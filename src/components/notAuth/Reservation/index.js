@@ -22,6 +22,8 @@ import books from '../../../assets/icon/12.png';
 import watch from '../../../assets/icon/14.png';
 import People from '../../../assets/icon/25.png';
 
+import Stars from 'react-native-stars';
+
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -79,7 +81,7 @@ export default class index extends Component {
   fetchcurrent_reservationData = async () => {
     const current_reservationResponse = await current_reservation();
     if (current_reservationResponse.result == true) {
-      // console.log("getting levels data ------------------- ",current_reservationResponse.response)
+      console.log("getting levels data ------------------- ",current_reservationResponse.response)
       var currentReservation =
         current_reservationResponse.response.current_transaction;
       this.setState({currentReservation,isBodyLoaded: true,isSpinner: false,});
@@ -88,7 +90,10 @@ export default class index extends Component {
   };
 
   componentDidMount = async () => {
+  setTimeout(() => {
     this.fetchcurrent_reservationData();
+  }, 700);
+ 
 
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
@@ -121,7 +126,9 @@ export default class index extends Component {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={Styles.header}>
+          <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
           <Image source={back} style={Styles.headertxtInputImg} />
+          </TouchableOpacity>
           <Text style={Styles.headerTxt}>Réservations</Text>
           <Image source={logo} style={Styles.headertxtInputImg1} />
         </View>
@@ -145,7 +152,7 @@ export default class index extends Component {
         </View>
 
         <View style={Styles.mainContainer}>
-          {
+          {/* {
  this.state.isBodyLoaded == true ?
  <ScrollView>
             {
@@ -198,17 +205,18 @@ export default class index extends Component {
                               flexDirection: 'row',
                               justifyContent: 'space-between',
                             }}>
-                            <Rating
-                              type="custom"
-                              ratingColor="#FF1493"
-                              ratingBackgroundColor="#c8c7c8"
-                              ratingCount={5}
-                              imageSize={15}
-                              startingValue={0}
-                              fractions={1}
-                              // onFinishRating={this.ratingCompleted}
-                              style={{paddingVertical: 10}}
-                            />
+                                <View style={{alignItems:'center',margin:6,marginStart:-25}}>
+                                    <Stars
+                                    // update={(rating)=>{this.setState({rating: rating})}}
+                                      default={singleCurrentMap.rating}
+                                      count={5}
+                                      // half={true}
+                                      starSize={30}
+                                      fullStar={<Image source={require("../../../assets/icon/111.png")} style={{height:15,width:15,margin:3}} />}
+                                      emptyStar={<Image source={require("../../../assets/icon/112.png")} style={{height:15,width:15,margin:3}} />}
+                                      halfStar={<Image source={require("../../../assets/icon/113.png")} style={{height:15,width:15,margin:3}} />}
+                                    />
+                                  </View>
                             <View style={Styles.continueBtn}>
                               <TouchableOpacity
                                 onPress={() => {
@@ -243,7 +251,7 @@ export default class index extends Component {
 
 
               :<View style={{alignItems:'center',justifyContent:'center'}}>
-              <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>No item found!</Text>
+              <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>Record non trouvé!</Text>
              </View>
             }
             
@@ -251,9 +259,9 @@ export default class index extends Component {
 
 
  :<View style={{alignItems:'center',justifyContent:'center'}}>
-   <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>Loading.......</Text>
+   <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>chargement...</Text>
   </View>
-          }
+          } */}
          
 
           <Modal

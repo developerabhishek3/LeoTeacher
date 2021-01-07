@@ -5,7 +5,7 @@ import Styles from './indexCss';
 import logo from '../../../assets/icon/96.png';
 import back from '../../../assets/icon/20.png';
 import nextArrow from '../../../assets/icon/36.png';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import {add_single_chat,get_single_chat} from '../../../Api/afterAuth';
 
@@ -18,10 +18,6 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default class index extends Component {
-
-
-
-
 
 
 
@@ -61,7 +57,7 @@ export default class index extends Component {
       }
       else{
         this.setState({ isBodyLoaded: false,isSpinner: false },()=>{
-          Alert.alert("Message","Something Went Wrong Try Again!",[ { text: "Okay",onPress:()=>{
+          Alert.alert("Message","Quelque chose a mal tourné, essayez encore!",[ { text: "Ok",onPress:()=>{
               this.props.navigation.goBack();
           }}]);
       })
@@ -75,7 +71,7 @@ export default class index extends Component {
     else {
       this.setState({ spinner: false }, () => {
         setTimeout(() => {
-          Alert.alert("Message", "Something went wrong!", [
+          Alert.alert("Message", "Quelque chose a mal tourné, essayez encore !!", [
             {
               text: 'Ok',
               onPress: () => {
@@ -114,7 +110,7 @@ export default class index extends Component {
       // console.log("getting ChatData data- inside ---------",add_single_chatFunctionResponse.response)
     }
     else{
-      Alert.alert("Message","Error Try Again!")
+      Alert.alert("Message","Erreur Réessayer!")
     }
     // this.setState({ChatData,isBodyLoaded:true,isSpinner:false});
     
@@ -123,7 +119,7 @@ export default class index extends Component {
 
   validateFunction(){
     if(this.state.chat_msg.length == 0){
-      Alert.alert("Message","Please add some message")
+      Alert.alert("Message","Veuillez ajouter un message!")
     }
     else{
       this.add_single_chatFunctionData()
@@ -225,9 +221,8 @@ export default class index extends Component {
       {
           this.state.isBodyLoaded == true ?
 
-
-
           <ScrollView style={{width:'100%'}}>
+              <KeyboardAwareScrollView enableOnAndroid={true} extraHeight={130} extraScrollHeight={130} showsVerticalScrollIndicator={false}>
           {
             this.state.ChatData.length > 0 ?
             <View  style={{borderWidth:0,width:SCREEN_WIDTH*0.9}}>
@@ -266,11 +261,11 @@ export default class index extends Component {
         </View>
 
           }
-
+</KeyboardAwareScrollView>
     </ScrollView>
 
           :<View>
-          <Text>Loading...</Text>
+          <Text>chargement...</Text>
       </View>
 
       }
@@ -289,7 +284,7 @@ export default class index extends Component {
                   // ref={this.myTextInput}
                   value={this.state.chat_msg}
                   onChangeText={(chat_msg) => this.setState({chat_msg})}
-                style={{width:'80%',borderWidth:0,borderRadius:20,marginStart:10}} placeholder="Enter message here" />
+                style={{width:'80%',borderWidth:0,borderRadius:20,marginStart:10,}} placeholder="Enter message here" />
                 <TouchableOpacity
                 //  onPress={()=>{this.props.navigation.navigate("chat2")}}
                 onPress={()=>{this.validateFunction()}}

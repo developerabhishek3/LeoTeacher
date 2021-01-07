@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View,Text,ScrollView, StatusBar,Image,TouchableOpacity,Modal,Dimensions,TextInput,BackHandler,Alert,Switch} from 'react-native'
+import { View,Text,ScrollView, StatusBar,Image,TouchableOpacity,Modal,Dimensions,TextInput,BackHandler,Alert,Switch,ImageBackground} from 'react-native'
 import BottomNavigator from '../../../router/BottomNavigator'
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -11,7 +11,7 @@ import {RadioButton} from 'react-native-paper';
 
 import watch from '../../../assets/icon/22.png'
 import Spinner from 'react-native-loading-spinner-overlay';
-import {online_offline_status,online_offlineFunction} from '../../../Api/afterAuth'
+import {online_offline_status,online_offlineFunction,home_count_data,bussiness_monthly} from '../../../Api/afterAuth'
 
 import { VictoryBar,VictoryChart } from "victory-native";
 
@@ -39,15 +39,44 @@ export default class index extends Component {
        isSpinner: true,
        isSwitchOn: false,
        MySettingDate:[],
+       total_coaching_given:0,
+       remuneration_total:0,
        SwitchOnValueHolder: false,
        SwitchOnValueHolder2:false,
- 
+     
+       BusinessMonthlyData:[],
        
        email_notification:1,
+       data1:[
+         {
+            "id":"1",
+            "value":"COURS RÉSERVÉS"
+         },
+         {
+          "id":"",
+          "value":"COURS INSTANTANÉS"
+         }
+       ],
+       chooseOption:false,
+       isCourseInstant:false,
        online_offline:1,
+       bussiness_data: {
+        "Jan": 0,
+        "Fév": 0,
+        "Mars": 0,
+        "Avril": 0,
+        "Mai": 0,
+        "Juin": 0,
+        "Juillet": 0,
+        "Aug": 2,
+        "Sept": 0,
+        "Oct": 0,
+        "Nov": 0,
+        "Dec": 1
+        },
 
        newgData:[
-      { x: "JAN", y: 3 },
+      { x: "JAN", y: 9 },
       { x: "FEB", y:  10},
       { x: "MAR", y:  30},
       { x: "APRIL", y:  17},
@@ -57,9 +86,12 @@ export default class index extends Component {
       { x: "JULY", y:  43},
       { x: "JULY", y:  33},
       { x: "JULY", y:  63},
-      { x: "JULY", y:  97},
+      { x: "JULY", y:  81},
       { x: "JULY", y:  3}
     ]
+
+
+    
     }
 
   }
@@ -72,12 +104,9 @@ export default class index extends Component {
     this.props.navigation.navigate('choosetime')
   }
 
-
-
-
-
   componentDidMount(){
-        
+    this.FetchBusinessData()
+        this.fetchHomeCountData()
     this.Getonline_offline_status()
     BackHandler.addEventListener('hardwareBackPress', () => this.handleBackButton(this.props.navigation));
       }
@@ -212,16 +241,71 @@ export default class index extends Component {
                   }) 
                   email_global = 0,switch_global = value     
             console.log("getting finally here---111111111111--------",switch_global,email_global)
-            }
-      
+            }      
           this.FetchupdateSettings(value,email_global)    
         };
       
       
+        fetchHomeCountData = async () => {   
+          const home_count_dataResponse = await home_count_data();
+          if (home_count_dataResponse.result === true) {
+            var remuneration_total = home_count_dataResponse.response.remuneration_total;
+            var total_coaching_given = home_count_dataResponse.response.total_coaching_given
+
+            this.setState({remuneration_total,total_coaching_given})
+            console.log("getting result here ----------------->>>>>>>>>>>>>>>>>>>-",home_count_dataResponse.response)
+               
+          } else {           
+            console.log('getting error here-------------');
+          }
+          return;
+        };
+
+
+        
+
+        
+      FetchBusinessData = async () => {   
+  
+     
+
+        const bussiness_monthlyResponse = await bussiness_monthly({               
+          year:"2021"
+        });
+        if (bussiness_monthlyResponse.result === true) {
+          var BusinessMonthlyData =  bussiness_monthlyResponse.response.bussiness_data
+          console.log("getting inside state velue---------------",BusinessMonthlyData)
+          console.log("getting result here ----------------->>>>>>>>>>>>>>>>>>>-",bussiness_monthlyResponse.response)
       
+       
+        } else {
+          this.myAlert('Error', bussiness_monthlyResponse.error);
+          console.log('getting error here-------------');
+        }
+        return;
+      };
+        
 
 
 
+
+
+
+      FetchafterContinue = async () => {     
+       console.log("email confiramtion  and push confirmation -------------------",email_global,value,push_global)
+        const online_offlineResponse = await online_offlineFunction({               
+          online_offline:"1"
+        });
+        if (online_offlineResponse.result === true) {
+          console.log("getting result here ----------------->>>>>>>>>>>>>>>>>>>-",online_offlineResponse.response)
+      
+          this.Getonline_offline_status();        
+        } else {
+          this.myAlert('Error', online_offlineResponse.error);
+          console.log('getting error here-------------');
+        }
+        return;
+      };
 
 
 
@@ -238,6 +322,8 @@ export default class index extends Component {
 
   render() {
 
+    let gradphData = Object.keys(this.state.bussiness_data)
+
     return (
       <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
         <StatusBar barStyle={"light-content"} backgroundColor="blue" hidden={false} />
@@ -249,10 +335,63 @@ export default class index extends Component {
           </View>
           
           <ScrollView>
-          
-          <View style={Styles.containerView}>
 
-<Text style={Styles.txtView}>Notifications</Text>
+
+        <View style={{flexDirection:'row',justifyContent:'space-between',margin:10}}>
+
+        <ImageBackground                  
+                      resizeMode='cover' 
+                      source={require("../../../assets/icon/green.png")}
+                      style={{alignSelf:'center',width:SCREEN_WIDTH/2.2,height:80}}                      
+                    >
+
+
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                     <Text style={{color:"#FFFFFF",fontWeight:'700',margin:1,width:"60%",textAlign:'left',marginTop:15}}>Rémunération totale</Text>
+                        <View  style={{borderWidth:0,alignItems:"center",justifyContent:"center"}}>
+                          <Image source={require("../../../assets/icon/books.png")} style={{height:35,width:35,margin:4}} />
+                           <Text style={{color:"#FFFFFF",fontWeight:'700',marginStart:3}}>{this.state.remuneration_total}</Text>
+                        </View>
+                        </View>
+
+                     
+
+                    </ImageBackground>
+
+
+
+                    <ImageBackground                  
+                      resizeMode='cover' 
+                      source={require("../../../assets/icon/skyblue.png")}
+                      style={{alignSelf:'center',width:SCREEN_WIDTH/2.2,height:80,marginEnd:10}}                      
+                    >
+
+
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                     <Text style={{color:"#FFFFFF",fontWeight:'700',margin:1,width:"60%",textAlign:'left',marginTop:15}}>Nombre de 
+coaching donné</Text>
+                        <View  style={{borderWidth:0,alignItems:"center",justifyContent:"center"}}>
+                          <Image source={require("../../../assets/icon/books.png")} style={{height:35,width:35,margin:4}} />
+                           <Text style={{color:"#FFFFFF",fontWeight:'700',marginStart:3}}>{this.state.total_coaching_given}</Text>
+                        </View>
+                        </View>
+
+                     
+
+                    </ImageBackground>
+
+        </View>
+
+
+
+
+
+          
+          <View style={{flexDirection:'row',justifyContent:'space-between',margin:10}}>
+
+<Text style={{width:280,margin:10,borderWidth:0,fontWeight:'600',fontSize:14}} >Vous êtes hors ligne maintenant.
+Mettez - vous en mode "en ligne" pour être  visible par 
+les étudiants et être contacté pour un call in English.</Text>
 
 {/* <Text style={{fontWeight:'600',fontSize:16,paddingStart:20}}>Email Notification</Text> */}
       <Switch
@@ -276,22 +415,25 @@ export default class index extends Component {
 >
   <VictoryBar
     style={{ data: { fill: "skyblue",width:10 } }}
-    data={this.state.newgData}
+    // data={this.state.newgData}
+
+    
   
-    // data={[
-    //   { x: "JAN", y: 3 },
-    //   { x: "FEB", y:  10},
-    //   { x: "MAR", y:  30},
-    //   { x: "APRIL", y:  17},
-    //   { x: "MAY", y:  33},
-    //   { x: "JUNE", y:  6},
-    //   { x: "JULY", y:  3},
-    //   { x: "JULY", y:  43},
-    //   { x: "JULY", y:  33},
-    //   { x: "JULY", y:  63},
-    //   { x: "JULY", y:  97},
-    //   { x: "JULY", y:  3}
-    // ]}
+    
+    data={[
+      { x: "JAN", y: 2 },
+      { x: "FEB", y:  10},
+      { x: "MAR", y:  30},
+      { x: "APRIL", y:  17},
+      { x: "MAY", y:  33},
+      { x: "JUNE", y:  6},
+      { x: "JULY", y:  3},
+      { x: "JULY", y:  43},
+      { x: "JULY", y:  33},
+      { x: "JULY", y:  63},
+      { x: "JULY", y:  97},
+      { x: "JULY", y:  3}
+    ]}
   />
 </VictoryChart>
 
@@ -374,7 +516,7 @@ export default class index extends Component {
             
               </View>  
               <View style={Styles.radiobtnMainView}>
-                  <RadioButton.Group
+                  {/* <RadioButton.Group
                     onValueChange={(value) => this.setState({value})}
                     value={this.state.value}>
                     <View style={Styles.radioBtnView}>
@@ -385,7 +527,41 @@ export default class index extends Component {
                       <RadioButton value="second" />
                       <Text style={Styles.radiobtnText}>COURS INSTANTANÉS</Text>
                     </View>                   
-                  </RadioButton.Group>
+                  </RadioButton.Group> */}
+                  {
+                    this.state.data1.map((singleMap,key)=>{
+                      return(
+                        <View style={{margin:7,marginBottom:10}}>
+                          {
+                             this.state.checked == key ? 
+                             <TouchableOpacity 
+                             onPress={()=>{this.setState({checked:key,})}}
+                            //  onPress={()=>{
+                            //    let oldState = [...this.state.data1];
+                            //    oldState[key].isSelected = !oldState[key].isSelected;
+                            //    this.setState({ data1: oldState });
+                            //  }}
+                           style={{flexDirection:'row',alignItems:'center'}}>
+                          <Image source={require("../../../assets/icon/8.png")} style={{height:20,width:20,margin:3}} />
+                          <Text style={{color:"green"}}>{singleMap.value}</Text>
+                       </TouchableOpacity>
+                       :
+                       <TouchableOpacity 
+                       onPress={()=>{this.setState({checked:key,})}}
+                        //  onPress={()=>{
+                        //    let oldState = [...this.state.data1];
+                        //    oldState[key].isSelected = !oldState[key].isSelected;
+                        //    this.setState({ data1: oldState });
+                        //  }}
+                         style={{flexDirection:'row',alignItems:'center'}}>
+                         <Image source={require("../../../assets/icon/4.png")} style={{height:20,width:20,margin:3}} />
+                         <Text style={{color:"gray"}}>{singleMap.value}</Text>
+                         </TouchableOpacity>
+                          }                               
+                        </View>
+                      )
+                    })
+                  }
                 </View>           
               <View
                 style={{

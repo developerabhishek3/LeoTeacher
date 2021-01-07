@@ -116,18 +116,18 @@ class BottomNavigator extends Component{
                 <TouchableOpacity
                    style={{width: '25%',borderWidth:0}}
                   onPress={() => {
-                    if (currentRoute != 'profile') {
-                      this.props.navigation.navigate('profile', {
+                    if (currentRoute != 'profile2') {
+                      this.props.navigation.navigate('profile2', {
                         proceedView: undefined,
                       });
                     }
                   }}>
-                   {currentRoute == 'profile' ? (
+                   {currentRoute == 'profile2' ? (
                      <Image source={SelectedProfie} style={styles.routesImageView} />
                     ) : (
                       <Image source={UnSelectedProfie} style={styles.routesImageView} />
                   )}
-                  {currentRoute == 'profile' ? (
+                  {currentRoute == 'profile2' ? (
                     <Text style={{color:'#FF1493',margin:0,fontWeight:'700',textAlign:'center'}}>Profile</Text>
                     ) : (
                       <Text style={{color:'gray',margin:0,textAlign:'center'}}>Profile</Text>

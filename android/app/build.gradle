@@ -154,10 +154,18 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        //  release {
+        //     storeFile file('your_key_name.keystore')
+        //     storePassword 'your_key_store_password'
+        //     keyAlias 'your_key_alias'
+        //     keyPassword 'your_key_file_alias_password'
+        // }
+      
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.release
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -197,6 +205,14 @@ implementation 'com.facebook.android:facebook-android-sdk:4.34.0'
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
+
+
+    
+    implementation 'com.google.android.gms:play-services-base:16.1.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+
 
     // implementation(project(":react-native-community_google-signin"))
 

@@ -42,7 +42,7 @@ export default StyleSheet.create({
 
   },
   headertxtInputImg1: {
-    height: 30,
+    height: 50,
     width: 30,
     margin: 10,
     marginEnd: 15,
@@ -70,7 +70,7 @@ export default StyleSheet.create({
     flex:2,width:'99%',borderWidth:0
   },
   mainContentContainer:{
-    borderWidth:0,borderRadius:4,width:'96%',alignSelf:'center',margin:7,elevation:2
+    borderWidth:1,borderRadius:4,width:'96%',alignSelf:'center',margin:7,elevation:0,borderColor:"#DDDDDD"
   },
   headerSubTxt:{
     fontSize: 12,

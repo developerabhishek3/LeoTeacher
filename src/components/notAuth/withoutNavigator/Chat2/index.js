@@ -150,7 +150,9 @@ export default class index extends Component {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={Styles.header}>
+        <TouchableOpacity onPress={()=>{this.props.navigation.navigate("home")}}>
           <Image source={back} style={Styles.headertxtInputImg} />
+          </TouchableOpacity>
           <View style={{flexDirection: 'column', alignSelf: 'center'}}>
             <Text style={Styles.headerTxt}>Chat</Text>
             <Text style={Styles.headerSubTxt}>
@@ -206,7 +208,7 @@ export default class index extends Component {
             </Fragment>
             :
             <View style={{justifyContent:'center',alignItems:'center',}}>
-              <Text style={{textAlign:'center',marginTop:200,fontSize:18,fontWeight:'700'}}>Student not found!</Text>
+              <Text style={{textAlign:'center',marginTop:200,fontSize:18,fontWeight:'700'}}>Record non trouvé!</Text>
             </View>
           }
          
@@ -218,7 +220,7 @@ export default class index extends Component {
 
           :
           <View style={{justifyContent:'center',alignItems:'center',}}>
-          <Text style={{textAlign:'center',marginTop:200,fontSize:18,fontWeight:'700'}}>Loading...</Text>
+          <Text style={{textAlign:'center',marginTop:200,fontSize:18,fontWeight:'700'}}>chargement...</Text>
         </View>
         }
          

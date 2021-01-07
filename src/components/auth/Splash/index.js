@@ -12,7 +12,7 @@ export default class Splash extends Component {
 
   componentDidMount() {
 
- 
+   
 
     setTimeout(() => {
       this.props.navigation.replace('splash2');
@@ -42,7 +42,7 @@ export default class Splash extends Component {
         <Image
           resizeMode="stretch"
           style={{
-            width: 120,
+            width: 100,
             height: 120,            
             alignSelf:'center',
           }}

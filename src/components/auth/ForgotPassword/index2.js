@@ -87,14 +87,14 @@ export default class index extends Component {
     const { email,vcode  } = this.state;
 
     if (email.length === 0) {
-      this.myAlert('Message', 'Please enter your email');
+      this.myAlert('Message', 'Veuillez entrer votre adresse électronique');
     }
     else if(vcode.length === 0){
-            this.myAlert("Message","please enter you code")
+            this.myAlert("Message","veuillez entrer votre code")
     } else {
       const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!email.match(mailformat)) {
-        this.myAlert('Message', 'Invalid Email-Id');
+        this.myAlert('Message', 'Email-Id invalide');
         return false;
       }
       this.userForgotPasswordRe2Function();
@@ -168,6 +168,7 @@ export default class index extends Component {
                   <TextInput
                     style={Styles.textInputField}                    
                     editable={false}
+                    placeholder=" Eamil"
                     value={this.state.email}
                     onChangeText={(email) => this.setState({ email })}
                 />
@@ -176,7 +177,7 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder=" code"
+                    placeholder=" Code"
                     onChangeText={(vcode) => this.setState({ vcode })}
               />
                 </View>

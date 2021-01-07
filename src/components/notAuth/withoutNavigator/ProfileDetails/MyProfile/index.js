@@ -22,10 +22,15 @@ constructor(props){
       
     isBodyLoaded: false,
     isSpinner: true,
+    profile_url:"",
   }
 }
 
 componentDidMount = async () => {
+
+  let  profileImg  = this.props.navigation.getParam("profileImg")
+  console.log("HHHHHHHHHHHHHHHH+++++++++++++",profileImg)
+
   this.fetchStudentProfileData()
 
   BackHandler.addEventListener('hardwareBackPress', () =>
@@ -37,13 +42,14 @@ componentDidMount = async () => {
     const GetProfileDetails = await StudentProfile();
     if (GetProfileDetails.result == true) {
       var profileData = GetProfileDetails.response.my_profile;
+      var profile_url  = GetProfileDetails.response.my_profile.profile_url;
       console.log("getting GetProfileDetails data----------",profileData)
-      this.setState({ isBodyLoaded: true,isSpinner: false,profileData});
+      this.setState({ isBodyLoaded: true,isSpinner: false,profileData,profile_url});
     }
    
     else{
       this.setState({ isBodyLoaded: false,isSpinner: false },()=>{
-        Alert.alert("Message","Something Went Wrong Try Again!",[ { text: "Okay",onPress:()=>{
+        Alert.alert("Message","Quelque chose a mal tourné, essayez encore!",[ { text: "Ok",onPress:()=>{
             this.props.navigation.goBack();
         }}]);
     })
@@ -85,30 +91,11 @@ componentDidMount = async () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
   render() {
     const { profileData,isBodyLoaded,isSpinner } = this.state;
+
+   let  profileImg  = this.props.navigation.getParam("profileImg")
+
     console.log("getting inside the render method ??????????????",profileData)
 
     // const userMap = Object.assign(profileData)
@@ -116,33 +103,44 @@ componentDidMount = async () => {
       <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
         <Spinner visible={this.state.isSpinner}/>
         
-        {
-          isBodyLoaded == true ? 
-          <Fragment>
-
-
-
+      
 <ImageBackground source={bgImg} resizeMode="cover" style={{flex:2,borderWidth:0,width:'100%'}}>
         <View style={Styles.header}>
+          <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
           <Image source={back} style={Styles.headertxtInputImg} />
+          </TouchableOpacity>
           <Text style={Styles.headerTxt}>Mon profil</Text>
           <View style={{flexDirection:'row'}}>
           <Image source={logo} style={Styles.headertxtInputImg1} />
           <TouchableOpacity 
-              onPress={()=>{this.props.navigation.navigate("editprofile")}}
+              onPress={()=>{this.props.navigation.navigate("editprofile",{profileImg:this.state.profile_url})}}
           >
            <Image source={Edit} style={Styles.headertxtInputImg2} />
           </TouchableOpacity>
           </View>
         </View>
+
+
+        {
+          isBodyLoaded == true ? 
+          <Fragment>
+
+
           <View style={{marginTop:10}}> 
-            <Image source={People} style={Styles.peopleStyle} />            
+          {
+            this.state.profile_url == "" ?
+
+                        <Image source={People}  style={Styles.peopleStyle} />
+            :
+            <Image source={{
+              uri: `https://www.spyk.fr/${this.state.profile_url}`,
+            }}  style={Styles.peopleStyle} />
+          }                 
           </View>          
           <ScrollView>
             
 
           <View style={{flex:2,borderWidth:0,width:'99%',alignSelf:'center',marginTop:6,marginBottom:15}}>
-
 
 
 
@@ -164,8 +162,6 @@ componentDidMount = async () => {
             </View>
 
 
-
-
             <View style={Styles.maincontentContaine}>
             <View style={Styles.nameStyleView}>
               <Text style={Styles.nameHeading}>Email</Text>
@@ -177,20 +173,14 @@ componentDidMount = async () => {
             <View style={Styles.nameStyleView}>
               <Text style={Styles.nameHeading}>Date de naissance</Text>
 
-    <Text style={Styles.nameHeadingTxt}>{profileData.dob}</Text>
+              <Text style={Styles.nameHeadingTxt}>{profileData.dob}</Text>
 
             </View>
             </View>
-
-
-
-
             <View style={Styles.maincontentContaine}>
             <View style={Styles.nameStyleView}>
               <Text style={Styles.nameHeading}>Diplôme</Text>
-
               <Text style={Styles.nameHeadingTxt}>{} </Text>
-
             </View>
 
             <View style={Styles.nameStyleView}>
@@ -201,16 +191,11 @@ componentDidMount = async () => {
             </View>
             </View>
 
-
-
             <View style={Styles.addressView}>
                 <Text style={Styles.nameHeading}>Address</Text>
     <Text style={Styles.nameHeadingTxt}>{profileData.address}</Text>
 
             </View>
-
-
-
             <View style={Styles.addressView}>
                 <Text style={Styles.nameHeading}>Objectif</Text>
                 <Text style={Styles.nameHeadingTxt}>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century .</Text>
@@ -219,25 +204,19 @@ componentDidMount = async () => {
             </View>
 
 
-
-
-
-
-
-
-
           </View>
-          </ScrollView>          
+          </ScrollView>  
+          
+          </Fragment>
+
+
+:
+
+null
+}        
         </ImageBackground>      
 
 
-            </Fragment>
-
-
-          :
-
-          null
-      }
          
       </View>
     )

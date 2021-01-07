@@ -33,7 +33,7 @@ export default StyleSheet.create({
     marginStart: 15,
   },
   headertxtInputImg1: {
-    height: 30,
+    height: 50,
     width: 30,
     margin: 10,
     marginEnd: 15,
@@ -65,9 +65,9 @@ export default StyleSheet.create({
     width: '99%',
   },
   contentView: {
-    borderWidth: 0,
-    borderColor: 'gray',
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#DDDDDD',
+    elevation: 0,
     width: '96%',
     borderRadius: 7,
     alignSelf: 'center',

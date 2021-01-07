@@ -73,7 +73,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     margin: 7,
   },
-  peopleStyle: {height: 90, width: 90, alignSelf:'center'},
+  peopleStyle: {height: 90, width: 90, alignSelf:'center',borderRadius:50},
   continueBtn: {
     backgroundColor: '#FF1493',
     margin: 6,

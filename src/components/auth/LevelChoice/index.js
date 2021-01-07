@@ -124,7 +124,7 @@ export default class index extends Component {
        
         let filters = this.state.levelsData.filter(i => i.isSelected);
         if(filters && filters.length == 0) {
-          return Alert.alert('Message','level select kr');
+          return Alert.alert('Message','Veuillez sélectionner le niveau!');
         }
         this.update_levelFunction()
       

@@ -457,6 +457,38 @@ export async function StudentProfile() {
 
 
 
+export async function get_academic_info() {
+
+  const token = await AsyncStorage.getItem('token');
+  const user_id = await AsyncStorage.getItem('user_id');
+  
+  const TokenValue = JSON.parse(token);
+  const UserId = JSON.parse(user_id)
+  
+  console.log("getting token and user id here inside the function-----------",UserId,TokenValue)
+ 
+  try {
+    const get_academic_infoResponse = await Axios.get(
+      'https://www.spyk.fr/api_teacher/get_academic_info',      
+      {
+        headers: {...commonHeader, 'user-id' : `${UserId}`, 'token' :`${TokenValue}`}   
+      },
+    );
+    if (get_academic_infoResponse.status) {
+      // console.log("getting response on the function--------",get_academic_infoResponse.data)
+      return {result: true, response: get_academic_infoResponse.data};
+    } else {
+      // console.log("getting error on the function--------",get_academic_infoResponse.data)
+      return {result: false, error: get_academic_infoResponse.data};
+    }
+  } catch (error) {
+    return {result: false, error};
+  }
+}
+
+
+
+
 
 
 
@@ -1223,4 +1255,190 @@ export async function delete_account(body ={}) {
 
 
 
+  
+  
+export async function demand_amount(body ={}) {
+
+  const token = await AsyncStorage.getItem('token');
+  const user_id = await AsyncStorage.getItem('user_id');
+  
+  const TokenValue = JSON.parse(token);
+  const UserId = JSON.parse(user_id)
+  
+  try {      
+    const demand_amountResponse = await Axios.post(
+      'https://www.spyk.fr/api_teacher/demand_amount',
+      body,
+      {
+               headers: {...commonHeader, 'user-id' : `${UserId}`, 'token' :`${TokenValue}`}   
+      },
+    );
+    if (demand_amountResponse.status) {
+      return {result: true, response: demand_amountResponse.data};
+    } else {
+      return {result: false, response: demand_amountResponse.data};
+    }
+  } catch (err) {
+    let error = new Error();
+    const {data, status} = err.response;
+    error.response = err.response;
+    if (status == 400 && data.error === 'invalid_grant') {
+      error.message = 'Invalid Credentials';
+    } else {
+      error.message = 'Request Failed';
+    }
+    throw error;
+  }
+  }
+
+
+
+    
+  
+export async function reservation_request_accept_reject(body ={}) {
+
+  const token = await AsyncStorage.getItem('token');
+  const user_id = await AsyncStorage.getItem('user_id');
+  
+  const TokenValue = JSON.parse(token);
+  const UserId = JSON.parse(user_id)
+  
+  try {      
+    const reservation_request_accept_rejectResponse = await Axios.post(
+      'https://www.spyk.fr/api_teacher/reservation_request_accept_reject',
+      body,
+      {
+               headers: {...commonHeader, 'user-id' : `${UserId}`, 'token' :`${TokenValue}`}   
+      },
+    );
+    if (reservation_request_accept_rejectResponse.status) {
+      return {result: true, response: reservation_request_accept_rejectResponse.data};
+    } else {
+      return {result: false, response: reservation_request_accept_rejectResponse.data};
+    }
+  } catch (err) {
+    let error = new Error();
+    const {data, status} = err.response;
+    error.response = err.response;
+    if (status == 400 && data.error === 'invalid_grant') {
+      error.message = 'Invalid Credentials';
+    } else {
+      error.message = 'Request Failed';
+    }
+    throw error;
+  }
+  }
+
+
+
+    
+export async function set_availability(body ={}) {
+
+  const token = await AsyncStorage.getItem('token');
+  const user_id = await AsyncStorage.getItem('user_id');
+  
+  const TokenValue = JSON.parse(token);
+  const UserId = JSON.parse(user_id)
+  
+  try {      
+    const set_availabilityResponse = await Axios.post(
+      'https://www.spyk.fr/api_teacher/set_availability',
+      body,
+      {
+               headers: {...commonHeader, 'user-id' : `${UserId}`, 'token' :`${TokenValue}`}   
+      },
+    );
+    if (set_availabilityResponse.status) {
+      return {result: true, response: set_availabilityResponse.data};
+    } else {
+      return {result: false, response: set_availabilityResponse.data};
+    }
+  } catch (err) {
+    let error = new Error();
+    const {data, status} = err.response;
+    error.response = err.response;
+    if (status == 400 && data.error === 'invalid_grant') {
+      error.message = 'Invalid Credentials';
+    } else {
+      error.message = 'Request Failed';
+    }
+    throw error;
+  }
+  }
+
+
+
    
+
+  // # : NOTIFICATION SETTING (GET CURRENT STATUS)
+
+  export async function home_count_data() {
+
+    const token = await AsyncStorage.getItem('token');
+    const user_id = await AsyncStorage.getItem('user_id');
+    
+    const TokenValue = JSON.parse(token);
+    const UserId = JSON.parse(user_id)
+    
+    // console.log("getting token and user id here inside the function-----------",UserId)
+    // console.log("getting token and user id here inside the function-----------",TokenValue)
+   
+    try {
+      const home_count_dataResponse = await Axios.get(
+        'https://www.spyk.fr/api_teacher/home_count_data',      
+        {
+          headers: {...commonHeader, 'user-id' : `${UserId}`, 'token' :`${TokenValue}`}   
+        },
+      );
+      if (home_count_dataResponse.status) {
+        // console.log("getting response on the function--------",home_count_dataResponse.data)
+        return {result: true, response: home_count_dataResponse.data};
+      } else {
+        // console.log("getting error on the function--------",home_count_dataResponse.data)
+        return {result: false, error: home_count_dataResponse.data};
+      }
+    } catch (error) {
+      return {result: false, error};
+    }
+  }
+  
+
+
+
+
+
+  
+    
+export async function bussiness_monthly(body ={}) {
+
+  const token = await AsyncStorage.getItem('token');
+  const user_id = await AsyncStorage.getItem('user_id');
+  
+  const TokenValue = JSON.parse(token);
+  const UserId = JSON.parse(user_id)
+  
+  try {      
+    const bussiness_monthlyResponse = await Axios.post(
+      'https://www.spyk.fr/api_teacher/bussiness_monthly',
+      body,
+      {
+               headers: {...commonHeader, 'user-id' : `${UserId}`, 'token' :`${TokenValue}`}   
+      },
+    );
+    if (bussiness_monthlyResponse.status) {
+      return {result: true, response: bussiness_monthlyResponse.data};
+    } else {
+      return {result: false, response: bussiness_monthlyResponse.data};
+    }
+  } catch (err) {
+    let error = new Error();
+    const {data, status} = err.response;
+    error.response = err.response;
+    if (status == 400 && data.error === 'invalid_grant') {
+      error.message = 'Invalid Credentials';
+    } else {
+      error.message = 'Request Failed';
+    }
+    throw error;
+  }
+  }

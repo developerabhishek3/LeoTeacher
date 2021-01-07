@@ -33,7 +33,7 @@ export default StyleSheet.create({
     marginStart: 15,
   },
   headertxtInputImg1: {
-    height: 30,
+    height: 45,
     width: 30,
     margin: 10,
     marginEnd: 15,
@@ -68,8 +68,8 @@ export default StyleSheet.create({
   contentContainer:{
     borderWidth:1,
     borderRadius:10,
-    borderColor:'gray',
-    elevation:2,
+    borderColor:'#DDDDDD',
+    elevation:0,
     width:'96%',
     alignSelf:'center',
     
@@ -104,7 +104,7 @@ export default StyleSheet.create({
     borderWidth:2,
     height:30,
     borderRadius:4,
-    width:'15%',marginEnd:4,
+    width:50,marginEnd:4,
     justifyContent:'center'
   },
   currencyTxtStyle:{
@@ -127,6 +127,15 @@ export default StyleSheet.create({
 
   },
   continueBtn1: {
+    borderColor: '#FF1493',
+    margin: 6,
+    borderWidth:1,
+    borderRadius: 5,
+    
+    alignItems: 'center',
+
+  },
+  continueBtn2: {
     borderColor: '#FF1493',
     margin: 6,
     borderWidth:1,
