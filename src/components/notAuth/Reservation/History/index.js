@@ -22,6 +22,8 @@ import books from '../../../../assets/icon/12.png';
 import watch from '../../../../assets/icon/14.png';
 import People from '../../../../assets/icon/25.png';
 
+import Stars from 'react-native-stars';
+
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -120,7 +122,9 @@ export default class index extends Component {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <View style={Styles.header}>
+        <TouchableOpacity onPress={()=>{this.props.navigation.navigate("home")}}>
           <Image source={back} style={Styles.headertxtInputImg} />
+          </TouchableOpacity>
           <Text style={Styles.headerTxt}>Réservations</Text>
           <Image source={logo} style={Styles.headertxtInputImg1} />
         </View>
@@ -194,7 +198,21 @@ export default class index extends Component {
                     </Text>
                   </View>
 
-                  <View
+                  <View style={{alignItems:'center',margin:3,marginStart:-25}}>
+                                    <Stars
+                                    // update={(rating)=>{this.setState({rating: rating})}}
+                                      default={singlehistoryMap.rating}
+                                      count={5}
+                                      // half={true}
+                                      starSize={30}
+                                      fullStar={<Image source={require("../../../../assets/icon/111.png")} style={{height:15,width:15,margin:3}} />}
+                                      emptyStar={<Image source={require("../../../../assets/icon/112.png")} style={{height:15,width:15,margin:3}} />}
+                                      halfStar={<Image source={require("../../../../assets/icon/113.png")} style={{height:15,width:15,margin:3}} />}
+                                    />
+                                  </View>
+
+
+                  {/* <View
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
@@ -210,12 +228,13 @@ export default class index extends Component {
                       // onFinishRating={this.ratingCompleted}
                       style={{paddingVertical: 10}}
                     />
-                    {/* <View style={Styles.continueBtn}>
+                   
+                  </View> */}
+                   {/* <View style={Styles.continueBtn}>
                       <TouchableOpacity onPress={()=>{this.Show_Custom_Alert()}}>
                       <Text style={Styles.continueBtnTxt}>Annuler</Text>
                       </TouchableOpacity>
                     </View> */}
-                  </View>
                 </View>
               </View>
             </View>
@@ -232,7 +251,7 @@ export default class index extends Component {
 
          
             :<View style={{alignItems:'center',justifyContent:'center'}}>
-            <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>No item found!</Text>
+            <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>Record non trouvé</Text>
            </View>
           }
 
@@ -241,7 +260,7 @@ export default class index extends Component {
 
           </ScrollView>
             :<View style={{alignItems:'center',justifyContent:'center'}}>
-            <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>Loading.......</Text>
+            <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>chargement...</Text>
             </View>
         }
 

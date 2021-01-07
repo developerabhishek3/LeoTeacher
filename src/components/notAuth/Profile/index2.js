@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component,Fragment} from 'react'
 import { View,Text,ScrollView, ImageBackground,Image,TextInput,TouchableOpacity,Modal,Dimensions,Alert,BackHandler} from 'react-native'
 import BottomNavigator from '../../../router/BottomNavigator'
 import Styles from './indexCss'
@@ -19,8 +19,8 @@ import logoutIcon from '../../../assets/ProfileIcon/36.png'
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 import AsyncStorage from '@react-native-community/async-storage';
-
-import {LogoutFunction} from '../../../Api/afterAuth';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {LogoutFunction,StudentProfile} from '../../../Api/afterAuth';
 
 export default class index extends Component {
     constructor(props){
@@ -29,6 +29,10 @@ export default class index extends Component {
           value: 'first',
           Model_Visibility: false,
           Alert_Visibility: false,
+          profileData:[],
+          profile_url:"",
+          isBodyLoaded:false,
+          isSpinner:true
         }    
       }
           
@@ -43,7 +47,7 @@ export default class index extends Component {
             let keys = ['token'];
             AsyncStorage.multiRemove(keys)
             this.props.navigation.navigate("login")            
-            Alert.alert("Message","Logout Sucessfully !")
+            Alert.alert("Message","Déconnexion réussie!")
         }
         else{
             // console.log("getting error on logout -------------",LogoutResponse.error)
@@ -57,13 +61,31 @@ export default class index extends Component {
       componentDidMount = async () => {
    
   
-  
+        this.fetchStudentProfileData()
   
         BackHandler.addEventListener('hardwareBackPress', () =>
             this.handleBackButton(this.props.navigation),
           );
       }
       
+      fetchStudentProfileData = async () => {
+        const GetProfileDetails = await StudentProfile();
+        if (GetProfileDetails.result == true) {
+          var profileData = GetProfileDetails.response.my_profile;
+          var profile_url = GetProfileDetails.response.my_profile.profile_url
+          console.log("getting GetProfileDetails data----------",profileData,profile_url)
+          this.setState({ isBodyLoaded: true,isSpinner: false,profileData,profile_url});
+        }
+       
+        else{
+          this.setState({ isBodyLoaded: false,isSpinner: false },()=>{
+            Alert.alert("Message","Quelque chose a mal tourné, essayez encore!",[ { text: "Okay",onPress:()=>{
+                this.props.navigation.goBack();
+            }}]);
+        })
+        }   
+        // console.log("getting country response----------------",countryData.country_list)
+      };
     
     
     
@@ -115,36 +137,52 @@ export default class index extends Component {
   }
    
   render() {
+
+
+    const { profileData,isBodyLoaded,isSpinner } = this.state;
+
     return (
       <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
         <ImageBackground source={bgImg} resizeMode="cover" style={{flex:2,borderWidth:0,width:'100%'}}>
         <View style={Styles.header}>
+        <TouchableOpacity onPress={()=>{this.props.navigation.navigate("home")}}>
           <Image source={back} style={Styles.headertxtInputImg} />
+          </TouchableOpacity>
           <Text style={Styles.headerTxt}>Mon compte</Text>
           <Image source={logo} style={Styles.headertxtInputImg1} />
         </View>
+        <Spinner visible={this.state.isSpinner} />
 
+        <View>
+          {
+            this.state.isBodyLoaded == true ?
+
+          <Fragment>
           <View style={{marginTop:-15}}> 
-            <Image source={People} style={Styles.peopleStyle} />
-            
+          {
+            this.state.profile_url == "" ?
+
+                        <Image source={People}  style={Styles.peopleStyle} />
+            :
+            <Image source={{
+              uri: `https://www.spyk.fr/${this.state.profile_url}`,
+            }}  style={Styles.peopleStyle} />
+          }
           </View>
           {/* <Text style={{fontSize:13,color:'gray',fontWeight:'700',alignSelf:'center'}}>Votre client</Text> */}
-          <Text style={{alignSelf:'center',fontWeight:'700',fontSize:16,color:"#FF1493"}}>John Smith</Text>          
+          <Text style={{alignSelf:'center',fontWeight:'700',fontSize:16,color:"#FF1493"}}>{profileData.first_name} {profileData.last_name}</Text>          
           <ScrollView>
 
             <View style={{flex:2,margin:10}}> 
-        
-
+      
                 <TouchableOpacity 
-                  onPress={()=>{this.props.navigation.navigate("myprofile")}}
+                  onPress={()=>{this.props.navigation.navigate("myprofile",{profileImg:this.state.profile_url})}}
                 >
                   <View style={{flexDirection:'row',margin:5}}>
                       <Image source={profileIcon} style={{height:24,width:24,margin:10}}  />
                       <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Mon profil</Text>
                   </View>
                 </TouchableOpacity>
-
-
                 <TouchableOpacity
                      onPress={()=>{this.props.navigation.navigate("revenue")}}
                 >
@@ -153,9 +191,6 @@ export default class index extends Component {
                     <Text style={{fontSize:14,fontWeight:'700',margin:15}}> Mes revenus</Text>
                 </View>
                 </TouchableOpacity>
-
-
-
                 <TouchableOpacity
                     onPress={()=>{this.props.navigation.navigate('parameter')}}
                 >
@@ -180,15 +215,13 @@ export default class index extends Component {
                     <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Déconnexion</Text>
                 </View>
                 </TouchableOpacity>
-
-
-
-
             </View>
-
-
           </ScrollView>  
+          </Fragment> 
+            : null            
+          }
 
+          </View>
 
 
           <Modal
@@ -352,7 +385,7 @@ export default class index extends Component {
 
         </ImageBackground>
           <BottomNavigator
-            currentRoute={'profile'}
+            currentRoute={'profile2'}
             navigation={this.props.navigation}
         />
       </View>

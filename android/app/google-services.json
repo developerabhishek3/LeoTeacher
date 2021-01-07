@@ -1,21 +1,20 @@
 {
   "project_info": {
-    "project_number": "225031830913",
-    "firebase_url": "https://leoteacher-225bd.firebaseio.com",
-    "project_id": "leoteacher-225bd",
-    "storage_bucket": "leoteacher-225bd.appspot.com"
+    "project_number": "285102755058",
+    "project_id": "leoteacher-abbbb",
+    "storage_bucket": "leoteacher-abbbb.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:225031830913:android:5ff4eb57ff240c730ffc80",
+        "mobilesdk_app_id": "1:285102755058:android:f0eec8317c93d14568d46b",
         "android_client_info": {
           "package_name": "com.leoteacher"
         }
       },
       "oauth_client": [
         {
-          "client_id": "225031830913-dodkfhsbt6e622c5a4bl7aa591v5qabm.apps.googleusercontent.com",
+          "client_id": "285102755058-p4oivsraks7k65usk59bod578jmpiilr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.leoteacher",
@@ -23,20 +22,20 @@
           }
         },
         {
-          "client_id": "225031830913-0rncv6enrktmpu0i1vki8k1lvdkrsgpm.apps.googleusercontent.com",
+          "client_id": "285102755058-3hdq4lni3bghr3eni4rqp6r73h9ot309.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDaGPEMHiqIXVrBKheTQSLkkh7kefnCPEQ"
+          "current_key": "AIzaSyAxHJDNgtAPu2kPkya2KIVanYf2POXAnqU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "225031830913-0rncv6enrktmpu0i1vki8k1lvdkrsgpm.apps.googleusercontent.com",
+              "client_id": "285102755058-3hdq4lni3bghr3eni4rqp6r73h9ot309.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

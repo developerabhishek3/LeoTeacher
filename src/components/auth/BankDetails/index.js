@@ -30,7 +30,7 @@ export default class index extends Component {
 
       bank_name:"",
       bic_code:"",
-      validate:"",
+      iban:"",
       paypal_email:"",
 
 
@@ -54,13 +54,13 @@ export default class index extends Component {
     const {
         bank_name,
         bic_code,
-        validate,
+        iban,
         paypal_email 
     } = this.state;
     const add_update_bank_infoResponse = await add_update_bank_info({
         bank_name,
         bic_code,
-        validate,
+        iban,
         paypal_email  
     });
     if (add_update_bank_infoResponse.result == true) {
@@ -86,24 +86,24 @@ export default class index extends Component {
   };
 
   validateUser = () => {
-    const { bank_name,bic_code,validate,paypal_email  } = this.state;
+    const { bank_name,bic_code,iban,paypal_email  } = this.state;
 
     if (bank_name.length === 0) {
-      this.myAlert('Message', 'Please enter your bank_name');
+      this.myAlert('Message', 'Veuillez entrer le nom de votre banque!');
     } 
     else if (bic_code.length === 0) {
-        this.myAlert('Message', 'Please enter your code BIC');
+        this.myAlert('Message', 'Veuillez entrer votre code BIC!');
     }
-    else if (validate.length === 0) {
-        this.myAlert('Message', 'Please enter your Valider');
+    else if (iban.length === 0) {
+        this.myAlert('Message', 'Veuillez entrer votre iban!');
     } 
     else if(paypal_email.length === 0){
-      this.myAlert('Message', 'Please enter your paypal email');
+      this.myAlert('Message', 'Veuillez entrer votre email paypal !');
     }
     else {
       const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!paypal_email.match(mailformat)) {
-        this.myAlert('Message', 'Invalid Email-Id');
+        this.myAlert('Message', 'Email-Id invalide');
         return false;
       }
       this.add_update_bank_infoFunction();
@@ -116,8 +116,6 @@ export default class index extends Component {
 
   componentDidMount(){
 
- 
-     
      BackHandler.addEventListener('hardwareBackPress', () =>
          this.handleBackButton(this.props.navigation),
        );
@@ -195,8 +193,8 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder=" Valider"
-                    onChangeText={(validate) => this.setState({ validate })}
+                    placeholder=" iban"
+                    onChangeText={(iban) => this.setState({ iban })}
               />
                 </View>
 

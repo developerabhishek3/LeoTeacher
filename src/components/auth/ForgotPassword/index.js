@@ -85,11 +85,11 @@ export default class index extends Component {
     const { email,  } = this.state;
 
     if (email.length === 0) {
-      this.myAlert('Message', 'Please enter your email');
+      this.myAlert('Message', 'Veuillez entrer votre adresse électronique');
     } else {
       const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!email.match(mailformat)) {
-        this.myAlert('Message', 'Invalid Email-Id');
+        this.myAlert('Message', 'Email-Id invalide');
         return false;
       }
       this.userForgotPasswordRe1Function();

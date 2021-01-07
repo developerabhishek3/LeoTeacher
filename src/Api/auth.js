@@ -308,8 +308,8 @@ export async function level_academic_info() {
   const TokenValue = JSON.parse(token);
   const UserId = JSON.parse(user_id);
 
-  console.log('getting ion level acedemic welcom page==========', UserId);
-  console.log('getting ion level acedemic welcom page==========', TokenValue);
+  // console.log('getting ion level acedemic welcom page==========', UserId);
+  // console.log('getting ion level acedemic welcom page==========', TokenValue);
 
   try {
     const level_academic_infoResponse = await Axios.get(

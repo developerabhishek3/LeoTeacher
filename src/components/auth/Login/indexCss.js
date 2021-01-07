@@ -22,11 +22,11 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   headerView: {
-    marginTop: -10,
+    marginTop: 0,
   },
   headerLogo: {
-    height: 60,
-    width: 60,
+    height: 65,
+    width: 45,
     margin: 3,
     marginEnd: 50,
     alignSelf: 'center',

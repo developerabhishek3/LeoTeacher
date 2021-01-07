@@ -99,12 +99,12 @@ export default class index extends Component {
           <Image source={back} style={Styles.headertxtInputImg} />
           <Text style={Styles.headerTxt}>Info Client</Text>
           <View style={{margin: 7, flexDirection: 'row', marginStart: 10}}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('chat');
               }}>
               <Image source={Chat} style={Styles.headertxtInputImg2} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <Image source={logo} style={Styles.headertxtInputImg1} />
           </View>
         </View>
@@ -278,7 +278,7 @@ export default class index extends Component {
                       fontWeight: '700',
                       marginTop: 160,
                     }}>
-                    No item found!
+                   Record non trouvé
                   </Text>
                 </View>
               )}
@@ -293,7 +293,7 @@ export default class index extends Component {
                   fontWeight: '700',
                   marginTop: 160,
                 }}>
-                Loading.....
+                chargement...
               </Text>
             </View>
           )}

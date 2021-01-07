@@ -99,13 +99,13 @@ export default class index extends Component {
         const { email, password } = this.state;
     
         if (email.length === 0) {
-          this.myAlert('Message', 'Please enter your email');
+          this.myAlert('Message', 'Veuillez entrer votre adresse électronique!');
         } else if (password.length === 0) {
-          this.myAlert('Message', 'Please enter your password');
+          this.myAlert('Message', 'Veuillez entrer votre mot de passe!');
         } else {
           const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
           if (!email.match(mailformat)) {
-            this.myAlert('Message', 'Invalid Email-Id');
+            this.myAlert('Message', 'Email-Id invalide!');
             return false;
           }
           this.userLoginFunction();
@@ -113,9 +113,13 @@ export default class index extends Component {
       };
     
 
-      componentDidMount(){
+    async  componentDidMount(){
         
-    BackHandler.addEventListener('hardwareBackPress', () => this.handleBackButton(this.props.navigation));
+
+        const FCMtoken = await AsyncStorage.getItem('fcmToken');
+        console.log("getting token --------", FCMtoken)
+        this.setState({ fcm_token: FCMtoken })
+        BackHandler.addEventListener('hardwareBackPress', () => this.handleBackButton(this.props.navigation));
       }
 
 

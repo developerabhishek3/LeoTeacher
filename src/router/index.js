@@ -53,6 +53,7 @@ import HistoryReservation from '../components/notAuth/Reservation/History'
 import BankDetails from '../components/auth/BankDetails'
 
 
+import Notification from "../components/notification/index"
 
 
 
@@ -74,6 +75,12 @@ const AppNavigator = createStackNavigator(
     },
     welcome: {
       screen: Welcome,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    notification: {
+      screen: Notification,
       navigationOptions: {
         headerShown: false,
       },
@@ -107,6 +114,12 @@ const AppNavigator = createStackNavigator(
 
     bankdetails: {
       screen: BankDetails,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    notification: {
+      screen: Notification,
       navigationOptions: {
         headerShown: false,
       },

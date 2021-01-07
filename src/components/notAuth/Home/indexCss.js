@@ -32,7 +32,7 @@ export default StyleSheet.create({
     },
    
     headertxtInputImg:{
-        height:30,
+        height:50,
         width:30,
         margin:10,
         marginEnd:15,

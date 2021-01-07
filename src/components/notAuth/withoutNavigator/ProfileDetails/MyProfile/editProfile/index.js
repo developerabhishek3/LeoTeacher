@@ -36,6 +36,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const SCREEN_HEIGHT = Dimensions.get('window').height; 
 const SCREEN_WIDTH = Dimensions.get('window').width;
+
+import { StudentProfile,get_academic_info } from "../../../../../../Api/afterAuth"
+
 export default class index extends Component {
   constructor(props) {
     super(props);
@@ -63,6 +66,7 @@ export default class index extends Component {
       path:"",
       birth_date:  new Date(),
       date: new Date(),
+      profileData:[],
       // filePath: {},
        
 
@@ -171,7 +175,7 @@ async uploadWholeData(){
       ]).then((resp) => {        
        
     console.log("response:::::::" + JSON.stringify(resp.text()));
-    Alert.alert("Message","Profile update sucessfully!")
+    Alert.alert("Message","Mise à jour du profil réussie!")
     this.props.navigation.navigate("home")
     
     
@@ -207,6 +211,81 @@ async uploadWholeData(){
 
 
 
+
+
+
+  fetchStudentProfileData = async () => {
+    const GetProfileDetails = await StudentProfile();
+    if (GetProfileDetails.result == true) {
+      var profileData = GetProfileDetails.response.my_profile;
+      var first_name = GetProfileDetails.response.my_profile.first_name;
+      var last_name = GetProfileDetails.response.my_profile.last_name;
+      var birth_date = GetProfileDetails.response.my_profile.dob;
+      var address = GetProfileDetails.response.my_profile.address;
+      var postcode = GetProfileDetails.response.my_profile.postcode;
+      var city = GetProfileDetails.response.my_profile.city;
+      var country =  GetProfileDetails.response.my_profile.country;
+      var telephone_no =  GetProfileDetails.response.my_profile.phone;
+      var email =  GetProfileDetails.response.my_profile.email;
+
+      // console.log("getting GetProfileDetails data----------",profileData)
+      this.setState({ isBodyLoaded: true,isSpinner: false,profileData,
+        first_name,last_name,birth_date,address,postcode,city,country,telephone_no,email
+      
+      });
+    }
+   
+    else{
+      this.setState({ isBodyLoaded: false,isSpinner: false },()=>{
+        Alert.alert("Message","Quelque chose a mal tourné, essayez encore!",[ { text: "Ok",onPress:()=>{
+            this.props.navigation.goBack();
+        }}]);
+    })
+    }   
+    // console.log("getting country response----------------",countryData.country_list)
+  };
+
+
+
+
+
+
+
+
+
+  fetchget_academic_info = async () => {
+    const get_academic_infoResponse = await get_academic_info();
+    if (get_academic_infoResponse.result == true) {
+     var AcademicDetails = get_academic_infoResponse.response.academic_info;
+     var q_1_ans = get_academic_infoResponse.response.academic_info.q_1
+     var q_2_ans = get_academic_infoResponse.response.academic_info.q_2
+     var q_3_ans = get_academic_infoResponse.response.academic_info.q_3
+     var q_4_ans = get_academic_infoResponse.response.academic_info.q_4
+     var q_5_ans = get_academic_infoResponse.response.academic_info.q_5
+     var q_6_ans = get_academic_infoResponse.response.academic_info.q_6
+
+      console.log("getting get academic detail data----------",get_academic_infoResponse)
+      this.setState({ isBodyLoaded: true,isSpinner: false,AcademicDetails,
+        q_1_ans,q_2_ans,q_3_ans,q_4_ans,q_5_ans,q_6_ans  
+      });
+    }
+   
+    else{
+      this.setState({ isBodyLoaded: false,isSpinner: false },()=>{
+        Alert.alert("Message","Quelque chose a mal tourné, essayez encore!",[ { text: "Ok",onPress:()=>{
+            this.props.navigation.goBack();
+        }}]);
+    })
+    }   
+    // console.log("getting country response----------------",countryData.country_list)
+  };
+
+
+
+
+
+
+
   validateUser = async () => {
     const {      
       first_name,
@@ -226,57 +305,53 @@ async uploadWholeData(){
       q_6_ans
     } = this.state;
      if (first_name.length === 0) {
-      this.myAlert('Message', 'Please enter your first name');
+      this.myAlert('Message', 'Veuillez saisir votre prénom!');
     } else if (last_name.length === 0) {
-      this.myAlert('Message', 'Please enter your last name');
+      this.myAlert('Message', 'Veuillez entrer votre nom de famille!');
     }
     else if (birth_date.length === 0) {
-      this.myAlert('Message', 'Please enter your birth_date');
+      this.myAlert('Message', 'Veuillez entrer votre date de naissance!');
     }
     else if (address.length === 0) {
-      this.myAlert('Message', 'Please enter your address');
+      this.myAlert('Message', 'Veuillez entrer votre adresse!');
     }
     else if (postcode.length === 0) {
-      this.myAlert('Message', 'Please enter your postcode');
+      this.myAlert('Message', 'Veuillez entrer votre code postal!');
     }
     else if (city.length === 0) {
-      this.myAlert('Message', 'Please enter your city');
+      this.myAlert('Message', 'Veuillez entrer votre ville!');
     } else if (country.length === 0) {
-      this.myAlert('Message', 'Please enter your country');
+      this.myAlert('Message', 'Veuillez entrer votre pays!');
     } 
      else if (telephone_no.length === 0) {
-      this.myAlert('Message', 'Please enter your telephone no');
+      this.myAlert('Message', 'Veuillez saisir votre numéro de téléphone!');
     } 
     else if (email.length === 0) {
-      this.myAlert('Message', 'Please enter your email');
+      this.myAlert('Message', 'Veuillez entrer votre adresse électronique!');
     }   
     else if (q_1_ans.length === 0) {
-      this.myAlert('Message', 'Please select answer!');
+      this.myAlert('Message', 'Veuillez choisir votre réponse !');
     }
     else if (q_2_ans.length === 0 ) {
-      this.myAlert('Message', 'Please enter  answer!');
+      this.myAlert('Message', 'Veuillez entrer votre réponse');
     }
     else if (q_3_ans.length === 0 ) {
-      this.myAlert('Message', 'Please enter  answer!');
+      this.myAlert('Message', 'Veuillez entrer votre réponse".');
     }
     else if (q_4_ans.length === 0 ) {
-      this.myAlert('Message', 'Please enter answer!');
+      this.myAlert('Message', 'Veuillez entrer votre réponse".');
     }
     else if (q_5_ans.length === 0 ) {
-      this.myAlert('Message', 'Please select   answer!');
+      this.myAlert('Message', 'Veuillez choisir votre réponse !');
     }
-    else if (q_6_ans.length === 0 ) {
-      this.myAlert('Message', 'Please select   answer!');
+    else if(q_6_ans.length == 0){
+      this.myAlert('Message', 'Veuillez choisir votre réponse !');
     }
-  
     else {
    
-      // if(password != confirm_password){
-      //   this.myAlert("Message","Password and Confirm Password are not matched")
-      // }
       const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!email.match(mailformat)) {
-        this.myAlert('Message', 'Invalid email');
+        this.myAlert('Message', 'Email-id invalide');
         return false;
       }  
       this.uploadWholeData();
@@ -329,6 +404,9 @@ async uploadWholeData(){
 
   componentDidMount = async () => {
   
+    this.fetchStudentProfileData()
+    this.fetchget_academic_info()
+
     BackHandler.addEventListener('hardwareBackPress', () =>
     this.handleBackButton(this.props.navigation),
   );
@@ -360,6 +438,10 @@ async uploadWholeData(){
 
   render() {
     // console.log("inside render===================",this.state.filePath)
+    let  profileImg  = this.props.navigation.getParam("profileImg")
+
+
+    const { profileData,isBodyLoaded,isSpinner } = this.state;
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           {/* <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "blue" translucent = {false}/> */}
@@ -385,7 +467,9 @@ async uploadWholeData(){
           {
             this.state.path == "" ?
               <View style={{marginTop: 60}}>
-                <Image source={People} style={Styles.peopleStyle} />
+                <Image  source={{
+              uri: `https://www.spyk.fr/${profileImg}`,
+            }}  style={Styles.peopleStyle} />
               </View> 
             :
             <View style={{marginTop: 60}}>
@@ -398,11 +482,6 @@ async uploadWholeData(){
           {/* <View style={{marginTop: 10}}>
             <Image source={People} style={Styles.peopleStyle} />
           </View> */}
-
-
-       
-
-
 
 
           {/* <Text style={{ alignItems: 'center' }}>
@@ -427,11 +506,11 @@ async uploadWholeData(){
               }}>
               <TextInput placeholder="  Nom" 
                 onChangeText={(first_name) => this.setState({first_name})}
-              style={Styles.txtInput} />
+              style={Styles.txtInput} >{profileData.first_name}</TextInput>
 
               <TextInput placeholder="  Prénom" 
                 onChangeText={(last_name) => this.setState({last_name})}
-              style={Styles.txtInput} />
+              style={Styles.txtInput} >{profileData.last_name}</TextInput>
              <View   style={Styles.txtInput}>
                   {/* <TextInput
                     style={Styles.textInputField}
@@ -455,10 +534,10 @@ async uploadWholeData(){
                               height:24,width:24
                             },
                             dateInput: {
-                              marginLeft: -20,
+                              marginLeft: -30,
                               borderColor: 'red',
                               borderWidth: 0,
-                              marginRight: 90,
+                              marginRight: 110,
                             },          
                           }}
                           onDateChange={(birth_date) => {
@@ -469,29 +548,29 @@ async uploadWholeData(){
               <TextInput
                 placeholder="  Adresse postale"
                 style={Styles.txtInput}
-
                 onChangeText={(address) => this.setState({address})}
-
-              />
+              >
+                {profileData.address}
+              </TextInput>
               <TextInput placeholder="  Code postal"
                  keyboardType="number-pad"
                  onChangeText={(postcode) => this.setState({postcode})}
-              style={Styles.txtInput} />
+              style={Styles.txtInput} >{profileData.postcode}</TextInput>
               <TextInput placeholder="  Ville" 
                 onChangeText={(city) => this.setState({city})}  
-              style={Styles.txtInput} />
+              style={Styles.txtInput} >{profileData.city}</TextInput>
               <TextInput placeholder="  Pays" 
                onChangeText={(country) => this.setState({country})} 
-              style={Styles.txtInput} />
+              style={Styles.txtInput} >{profileData.country}</TextInput>
               <TextInput
                 placeholder="  Numéro de téléphone"
                 style={Styles.txtInput}
                 keyboardType="phone-pad"
                 onChangeText={(telephone_no) => this.setState({telephone_no})}
-              />
+              >{profileData.phone}</TextInput>
               <TextInput placeholder="  Email" 
                onChangeText={(email) => this.setState({email})}              
-              style={Styles.txtInput} />
+              style={Styles.txtInput} >{profileData.email}</TextInput>
 
               <View style={{alignSelf: 'flex-start'}}>
                 <Text style={Styles.txtStyle1}>Diplôme</Text>
@@ -585,7 +664,7 @@ sur l'application LEO ?
                 <TextInput
   onChangeText={(q_3_ans) => this.setState({q_3_ans})}
                 // style={Styles.txtInput1}
-                />
+                >{this.state.q_3_ans}</TextInput>
 
 
               </View>
@@ -607,7 +686,7 @@ sur l'application LEO ?
                 <TextInput
                     onChangeText={(q_4_ans) => this.setState({q_4_ans})}
                 // style={Styles.txtInput1}
-                />
+                >{this.state.q_4_ans}</TextInput>
               </View>
 
 

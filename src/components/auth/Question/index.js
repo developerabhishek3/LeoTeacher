@@ -147,22 +147,22 @@ export default class index extends Component {
       q_6_ans, } = this.state;
 
     if (q_1_ans.length === 0) {
-      this.myAlert('Message', 'Please select your answer');
+      this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
     } 
     else if (q_2_ans.length === 0) {
-        this.myAlert('Message', 'Please select your answer');
+        this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
     }
     else if (q_3_ans.length === 0) {
-        this.myAlert('Message', 'Please enter your answer');
+        this.myAlert('Message', 'Veuillez entrer votre réponse!');
     } 
     else if (q_4_ans.length === 0) {
-      this.myAlert('Message', 'Please enter your answer');
+      this.myAlert('Message', 'Veuillez entrer votre réponse!');
   } 
   else if (q_5_ans.length === 0) {
-    this.myAlert('Message', 'Please select your answer');
+    this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
   } 
   else if (q_6_ans.length === 0) {
-    this.myAlert('Message', 'Please select your answer');
+    this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
   } 
     else {
     //   const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
