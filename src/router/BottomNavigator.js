@@ -61,9 +61,9 @@ class BottomNavigator extends Component{
                     <Image source={UnSelectedHome} style={styles.routesImageView} />
                   )}  
                   {currentRoute == 'home' ? (
-                    <Text style={{color:'#FF1493',margin:0,fontWeight:'700',textAlign:'center'}}>Home</Text>
+                    <Text style={{color:'#b41565',margin:0,fontWeight:'700',textAlign:'center'}}>Accueil</Text>
                   ) : (
-                    <Text style={{color:'gray',margin:0,textAlign:'center'}}>Home</Text>
+                    <Text style={{color:'gray',margin:0,textAlign:'center'}}>Accueil</Text>
                   )}                 
                 </TouchableOpacity>
 
@@ -82,14 +82,13 @@ class BottomNavigator extends Component{
                     <Image source={UnSelectedReservation} style={styles.routesImageView} />
                   )}  
                   {currentRoute == 'reservation' ? (
-                    <Text style={{color:'#FF1493',margin:0,fontWeight:'700',textAlign:'center'}}>Reservation</Text>
+                    <Text style={{color:'#b41565',margin:0,fontWeight:'700',textAlign:'center'}}>Réservation</Text>
                   ) : (
-                    <Text style={{color:'gray',margin:0,textAlign:'center'}}>Reservation</Text>
+                    <Text style={{color:'gray',margin:0,textAlign:'center'}}>Réservation</Text>
                   )}                 
                 </TouchableOpacity>
 
-             
-
+            
                 <TouchableOpacity
                    style={{width: '25%',borderWidth:0}}
                   onPress={() => {
@@ -105,13 +104,11 @@ class BottomNavigator extends Component{
                     <Image source={UnSelectedChat} style={styles.routesImageView} />
                   )}  
                   {currentRoute == 'chat2' ? (
-                    <Text style={{color:'#FF1493',margin:0,fontWeight:'700',textAlign:'center'}}>Chat</Text>
+                    <Text style={{color:'#b41565',margin:0,fontWeight:'700',textAlign:'center'}}>Disponibilités</Text>
                     ) : (
-                      <Text style={{color:'gray',margin:0,textAlign:'center'}}>Chat</Text>
+                      <Text style={{color:'gray',margin:0,textAlign:'center'}}>Disponibilités</Text>
                   )}                 
                 </TouchableOpacity>
-
-
 
                 <TouchableOpacity
                    style={{width: '25%',borderWidth:0}}
@@ -128,9 +125,9 @@ class BottomNavigator extends Component{
                       <Image source={UnSelectedProfie} style={styles.routesImageView} />
                   )}
                   {currentRoute == 'profile2' ? (
-                    <Text style={{color:'#FF1493',margin:0,fontWeight:'700',textAlign:'center'}}>Profile</Text>
+                    <Text style={{color:'#b41565',margin:0,fontWeight:'700',textAlign:'center'}}>Profil</Text>
                     ) : (
-                      <Text style={{color:'gray',margin:0,textAlign:'center'}}>Profile</Text>
+                      <Text style={{color:'gray',margin:0,textAlign:'center'}}>Profil</Text>
                   )}                 
                 </TouchableOpacity>
                            

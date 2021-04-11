@@ -10,7 +10,7 @@ export default StyleSheet.create({
   },
   header: {
     height: 70,
-    backgroundColor: 'blue',
+    backgroundColor: '#5541E1',
     borderColor: 'red',
     borderWidth: 0,
     width: '100%',
@@ -64,7 +64,7 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     margin: 10,
-    color: '#FF1493',
+    color: '#b41565',
   },
   mainContainer:{
     flex:2,width:'99%',borderWidth:0

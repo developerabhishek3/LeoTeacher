@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
+               #5541E1printIdentifier = "2D02E47A1E0B4A5D006451C7"
                BuildableName = "LEOTeacher-tvOS.app"
-               BlueprintName = "LEOTeacher-tvOS"
+               #5541E1printName = "LEOTeacher-tvOS"
                ReferencedContainer = "container:LEOTeacher.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
+               #5541E1printIdentifier = "2D02E48F1E0B4A5D006451C7"
                BuildableName = "LEOTeacher-tvOSTests.xctest"
-               BlueprintName = "LEOTeacher-tvOSTests"
+               #5541E1printName = "LEOTeacher-tvOSTests"
                ReferencedContainer = "container:LEOTeacher.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -54,9 +54,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
+            #5541E1printIdentifier = "2D02E47A1E0B4A5D006451C7"
             BuildableName = "LEOTeacher-tvOS.app"
-            BlueprintName = "LEOTeacher-tvOS"
+            #5541E1printName = "LEOTeacher-tvOS"
             ReferencedContainer = "container:LEOTeacher.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -71,9 +71,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
+            #5541E1printIdentifier = "2D02E47A1E0B4A5D006451C7"
             BuildableName = "LEOTeacher-tvOS.app"
-            BlueprintName = "LEOTeacher-tvOS"
+            #5541E1printName = "LEOTeacher-tvOS"
             ReferencedContainer = "container:LEOTeacher.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

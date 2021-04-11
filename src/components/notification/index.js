@@ -331,10 +331,10 @@ export default class App extends React.Component {
                    until={this.state.secondBetweenTwoDate}
                   // until={10}
                    onFinish={() => this.setState({secondBetweenTwoDate:0,isButtonEnable:false})}
-                   digitStyle={{backgroundColor: '#FFF', borderWidth: 0, borderColor: '#FF1493',}}
-                   digitTxtStyle={{color: '#FF1493'}}
+                   digitStyle={{backgroundColor: '#FFF', borderWidth: 0, borderColor: '#b41565',}}
+                   digitTxtStyle={{color: '#b41565'}}
                    timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
-                   separatorStyle={{color: '#FF1493'}}
+                   separatorStyle={{color: '#b41565'}}
                    timeToShow={['H', 'M', 'S']}
                    timeLabels={{m: null, s: null}}
                    showSeparator
@@ -363,7 +363,7 @@ export default class App extends React.Component {
                     // onPress={()=>{this.Hide_Custom_Alert1()}}
                     onPress={()=>{this.fetchreservation_request_Accept()}}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                       marginStart: 25,
@@ -391,7 +391,7 @@ export default class App extends React.Component {
                     // }}
                     onPress={()=>{this.fetchreservation_request_Reject()}}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                       marginStart: 25,
@@ -427,7 +427,7 @@ export default class App extends React.Component {
                 <TouchableOpacity
                   onPress={()=>{this.Hide_Custom_Alert1()}}
                   style={{
-                    borderColor: '#FF1493',
+                    borderColor: '#b41565',
                     justifyContent: 'center',
                     margin: 10,
                     borderWidth:1,
@@ -455,7 +455,7 @@ export default class App extends React.Component {
                     this.Hide_Custom_Alert1();
                   }}
                   style={{
-                    borderColor: '#FF1493',
+                    borderColor: '#b41565',
                     justifyContent: 'center',
                     margin: 10,
                     marginStart: 25,

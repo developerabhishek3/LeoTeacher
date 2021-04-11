@@ -10,7 +10,7 @@ export default StyleSheet.create({
   },
   header: {
     height: 70,
-    backgroundColor: 'blue',
+    backgroundColor: '#5541E1',
     borderColor: 'red',
     borderWidth: 0,
     width: '103%',
@@ -33,7 +33,7 @@ export default StyleSheet.create({
     marginStart: 15,
   },
   headertxtInputImg1: {
-    height: 30,
+    height: 45,
     width: 30,
     margin: 2,
     marginEnd: 10,
@@ -75,7 +75,7 @@ export default StyleSheet.create({
     margin: 3,
   },
   contViewTxt1: {
-    color: '#FF1493',
+    color: '#b41565',
     fontWeight: '700',
     fontSize: 13,
     margin: 6,
@@ -94,7 +94,7 @@ export default StyleSheet.create({
     marginStart: 10,
     fontWeight: '700',
     fontSize: 15,
-    color: '#FF1493',
+    color: '#b41565',
   },
   thirdHeaderTxtContent: {
     fontSize: 14,
@@ -112,7 +112,7 @@ export default StyleSheet.create({
     fontWeight: '700',
   },
   continueBtn: {
-    backgroundColor: '#FF1493',
+    backgroundColor: '#b41565',
     margin: 6,
     borderRadius: 5,
     alignSelf: 'center',

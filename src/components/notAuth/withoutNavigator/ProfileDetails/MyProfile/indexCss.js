@@ -62,7 +62,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     margin: 7,
   },
-  peopleStyle: {height: 90, width: 90, alignSelf:'center',borderRadius:50,marginTop:50},
+  peopleStyle: {height: 90, width: 90, alignSelf:'center',borderRadius:50,},
   maincontentContaine:{
     flexDirection:'row',
     justifyContent:'space-between',
@@ -75,7 +75,7 @@ export default StyleSheet.create({
     width:'48%',borderWidth:0
   },
   nameHeading:{
-    fontSize:10,color:'#FF1493',
+    fontSize:10,color:'#b41565',
     fontWeight:'700',
     padding:3
   },

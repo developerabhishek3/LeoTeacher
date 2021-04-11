@@ -48,7 +48,7 @@ export default class index extends Component {
           "value":"Master"
           },
           {"id": "4",
-          "value":"Bachler"
+          "value":"Bachelor"
           },
           {"id": "5",
           "value":"Autre"
@@ -56,10 +56,10 @@ export default class index extends Component {
       ],
       data2:[
         {"id": "1",
-        "value":"anglais general"
+        "value":"anglais général"
           },
           {"id": "2",
-          "value":"anglaise profession"
+          "value":"anglais professionnel"
           },
           {"id": "3",
           "value":"les deux"
@@ -67,7 +67,7 @@ export default class index extends Component {
       ],
       data3:[
         {"id": "1",
-        "value":"Qui"
+        "value":"Oui"
           },
           {"id": "2",
           "value":"Non"
@@ -75,7 +75,7 @@ export default class index extends Component {
       ],
       data4:[
         {"id": "1",
-        "value":"Qui"
+        "value":"Oui"
           },
           {"id": "2",
           "value":"Non"
@@ -122,7 +122,7 @@ export default class index extends Component {
       if (add_update_academic_infoResponse.response.status === true) {           
           console.log("getting response >>>>>>>>>>>>>>>>",add_update_academic_infoResponse.response)      
           this.props.navigation.navigate("bankdetails")
-          Alert.alert("Message", add_update_academic_infoResponse.response.message)
+          // Alert.alert("Message", add_update_academic_infoResponse.response.message)
       }
       else {
         Alert.alert("Message", add_update_academic_infoResponse.response.message)
@@ -297,7 +297,7 @@ export default class index extends Component {
 
                 <View style={Styles.subHeader}>
                   <Text style={Styles.txtStyle1}>
-                    Devenez coach d'anglais LEO aujourd'hui et gagnez un revenu
+                    Devenez coach d'anglais SPYK aujourd'hui et gagnez un revenu
                     depuis chez vous avec des horaires que vous choisissez !
                   </Text>
                 </View>
@@ -306,7 +306,7 @@ export default class index extends Component {
                 <View style={{borderWidth:1,borderColor:'#DDDDDD',flexWrap:'wrap',width:'90%',borderRadius:10,alignSelf:'center',margin:10,flexDirection:'column'}}>
                 
                     <View style={{flexDirection:'column',}}>
-                      <Text style={{flexDirection:'column',flexWrap:'wrap',alignSelf:'flex-start',margin:10}}>Pourquoi voulez-vous devenir un coach d'anglais sur l'application LEO ?</Text>
+                      <Text style={{flexDirection:'column',flexWrap:'wrap',alignSelf:'flex-start',margin:10}}>Pourquoi voulez-vous devenir un coach d'anglais sur l'application SPYK ?</Text>
                      <TextInput 
                      style={Styles.textInputField}
                      numberOfLines={3}
@@ -377,7 +377,7 @@ export default class index extends Component {
 
                 <View style={Styles.subHeader}>
                   <Text style={Styles.txtStyle1}>
-                  Pouvez-vous parler français ?
+                  Quel est votre niveau de français ?
                   </Text>
                 </View>
 
@@ -419,7 +419,7 @@ export default class index extends Component {
                     // }}
                     onPress={()=>{this.validateUser()}}
                     >
-                    <Text style={Styles.continueBtnTxt}>Sauver</Text>
+                    <Text style={Styles.continueBtnTxt}>Valider</Text>
                   </TouchableOpacity>
                 </View>
               </View>

@@ -9,6 +9,8 @@ import {
   Dimensions,
   BackHandler,
   Alert,
+  RefreshControl,
+  StatusBar
 } from 'react-native';
 import BottomNavigator from '../../../router/BottomNavigator';
 import {Rating, AirbnbRating} from 'react-native-elements';
@@ -40,6 +42,7 @@ export default class index extends Component {
       reservation_id: 0,
       isBodyLoaded: false,
       isSpinner: true,
+      isCurrenetComponentRefreshing:false
     };
   }
 
@@ -84,7 +87,7 @@ export default class index extends Component {
       console.log("getting levels data ------------------- ",current_reservationResponse.response)
       var currentReservation =
         current_reservationResponse.response.current_transaction;
-      this.setState({currentReservation,isBodyLoaded: true,isSpinner: false,});
+      this.setState({currentReservation,isBodyLoaded: true,isSpinner: false,isCurrenetComponentRefreshing:false});
     }
     // console.log("getting country response----------------",levelsData.country_list)
   };
@@ -125,6 +128,7 @@ export default class index extends Component {
   render() {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+         <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#5541E1" translucent = {false}/>
         <View style={Styles.header}>
           <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
           <Image source={back} style={Styles.headertxtInputImg} />
@@ -146,21 +150,25 @@ export default class index extends Component {
           <View style={{flexDirection: 'column'}}>
             <Text style={Styles.subheadingTxt1}>En cours</Text>
             <View
-              style={{borderColor: '#FF1493', borderWidth: 1, width: 100}}
+              style={{borderColor: '#b41565', borderWidth: 1, width: 100}}
             />
           </View>
         </View>
 
         <View style={Styles.mainContainer}>
-          {/* {
- this.state.isBodyLoaded == true ?
- <ScrollView>
+          {
+            this.state.isBodyLoaded == true ?
+            <ScrollView 
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+                          <RefreshControl refreshing={this.state.isCurrenetComponentRefreshing} onRefresh={()=>{  this.setState({ isCurrenetComponentRefreshing: true }); setTimeout(()=>{
+                        this.fetchcurrent_reservationData();
+                      },100)  }} />
+                    }>
             {
              this.state.currentReservation.length > 0 ?
               <Fragment>
-
-
-{this.state.currentReservation.map((singleCurrentMap) => {
+              {this.state.currentReservation.map((singleCurrentMap) => {
               return (
                 <Fragment>
                   <TouchableOpacity onPress={()=>{this.props.navigation.navigate('clientinfo',{
@@ -242,28 +250,16 @@ export default class index extends Component {
               );
             })}
 
-
-
               </Fragment>
-
-
-
-
-
               :<View style={{alignItems:'center',justifyContent:'center'}}>
               <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>Record non trouvé!</Text>
              </View>
-            }
-            
+            }            
           </ScrollView>
-
-
- :<View style={{alignItems:'center',justifyContent:'center'}}>
-   <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>chargement...</Text>
-  </View>
-          } */}
-         
-
+              :<View style={{alignItems:'center',justifyContent:'center'}}>
+                <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>chargement...</Text>
+                </View>
+          }         
           <Modal
             visible={this.state.Alert_Visibility}
             animationType={'fade'}
@@ -363,7 +359,7 @@ export default class index extends Component {
                     margin: 2,
                     fontSize: 14,
                     fontWeight: '700',
-                    color: '#FF1493',
+                    color: '#b41565',
                     alignSelf: 'center',
                   }}>
                   Termes et conditions
@@ -388,7 +384,7 @@ export default class index extends Component {
                       this.Hide_Custom_Alert();
                     }}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
 
@@ -411,7 +407,7 @@ export default class index extends Component {
                   <TouchableOpacity
                     onPress={() => this.Hide_Custom_Alert1()}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
 
@@ -436,7 +432,6 @@ export default class index extends Component {
             </View>
           </Modal>
         </View>
-
         <BottomNavigator
           currentRoute={'reservation'}
           navigation={this.props.navigation}

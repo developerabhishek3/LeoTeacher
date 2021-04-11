@@ -75,14 +75,12 @@ export default class Splash extends Component {
         var student_level =  newData.course_time;
     
         var request_end = new Date(newData.request_end)
+
+        
+        var realEndTime =    new Date(request_end.setHours(request_end.getHours() - 1))
+
+        var secondBetweenTwoDate = parseInt((realEndTime.getTime() - new Date().getTime()) / 1000);
         var request_start = new Date(newData.request_start)
-    
-        var secondBetweenTwoDate = parseInt((request_end.getTime() - new Date().getTime()) / 1000);
-
-
-
-
-
         this.props.navigation.navigate('notification',{
           student_name:student_name,
           transaction_id:transaction_id,
@@ -97,7 +95,7 @@ export default class Splash extends Component {
         this.props.navigation.replace('welcome')
       }
       
-    }, 3000);
+    }, 4000);
   }
 
 
@@ -145,7 +143,7 @@ export default class Splash extends Component {
                 fontFamily:'Montserrat-Regular'
             }}
           >
-            Application mobile LEO,
+           Application mobile SPYK,
           </Text>
                   <Text
                       style= {{
@@ -157,7 +155,7 @@ export default class Splash extends Component {
                             fontFamily:'Montserrat-Regular'
                         }}
                   >
-                  Pratiquez votre anglais oral avec                                      
+                 Join us!                                  
                   </Text>
                   <Text
                       style= {{
@@ -169,7 +167,7 @@ export default class Splash extends Component {
                             fontFamily:'Montserrat-Regular'
                         }}
                   >                
-                    un coach, où vous voulez,                    
+                  Gagnez de l'argent en parlant anglais,                   
                   </Text>
                   <Text
                       style= {{
@@ -181,7 +179,7 @@ export default class Splash extends Component {
                             fontFamily:'Montserrat-Regular'
                         }}
                   >                
-                    quand vous voulez !                   
+                   Où vous voulez, quand vous voulez !             
                   </Text>
                   </View>
             </View>

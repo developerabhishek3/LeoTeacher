@@ -386,13 +386,13 @@ amountAfterCheck () {
                 <View style={{borderColor: 'gray', borderWidth: 1, width: 130}} />
           </View>
 
-          <TouchableOpacity onPress={()=>{this.validate()}} style={{margin:10,backgroundColor:"#FF1493",justifyContent:'center',alignItems:'center',height:30,marginTop:24}}>            
+          <TouchableOpacity onPress={()=>{this.validate()}} style={{margin:10,backgroundColor:"#b41565",justifyContent:'center',alignItems:'center',height:30,marginTop:24}}>            
             <Text style={{fontSize:14,fontWeight:'700',color:"#FFFFFF",marginStart:15,marginEnd:15,margin:0}}>Go</Text>
             </TouchableOpacity>
 
 
         </View>
-        <Spinner visible={this.state.isSpinner}/>
+        {/* <Spinner visible={this.state.isSpinner}/> */}
 
         <View style={Styles.mainContainer}>
           {
@@ -624,12 +624,10 @@ amountAfterCheck () {
                   </ScrollView>
                   }
 
-
-
               </Fragment>
             :
                 <View style={{alignItems:'center',justifyContent:'center',marginTop:160}}>
-                  <Text style={{fontSize:18,fontWeight:'700',textAlign:'center'}}>Loading...</Text>
+                  <Text style={{fontSize:18,fontWeight:'700',textAlign:'center'}}></Text>
                 </View>
           }
           
@@ -746,7 +744,7 @@ amountAfterCheck () {
                                         onPress={()=>{this.setState({to_bank_or_paypal_account:singleMap.value})}}                                                                                                
                                             style={{flexDirection:'row',alignItems:'center'}}>
                                             <Image source={require("../../../../../assets/icon/9.png")} style={{height:20,width:20,margin:3}} />
-                                            <Text style={{color:"#FF1493"}}>{singleMap.value}</Text>
+                                            <Text style={{color:"#b41565"}}>{singleMap.value}</Text>
                                         </TouchableOpacity>
                                         :     
                                         <TouchableOpacity          
@@ -776,7 +774,7 @@ amountAfterCheck () {
                     // onPress={() => this.Hide_Custom_Alert1()}
                     onPress={()=>{this.demand_amountdata()}}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                       height: 35,

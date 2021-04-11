@@ -997,8 +997,8 @@ export async function get_single_chat(body ={}) {
   const TokenValue = JSON.parse(token);
   const UserId = JSON.parse(user_id)
   
-  console.log("getting token and user id here inside the function-----------",UserId)
-  console.log("getting token and user id here inside the function-----------",TokenValue)
+  // console.log("getting token and user id here inside the function-----------",UserId)
+  // console.log("getting token and user id here inside the function-----------",TokenValue)
   try {      
     const get_single_chatResponse = await Axios.post(
       'https://www.spyk.fr/api_teacher/get_single_chat',
@@ -1442,3 +1442,154 @@ export async function bussiness_monthly(body ={}) {
     throw error;
   }
   }
+
+
+
+
+  
+export async function notification_count() {
+  const token = await AsyncStorage.getItem('token');
+  const user_id = await AsyncStorage.getItem('user_id');
+
+  const TokenValue = JSON.parse(token);
+  const UserId = JSON.parse(user_id);
+
+  // console.log(
+  //   'ghetting incomplete transactoin tokena dn ujserId =========',
+  //   TokenValue,
+  //   UserId,
+  // );
+
+  try {
+    const notification_countResponse = await Axios.get(
+      `https://www.spyk.fr/api_teacher/notification_count`,
+      {
+        headers: {
+          ...commonHeader,
+          'user-id': `${UserId}`,
+          token: `${TokenValue}`,
+        },
+      },
+    );
+    if (notification_countResponse.status) {
+      // console.log("getting response on the function--------",notification_countResponse.data)
+      return {result: true, response: notification_countResponse.data};
+    } else {
+      return {result: false, error: notification_countResponse.data};
+    }
+  } catch (error) {
+    return {result: false, error};
+  }
+}
+
+
+export async function my_notification() {
+  const token = await AsyncStorage.getItem('token');
+  const user_id = await AsyncStorage.getItem('user_id');
+
+  const TokenValue = JSON.parse(token);
+  const UserId = JSON.parse(user_id);
+
+  // console.log(
+  //   'ghetting incomplete transactoin tokena dn ujserId =========',
+  //   TokenValue,
+  //   UserId,
+  // );
+
+  try {
+    const my_notificationResponse = await Axios.get(
+      `https://www.spyk.fr/api_teacher/my_notification`,
+      {
+        headers: {
+          ...commonHeader,
+          'user-id': `${UserId}`,
+          token: `${TokenValue}`,
+        },
+      },
+    );
+    if (my_notificationResponse.status) {
+      // console.log("getting response on the function--------",my_notificationResponse.data)
+      return {result: true, response: my_notificationResponse.data};
+    } else {
+      return {result: false, error: my_notificationResponse.data};
+    }
+  } catch (error) {
+    return {result: false, error};
+  }
+}
+
+
+
+export async function demand_amount_complete() {
+  const token = await AsyncStorage.getItem('token');
+  const user_id = await AsyncStorage.getItem('user_id');
+
+  const TokenValue = JSON.parse(token);
+  const UserId = JSON.parse(user_id);
+
+  // console.log(
+  //   'ghetting incomplete transactoin tokena dn ujserId =========',
+  //   TokenValue,
+  //   UserId,
+  // );
+
+  try {
+    const demand_amount_completeResponse = await Axios.get(
+      `https://www.spyk.fr/api_teacher/demand_amount_complete`,
+      {
+        headers: {
+          ...commonHeader,
+          'user-id': `${UserId}`,
+          token: `${TokenValue}`,
+        },
+      },
+    );
+    if (demand_amount_completeResponse.status) {
+      // console.log("getting response on the function--------",demand_amount_completeResponse.data)
+      return {result: true, response: demand_amount_completeResponse.data};
+    } else {
+      return {result: false, error: demand_amount_completeResponse.data};
+    }
+  } catch (error) {
+    return {result: false, error};
+  }
+}
+
+
+
+
+export async function demand_amount_pending() {
+  const token = await AsyncStorage.getItem('token');
+  const user_id = await AsyncStorage.getItem('user_id');
+
+  const TokenValue = JSON.parse(token);
+  const UserId = JSON.parse(user_id);
+
+  // console.log(
+  //   'ghetting incomplete transactoin tokena dn ujserId =========',
+  //   TokenValue,
+  //   UserId,
+  // );
+
+  try {
+    const demand_amount_pendingResponse = await Axios.get(
+      `https://www.spyk.fr/api_teacher/demand_amount_pending`,
+      {
+        headers: {
+          ...commonHeader,
+          'user-id': `${UserId}`,
+          token: `${TokenValue}`,
+        },
+      },
+    );
+    if (demand_amount_pendingResponse.status) {
+      // console.log("getting response on the function--------",demand_amount_pendingResponse.data)
+      return {result: true, response: demand_amount_pendingResponse.data};
+    } else {
+      return {result: false, error: demand_amount_pendingResponse.data};
+    }
+  } catch (error) {
+    return {result: false, error};
+  }
+}
+

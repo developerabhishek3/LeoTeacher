@@ -103,7 +103,7 @@ export default class index extends Component {
     else {
       const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!paypal_email.match(mailformat)) {
-        this.myAlert('Message', 'Email-Id invalide');
+        this.myAlert('Message', 'Adresse email invalide');
         return false;
       }
       this.add_update_bank_infoFunction();
@@ -193,7 +193,7 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder=" iban"
+                    placeholder=" IBAN"
                     onChangeText={(iban) => this.setState({ iban })}
               />
                 </View>
@@ -201,7 +201,7 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder=" paypal email"
+                    placeholder=" Email  de votre compte Paypal"
                     onChangeText={(paypal_email) => this.setState({ paypal_email })}
               />
                 </View>
@@ -209,8 +209,8 @@ export default class index extends Component {
               </View>
 
               <View style={Styles.subHeader}>
-                <Text style={Styles.txtStyle2}>Vos coordonnées et votre profil seront envoyés au service administratif & RH de LEO.
-Après confirmation, votre compte coach d'anglais LEO sera activé dans un délai de 48h si votre profil est retenu.</Text>
+                <Text style={Styles.txtStyle2}>Vos coordonnées et votre profil seront envoyés au service administratif & RH de SPYK.
+Après confirmation, votre compte coach d'anglais SPYK sera activé dans un délai de 48h si votre profil est retenu.</Text>
                 {/* <Text style={Styles.txtStyle1}>vous enverrons un lien pour réinitialiser</Text>
                 <Text style={Styles.txtStyle1}>votre mot de passe.</Text> */}
               </View>
