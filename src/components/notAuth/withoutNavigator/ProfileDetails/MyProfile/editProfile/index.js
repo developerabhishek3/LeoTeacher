@@ -24,7 +24,7 @@ import Right from '../../../../../../assets/icon/33.png';
 import {Rating, AirbnbRating} from 'react-native-ratings';
 
 import People from '../../../../../../assets/icon/25.png';
-import DatePicker from 'react-native-datepicker';
+import DatePicker from 'react-native-date-picker'
 import ImagePicker from 'react-native-image-picker';
 
 import {update_profile} from '../../../../../../Api/afterAuth'
@@ -38,6 +38,10 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 import { StudentProfile,get_academic_info } from "../../../../../../Api/afterAuth"
+
+import 'moment/locale/zh-cn'
+import moment from  'moment/locale/fr'
+
 
 export default class index extends Component {
   constructor(props) {
@@ -138,10 +142,17 @@ async uploadWholeData(){
   const TokenValue = JSON.parse(token);
   const UserId = JSON.parse(user_id);
 
+
+
+  var ActualDate = new Date( this.state.birth_date)
+  var birth_date =JSON.stringify(ActualDate)
+  let birth_date_new =  birth_date.substr(1,10)
+  console.log("getting now velue rere===================",birth_date_new)  
+
   console.log("here token and user id===============",TokenValue,UserId)
 
 
-  console.log("inside the function calling for upload form data------------------------------")
+  console.log("inside the function calling for upload form data------------------------------",this.state.filePath)
 
   const URL = `https://www.spyk.fr/api_teacher/update_profile`
 
@@ -157,7 +168,7 @@ async uploadWholeData(){
       { name: 'profile_pic', filename: 'photo.jpg', type: 'image/png', data: this.state.filePath},
       { name: 'first_name', data: this.state.first_name },
       { name: 'last_name', data: this.state.last_name },
-      { name: 'birth_date', data: this.state.birth_date },
+      { name: 'birth_date', data: birth_date_new },
       { name: 'email', data: this.state.email },
       { name: 'telephone_no', data: this.state.telephone_no },
       { name: 'address', data: this.state.address },
@@ -367,7 +378,7 @@ async uploadWholeData(){
 
   chooseFile = () => {
     var options = {
-      title: 'Select Image',
+      title: 'Choisir une photo',
       // customButtons: [
       //   { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
       // ],
@@ -440,11 +451,16 @@ async uploadWholeData(){
     // console.log("inside render===================",this.state.filePath)
     let  profileImg  = this.props.navigation.getParam("profileImg")
 
+    
+    let DOB = this.props.navigation.getParam("birthDate")   
+    var birth_date = new Date(DOB)
+
+
 
     const { profileData,isBodyLoaded,isSpinner } = this.state;
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          {/* <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "blue" translucent = {false}/> */}
+          <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#5541E1" translucent = {false}/>
         <ImageBackground
           source={bgImg}
           resizeMode="cover"
@@ -464,18 +480,45 @@ async uploadWholeData(){
               <Image source={logo} style={Styles.headertxtInputImg1} />
             </View>
           </View>
-          {
+          {/* {
             this.state.path == "" ?
               <View style={{marginTop: 60}}>
                 <Image  source={{
               uri: `https://www.spyk.fr/${profileImg}`,
             }}  style={Styles.peopleStyle} />
               </View> 
-            :
+            : this.state.path == "" ?
+
+            <View style={{marginTop: 60}}>
+            <Image  source={require("../../../../../../assets/icon/avatar.png")} style={Styles.peopleStyle} />
+          </View>
+
+            : <View style={{marginTop: 60}}>
+            <Image  source={{ uri: this.state.path }} style={Styles.peopleStyle} />
+          </View>
+
+           
+          } */}
+
+          {
+            this.state.path == "" ?
+            <View style={{marginTop: 60}}>
+            <Image  source={require("../../../../../../assets/icon/avatar.png")} style={Styles.peopleStyle} />
+          </View>
+          :
+          this.state.path == "" ?
+          <View style={{marginTop: 60}}>
+            <Image  source={{
+          uri: `https://www.spyk.fr/${profileImg}`,
+        }}  style={Styles.peopleStyle} />
+          </View> :
             <View style={{marginTop: 60}}>
             <Image  source={{ uri: this.state.path }} style={Styles.peopleStyle} />
           </View>
           }
+
+
+
          {/* <Text style={{ alignItems: 'center' }}>
             {this.state.path}
           </Text> */}
@@ -511,39 +554,55 @@ async uploadWholeData(){
               <TextInput placeholder="  Prénom" 
                 onChangeText={(last_name) => this.setState({last_name})}
               style={Styles.txtInput} >{profileData.last_name}</TextInput>
-             <View   style={Styles.txtInput}>
-                  {/* <TextInput
-                    style={Styles.textInputField}
-                    placeholder="  Date de naissance"
-                    onChangeText={(birth_date) => this.setState({birth_date})}
+            <View   style={{
+                borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 10,
+    margin: 10,
+    paddingStart: 20,
+    width:"85%"
+            }}>                              
+                 {/* <DatePicker
+                  style={{width: SCREEN_WIDTH*0.70,}}
+                  date={this.state.birth_date}
+                  placeholder="Date of Birth"                    
+                  format="YYYY-MM-DD"                              
+                  maxDate={this.state.date}                                
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    // iconSource={calenderIcon}
+                    
+                    customStyles={{
+                      dateIcon: {
+                        left: -15,
+                        height:24,width:24
+                      },
+                      dateInput: {
+                        marginLeft: -60,
+                        borderColor: 'red',
+                        borderWidth: 0,
+                        marginRight: 90,
+                      },          
+                    }}
+                    onDateChange={(birth_date) => {
+                      this.setState({birth_date});
+                    }}
                   /> */}
-                  
-                      <DatePicker
-                        style={{width: SCREEN_WIDTH*0.70,}}
-                        date={this.state.birth_date}
-                        placeholder="Date of Birth"                    
-                        format="DD-MM-YYYY"                   
-                        maxDate={this.state.date}
-                          confirmBtnText="Confirm"
-                          cancelBtnText="Cancel"
-                          // iconSource={calenderIcon}
-                          
-                          customStyles={{
-                            dateIcon: {
-                              left: 5,
-                              height:24,width:24
-                            },
-                            dateInput: {
-                              marginLeft: -30,
-                              borderColor: 'red',
-                              borderWidth: 0,
-                              marginRight: 110,
-                            },          
-                          }}
-                          onDateChange={(birth_date) => {
-                            this.setState({birth_date});
-                          }}
-                        />
+                    <DatePicker                    
+                        mode="date"    
+                        maximumDate={this.state.date}               
+                        date={birth_date}
+                        locale={'fr'}                    
+                        onDateChange={(birth_date) => {
+                          this.setState({birth_date});
+                        }}
+                    />
+{/* 
+                  <DatePicker
+                       date={birth_date}
+                        onDateChange={setDate}
+                      /> */}
+
                 </View>
               <TextInput
                 placeholder="  Adresse postale"

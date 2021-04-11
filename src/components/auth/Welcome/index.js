@@ -22,27 +22,6 @@ import {level_academic_info} from '../../../Api/auth'
 export default class index extends Component {
 
 
-//   constructor(props){
-//     super(props);
-
-//     this.state = {
-//       isLoading: true,
-//       isSpinner: true,
-//     }
-//   }
-//   async componentDidMount(){
-//     try{
-//       const userLoggedIn = await AsyncStorage.getItem('userLoggedIn') || 'false';
-//       if(userLoggedIn == 'true'){                
-//           this.props.navigation.navigate('home');                                        
-//       }
-//       setTimeout(()=>{
-//         this.setState({ isLoading: false,isSpinner:false });
-//       },300);
-//     }catch(error){
-
-//     }
-// }
 
 
 constructor(props){
@@ -122,6 +101,7 @@ async checkScreenStatus () {
 
     return (    
       <Fragment>
+            <Spinner visible={this.state.isSpinner} />
   {  !isLoading && 
       <View style={Styles.container}>
         <StatusBar hidden />
@@ -134,13 +114,15 @@ async checkScreenStatus () {
               <View style={Styles.headerView}>
                 <View style={{flexDirection: 'column'}}>
                   <Text style={Styles.headerTxt}> Devenez coach </Text>
-                  <Text style={Styles.headerTxt}> d'anglais LEO</Text>
+                  <Text style={Styles.headerTxt}> d'anglais SPYK</Text>
                 </View>
                 <Image source={logo} style={Styles.headerLogo} />
               </View>
 
+            <View style={{width:"96%",borderWidth:0,alignSelf:"center"}}>
+
               <Text style={Styles.txtStyle}>
-                Comment devenir coach d'anglais LEO ?{' '}
+                Comment devenir coach d'anglais SPYK ?{' '}
               </Text>
               <Text style={Styles.txtStyle1}>C'est très simple.</Text>
 
@@ -180,12 +162,10 @@ async checkScreenStatus () {
                   Comment se passe un coaching avec un client?
                 </Text>
                 <Text style={Styles.txtStyle2}>
-                  Rien à préparer, juste se mettre en disponibilité.
-                </Text>
-                <Text style={Styles.txtStyle2}>
-                  sur l'appli et démarrer une conversation
-                </Text>
-                <Text style={Styles.txtStyle2}>téléphonique en anglais !</Text>
+                Rien à préparer, vous n'avez qu'à renseigner votre disponibilité sur l'appli ou vous mettre en mode "en ligne" et démarrer une conversation téléphonique en anglais !
+                </Text>                
+              </View>
+
               </View>
            
               <View style={Styles.continueBtn}>

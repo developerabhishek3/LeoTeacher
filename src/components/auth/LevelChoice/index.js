@@ -90,7 +90,7 @@ export default class index extends Component {
         // }
         if (update_levelResponse.response.status === true) {           
             console.log("getting response >>>>>>>>>>>>>>>>",update_levelResponse.response)      
-            this.props.navigation.navigate("home")
+            this.props.navigation.navigate("login")
             // Alert.alert("Message", update_levelResponse.response.message)
         }
         else {
@@ -166,14 +166,14 @@ export default class index extends Component {
               <View style={Styles.headerView}>
                 <Image source={logo} style={Styles.headerLogo} />
                 <View style={{marginEnd: 50, marginTop: -10}}>
-                  <Text style={Styles.headerTxt}>Niveau d'</Text>
-                  <Text style={Styles.headerTxt1}>anglais</Text>
+                  <Text style={Styles.headerTxt}>Niveau</Text>
+                  <Text style={Styles.headerTxt1}>d'anglais</Text>
                 </View>
               </View>
 
               <View style={{marginTop: 30}}>
                 <View style={Styles.subHeader}>
-                  <Text style={Styles.txtStyle1}>Sélectionnez les niveaux de cours que vous souhaitez donner :</Text>
+                  <Text style={Styles.txtStyle1}>Sélectionner les niveaux de coachings que vous souhaitez donner :</Text>
                 </View>
                 <View style={Styles.radiobtnMainView}>
                   {/* <RadioButton.Group

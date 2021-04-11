@@ -15,11 +15,12 @@ export default StyleSheet.create({
         
         },
         continueBtn:{
-            backgroundColor:'#FF1493',
+            backgroundColor:'#b41565',
             margin:20,
             borderRadius:5,
             width:'40%',
-            alignSelf:'center'
+            alignSelf:'center',
+            justifyContent:"center"
         
         },
     headerView:{
@@ -35,35 +36,37 @@ export default StyleSheet.create({
         fontSize:26,
         fontWeight:'700',
         margin:1,
-        marginStart:10
+        marginStart:30
 
     },
     txtStyle:{
         fontSize:15,
         fontWeight:'600',
-        marginStart:20,
+        marginStart:30,
         alignSelf:'flex-start',marginBottom:30,
         margin:10
     },
     txtStyle1:{
         fontSize:15,
         fontWeight:'600',
-        marginStart:20,
+        marginStart:30,
         alignSelf:'flex-start',
         marginBottom:10        
     },
     txtStyle2:{
-        fontSize:15,
+        fontSize:14,
         fontWeight:'600',        
         marginStart:20,
-        alignSelf:'flex-start',        
+        alignSelf:'center',        
         margin:2,
+        width:"90%",
+
     },
     txtStyle3:{
         fontSize:15,
         fontWeight:'700',
         marginStart:20,
-        alignSelf:'flex-start',
+        alignSelf:'center',  
         marginBottom:10   
     },
 
@@ -72,6 +75,8 @@ export default StyleSheet.create({
         color:'#FFFFFF',
         fontWeight:"700",
         fontSize:16,
+        textAlign:"center",
+        alignSelf:"center",
         marginStart:30,marginEnd:30,
     },
 

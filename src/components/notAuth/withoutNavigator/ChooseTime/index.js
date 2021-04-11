@@ -30,7 +30,19 @@ import {RadioButton} from 'react-native-paper';
 let today = '';
 
 
-import {get_waiting_timeFunction,set_availability} from '../../../../Api/afterAuth'
+import {get_waiting_timeFunction,set_availability} from '../../../../Api/afterAuth';
+
+
+
+
+LocaleConfig.locales['fr'] = {
+  monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+  monthNamesShort: ['Janv.','Févr.','Mars','Avril','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
+  dayNames: ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'],
+  dayNamesShort: ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'],
+  today: 'Aujourd\'hui'
+};
+LocaleConfig.defaultLocale = 'fr';
 
 export default class index extends Component {
   constructor(props) {
@@ -231,7 +243,7 @@ set_date = (day) => {
 this.setState({date_slot: d});
   // let color = 'rgba(255,100,120,10)'
 
-  let color = "#FF1493"
+  let color = "#b41565"
 
 
   if (this.state.markedDates[d]) {
@@ -334,11 +346,13 @@ set_availabilityData = async () => {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <StatusBar
           barStyle={'light-content'}
-          backgroundColor="blue"
+          backgroundColor="#5541E1"
           hidden={false}
         />
         <View style={Styles.header}>
+          <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
           <Image source={back} style={Styles.headertxtInputImg1} />
+          </TouchableOpacity>
           <Text style={Styles.headerTxt}>Définir sa disponibilité</Text>
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
@@ -356,11 +370,8 @@ set_availabilityData = async () => {
             <View style={Styles.subheaderView}>
               <Text style={Styles.subheaderTxt}>Choisissez une date</Text>
               <Image source={calenderIcon} style={Styles.headertxtInputImg1} />
-            </View>
-           
-
+            </View>          
                 <Calendar
-
                   style={Styles.calenderStyle}
                   minDate={today}
 
@@ -381,7 +392,7 @@ set_availabilityData = async () => {
                   // todayTextColor: '#000000',
                   todayTextColor: 'red',
                   arrowColor: '#000000',
-                  indicatorColor: 'blue',
+                  indicatorColor: '#5541E1',
                   }}
                   />
 
@@ -420,7 +431,7 @@ set_availabilityData = async () => {
                             }}
                            
                            >                           
-                               <View style={{margin:6,borderColor:"#FF1493",borderWidth:1,borderRadius:6,backgroundColor:"#FF1493"}}>
+                               <View style={{margin:6,borderColor:"#b41565",borderWidth:1,borderRadius:6,backgroundColor:"#b41565"}}>
                                <Text style={{margin:7,fontWeight:'700',color:"#FFFFFF",}}>{singletimeslot.value}</Text>
                                </View>
                                </TouchableOpacity>
@@ -433,7 +444,7 @@ set_availabilityData = async () => {
                              this.setState({ time_slot: oldState });
                            }}                             
                              >                           
-                                 <View style={{margin:6,borderColor:'#FF1493',borderWidth:1,borderRadius:6}}>
+                                 <View style={{margin:6,borderColor:'#b41565',borderWidth:1,borderRadius:6}}>
                                  <Text style={{margin:7,fontWeight:"700"}}>{singletimeslot.value}</Text>
                                  </View>
                                  </TouchableOpacity>
@@ -584,7 +595,7 @@ set_availabilityData = async () => {
                   <TouchableOpacity
                     onPress={()=>{this.Hide_Custom_Alert1()}}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                       marginStart: 25,
@@ -611,7 +622,7 @@ set_availabilityData = async () => {
                       this.Hide_Custom_Alert();
                     }}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                       marginStart: 25,

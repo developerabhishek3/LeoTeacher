@@ -8,7 +8,9 @@ import {
   Modal,
   Dimensions,
   BackHandler,
-  Alert
+  Alert,
+  RefreshControl,
+  StatusBar
 } from 'react-native';
 import BottomNavigator from '../../../../router/BottomNavigator';
 import {Rating, AirbnbRating} from 'react-native-elements';
@@ -45,6 +47,7 @@ export default class index extends Component {
 
       isBodyLoaded: false,
       isSpinner: true,
+      isCurrenetComponentRefreshing:false
     };
   }
 
@@ -71,7 +74,7 @@ export default class index extends Component {
     if (history_reservationResponse.result == true) {
       console.log("getting levels data ------------------- ",history_reservationResponse.response)
       var historyReservation = history_reservationResponse.response.history_transaction
-      this.setState({historyReservation,isBodyLoaded: true,isSpinner: false,});
+      this.setState({historyReservation,isBodyLoaded: true,isSpinner: false,isCurrenetComponentRefreshing:false});
     }
     // console.log("getting country response----------------",levelsData.country_list)
   };
@@ -121,6 +124,7 @@ export default class index extends Component {
   render() {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+         <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#5541E1" translucent = {false}/>
         <View style={Styles.header}>
         <TouchableOpacity onPress={()=>{this.props.navigation.navigate("home")}}>
           <Image source={back} style={Styles.headertxtInputImg} />
@@ -134,7 +138,7 @@ export default class index extends Component {
           <View style={{flexDirection: 'column'}}>
             <Text style={Styles.subheadingTxt1}>Historique</Text>
             <View
-              style={{borderColor: '#FF1493', borderWidth: 1, width: 100}}
+              style={{borderColor: '#b41565', borderWidth: 1, width: 100}}
             />
           </View>
           <TouchableOpacity onPress={()=>{this.props.navigation.navigate("reservation")}}>
@@ -153,7 +157,13 @@ export default class index extends Component {
 
 
          
-          <ScrollView>
+          <ScrollView 
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+                        <RefreshControl refreshing={this.state.isCurrenetComponentRefreshing} onRefresh={()=>{  this.setState({ isCurrenetComponentRefreshing: true }); setTimeout(()=>{
+                      this.fetchhistory_reservationData();
+                    },100)  }} />
+                  }>
 
           {
             this.state.historyReservation.length > 0 ?
@@ -166,9 +176,19 @@ export default class index extends Component {
 
 {
                 this.state.historyReservation.map((singlehistoryMap)=>{
+
+                  console.log("checking single history map==========",singlehistoryMap)
                     return(
                         <Fragment>
-
+                          <TouchableOpacity onPress={()=>{this.props.navigation.navigate('clientinfo',{
+                            reservation_id:singlehistoryMap.reservation_id,
+                            course_date:singlehistoryMap.course_date,
+                            course_time:singlehistoryMap.course_time,
+                            student_profile_url:singlehistoryMap.student_profile_url,
+                            student_id:singlehistoryMap.student_id,
+                            student_name:singlehistoryMap.student_name,
+                            historyFlag:true,
+                          })}}>
               <View style={Styles.contentView}>
               <View style={{flexDirection: 'row'}}>
                 <Image 
@@ -219,7 +239,7 @@ export default class index extends Component {
                     }}>
                     <Rating
                       type="custom"
-                      ratingColor="#FF1493"
+                      ratingColor="#b41565"
                       ratingBackgroundColor="#c8c7c8"
                       ratingCount={5}
                       imageSize={15}
@@ -238,6 +258,8 @@ export default class index extends Component {
                 </View>
               </View>
             </View>
+
+            </TouchableOpacity>
            </Fragment>
                     )
                 })
@@ -324,7 +346,7 @@ export default class index extends Component {
                   <Text style={{margin:2,fontSize:12,fontWeight:'700',color:"gray",alignSelf:'center'}}>prévu avec votre étudiant?</Text>
                   <Text style={{margin:2,fontSize:12,fontWeight:'700',color:"gray",alignSelf:'center'}}>Des pénalités peuvent s'appliquer.</Text>
                   <Text style={{margin:2,fontSize:12,fontWeight:'700',color:"gray",alignSelf:'center'}}> Voir CGV.</Text>
-                  <Text style={{margin:2,fontSize:14,fontWeight:'700',color:"#FF1493",alignSelf:'center'}}>Termes et conditions</Text>
+                  <Text style={{margin:2,fontSize:14,fontWeight:'700',color:"#b41565",alignSelf:'center'}}>Termes et conditions</Text>
 
 
 
@@ -340,7 +362,7 @@ export default class index extends Component {
                   <TouchableOpacity
                     onPress={() => this.Hide_Custom_Alert()}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                    
@@ -363,7 +385,7 @@ export default class index extends Component {
                   <TouchableOpacity
                     onPress={() => this.Hide_Custom_Alert1()}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                    

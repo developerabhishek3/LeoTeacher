@@ -3,15 +3,14 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 export default StyleSheet.create({
   container: {
-    height:SCREEN_HEIGHT,
-    width:SCREEN_WIDTH,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex:1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: '#F6F2EF',
   },
   header: {
     height: 70,
-    backgroundColor: 'blue',
+    backgroundColor: '#5541E1',
     borderColor: 'red',
     borderWidth: 0,
     width: '100%',
@@ -38,10 +37,10 @@ export default StyleSheet.create({
     elevation:2,
     width:'90%',
     borderWidth:0,
-    height:40,
+    height:40,alignSelf:'center',
     backgroundColor:"#FFFFFF",
-    marginBottom:20
-
+    marginBottom:40,
+    margin:10,marginTop:10,
   },
   headertxtInputImg1: {
     height: 40,
@@ -66,7 +65,7 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     margin: 10,
-    color: '#FF1493',
+    color: '#b41565',
   },
   mainContainer:{
     borderWidth: 0,
@@ -93,7 +92,7 @@ export default StyleSheet.create({
     fontWeight: '700',
   },
   continueBtn: {
-    backgroundColor: '#FF1493',
+    backgroundColor: '#b41565',
     margin: 6,
     borderRadius: 5,
     justifyContent: 'flex-end',

@@ -8,6 +8,8 @@ import {
   Modal,
   Dimensions,
   BackHandler,
+  Linking,
+  StatusBar
 } from 'react-native';
 import BottomNavigator from '../../../../router/BottomNavigator';
 import {Rating, AirbnbRating} from 'react-native-elements';
@@ -93,10 +95,22 @@ export default class index extends Component {
   };
 
   render() {
+
+    let historyFlag = this.props.navigation.getParam("historyFlag")
+    let student_id = this.props.navigation.getParam('student_id');
+
+    let course_time = this.props.navigation.getParam("course_time")
+    let course_date = this.props.navigation.getParam("course_date")
+    let student_profile_url = this.props.navigation.getParam("student_profile_url")
+    let student_name =  this.props.navigation.getParam("student_name")
+
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+         <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#5541E1" translucent = {false}/>
         <View style={Styles.header}>
+        <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
           <Image source={back} style={Styles.headertxtInputImg} />
+          </TouchableOpacity>
           <Text style={Styles.headerTxt}>Info Client</Text>
           <View style={{margin: 7, flexDirection: 'row', marginStart: 10}}>
             {/* <TouchableOpacity
@@ -161,7 +175,7 @@ export default class index extends Component {
                                 }}>
                                 {/* <Rating
                               type="custom"
-                              ratingColor="#FF1493"
+                              ratingColor="#b41565"
                               ratingBackgroundColor="#c8c7c8"
                               ratingCount={5}
                             
@@ -256,14 +270,41 @@ export default class index extends Component {
                           </Text>
                         </View>
 
-                        <View style={Styles.continueBtn}>
-                          <TouchableOpacity>
-                            <Text style={Styles.continueBtnTxt}>
-                              {' '}
+                        {
+                          historyFlag == true ?
+
+                          <View style={Styles.continueBtn}>
+                          <TouchableOpacity onPress={()=>{this.props.navigation.navigate("profile",{
+                            student_id:student_id,
+                            course_date:course_date,
+                            course_time:course_time,
+                            student_profile_url:student_profile_url,
+                            student_name:student_name
+                          })}}>
+                            <Text style={Styles.continueBtnTxt}>                             
+                            Evaluez le professeur
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+
+                          :
+
+                          <View style={Styles.continueBtn}>
+                          <TouchableOpacity style={{flexDirection:'row',margin:3}}
+                              onPress={()=>{
+                                Linking.openURL(`tel:${9999999999}`)
+                              }}
+                          >
+                            <Image source={require("../../../../assets/icon/call.png")} style={{height:20,width:20,margin:6}} />
+                            <Text style={Styles.continueBtnTxt}>                             
                               Appeler le tutor pour démarrer le coaching
                             </Text>
                           </TouchableOpacity>
                         </View>
+
+                        }
+
+                       
                       </Fragment>
                     );
                   })}

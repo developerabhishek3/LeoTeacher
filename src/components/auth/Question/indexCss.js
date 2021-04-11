@@ -131,11 +131,13 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   continueBtn: {
-    backgroundColor: '#FF1493',
+    backgroundColor: '#b41565',
     margin: 3,
     borderRadius: 5,
     width: '40%',
     alignSelf: 'center',
+    justifyContent:"center",
+
   },
   continueBtnTxt: {
     margin: 10,
@@ -143,5 +145,6 @@ export default StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
     alignSelf: 'center',
+    textAlign:"center"
   },
 });

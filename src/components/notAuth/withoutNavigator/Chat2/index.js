@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-import {View, Text, ScrollView, Image, TouchableOpacity,Modal,Dimensions, Alert,BackHandler} from 'react-native';
+import {View, Text, ScrollView, Image, TouchableOpacity,Modal,Dimensions, Alert,BackHandler,RefreshControl,StatusBar} from 'react-native';
 import BottomNavigator from '../../../../router/BottomNavigator';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -29,17 +29,18 @@ export default class index extends Component {
       chatUserData:[],
       isBodyLoaded: false,
       isSpinner: true,  
+      isCurrenetComponentRefreshing:false
     };
   }
 
 
   componentDidMount = async () => {
 
-    const user_id = await AsyncStorage.getItem('user_id');
-    this.setState({user_id})
+ 
   
-    console.log("getting user id inside the did mount --------- ",user_id)
+    // console.log("getting user id inside the did mount --------- ",user_id)
 
+    
     this.fetchChatUserData()
 
 
@@ -59,9 +60,9 @@ export default class index extends Component {
       if (getChatUserResponse.response.status == true) {           
           console.log("getting response >>>>>>>>>>>>>>>>",getChatUserResponse.response)    
           
-          var chatUserData =       getChatUserResponse.response.user_list;
+          var chatUserData =  getChatUserResponse.response.user_list;
 
-          this.setState({chatUserData,isSpinner:false,isBodyLoaded:true})
+          this.setState({chatUserData,isSpinner:false,isBodyLoaded:true,isCurrenetComponentRefreshing:false})
       }
       else {
         Alert.alert("Message", getChatUserResponse.response.message)
@@ -147,8 +148,21 @@ export default class index extends Component {
 
 
   render() {
+
+
+    const newArray = [];
+    this.state.chatUserData.forEach(obj => {
+      if (!newArray.some(o => o.user_id === obj.user_id)) {
+        newArray.push({ ...obj })
+      }
+ 
+    });
+
+    console.log("getting chat user herer===========",newArray)
+
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#5541E1" translucent = {false}/>
         <View style={Styles.header}>
         <TouchableOpacity onPress={()=>{this.props.navigation.navigate("home")}}>
           <Image source={back} style={Styles.headertxtInputImg} />
@@ -170,16 +184,22 @@ export default class index extends Component {
           this.state.isBodyLoaded == true ?
 
 
-          <ScrollView>
+          <ScrollView 
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+                        <RefreshControl refreshing={this.state.isCurrenetComponentRefreshing} onRefresh={()=>{  this.setState({ isCurrenetComponentRefreshing: true }); setTimeout(()=>{
+                      this.fetchChatUserData();
+                    },100)  }} />
+                  }>
           {
-            this.state.chatUserData.length > 0 ?
+           newArray.length > 0 ?
             <Fragment>
 
 {
-            this.state.chatUserData.map((singleChatData)=>{
+           newArray.map((singleChatData)=>{
               return(
                 <View>
-        <TouchableOpacity onPress={()=>{this.props.navigation.navigate("chat",{user_id:singleChatData.user_id})}}>
+        <TouchableOpacity onPress={()=>{this.props.navigation.navigate("chat",{Id:singleChatData.user_id})}}>
           <View style={Styles.mainContentContainer}>              
             <View style={{flexDirection: 'row', margin: 3}}>
               <Image
@@ -298,7 +318,7 @@ export default class index extends Component {
                   <TouchableOpacity
                     onPress={() => this.Hide_Custom_Alert1()}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                    
@@ -321,7 +341,7 @@ export default class index extends Component {
                   {/* <TouchableOpacity
                     onPress={() => this.Hide_Custom_Alert1()}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                    
@@ -440,7 +460,7 @@ export default class index extends Component {
                   <TouchableOpacity
                     onPress={() => this.Hide_Custom_Alert2()}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                    
@@ -463,7 +483,7 @@ export default class index extends Component {
                   {/* <TouchableOpacity
                     onPress={() => this.Hide_Custom_Alert1()}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                       height: 35,

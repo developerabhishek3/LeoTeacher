@@ -56,6 +56,11 @@ import BankDetails from '../components/auth/BankDetails'
 import Notification from "../components/notification/index"
 
 
+import notificationData from '../components/notAuth/withoutNavigator/ProfileDetails/Notifications';
+
+import demandAmount from '../components/notAuth/withoutNavigator/ProfileDetails/DemandAmount/index'
+import demandAmountPending from '../components/notAuth/withoutNavigator/ProfileDetails/DemandAmount/index2'
+
 
 
 
@@ -124,6 +129,12 @@ const AppNavigator = createStackNavigator(
         headerShown: false,
       },
     },
+    notificationdata: {
+      screen: notificationData,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
 
 
     googlelogin: {
@@ -131,6 +142,19 @@ const AppNavigator = createStackNavigator(
       navigationOptions: {
         headerShown: false,
       },
+    },
+
+    demandamount:{
+      screen:demandAmount,
+      navigationOptions:{
+        headerShown:false,
+      }
+    },
+    demandamountpending:{
+      screen:demandAmountPending,
+      navigationOptions:{
+        headerShown:false,
+      }
     },
     singup:{
         screen:Signup,
@@ -266,7 +290,7 @@ const AppNavigator = createStackNavigator(
   },
   {
     unmountInactiveRoutes: true,
-    initialRouteName: 'splash',
+    initialRouteName: 'splash2',
   },
 );
 

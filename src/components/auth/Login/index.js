@@ -17,22 +17,21 @@ export default class index extends Component {
         this.state = {
           email: '',
           password: '',
-          fcm_token: '',
-    
-    
-          token: '',
-    
-          userLoggedInData: {},
-    
+          fcm_token: '',      
+          token: '',    
+          userLoggedInData: {},    
           username: '',
-    
-          userDetais: []
+          userDetais: [],
+          showPassword: true,  
         };
+        this.toggleSwitch = this.toggleSwitch.bind(this);
       }
 
 
 
-
+      toggleSwitch() {
+        this.setState({ showPassword: !this.state.showPassword });
+      }
 
 
       userLoginFunction = async () => {
@@ -105,7 +104,7 @@ export default class index extends Component {
         } else {
           const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
           if (!email.match(mailformat)) {
-            this.myAlert('Message', 'Email-Id invalide!');
+            this.myAlert('Message', 'Adresse email invalide');
             return false;
           }
           this.userLoginFunction();
@@ -172,8 +171,8 @@ export default class index extends Component {
 
 
                     <View style={Styles.subHeader}>
-                    <Text style={Styles.txtStyle1}>Entrez vos données de connexion </Text>
-                    <Text style={Styles.txtStyle1}>pour continuer.</Text>
+                    <Text style={Styles.txtStyle1}>Entrez vos identifiants de connexion pour continuer ou inscrivez-vous</Text>
+                    {/* <Text style={Styles.txtStyle1}>pour continuer.</Text> */}
                     </View>
 
                     <View style={Styles.textInputView}>  
@@ -183,19 +182,54 @@ export default class index extends Component {
                         <TextInput                           
                           style={Styles.textInputField}
                           onChangeText={(email) => this.setState({ email })}
-                          placeholder="  Nouvel Utilisateur"
+                          placeholder="Adresse email"
                         />
                     </View>
 
                     
-
+{/* 
                     <View>
                         <TextInput 
                            style={Styles.textInputField}
+                           secureTextEntry={true}
                            onChangeText={(password) => this.setState({ password })}
-                          placeholder="  Mot de passe"
+                          placeholder="Mot de passe"
                         />
+                    </View> */}
+
+
+                    <View style={{flexDirection:'row', borderWidth: 1,
+                          borderColor: '#DDDDDD',
+                          borderRadius: 10,
+                          justifyContent:'space-between',
+                          margin: 10,
+                      }}>
+                      <TextInput 
+                        // secureTextEntry={this.state.password.length > 0 ? true : false }
+                        secureTextEntry={this.state.showPassword && this.state.password.length > 0 ? true:false}
+                        // style={{fontFamily: this.state.password ? 'OpenSans-Regular' : 'OpenSans-Italic',  borderColor: '#DDDDDD',color:"gray",borderWidth:1,borderRadius:10,margin:10,paddingStart:10}}
+                        placeholder="Mot de passe"
+                        
+                        style={{paddingStart:15,fontFamily: this.state.password ? 'OpenSans-Regular' : 'OpenSans-Regular', borderWidth:0,width:"85%",color:"gray"}}
+                        value={this.state.password}     
+                        onChangeText={(password) => this.setState({ password })}           
+                      />
+                      <TouchableOpacity  
+                        onPress={this.toggleSwitch}            
+                        value={!this.state.showPassword}>
+                          {
+                            this.state.showPassword == true ?
+                            <Image source={require("../../../assets/icon/invisible-1.png")} style={{width: 30, height: 30,marginTop:10,margin:6}} />
+                            :
+                            <Image source={require("../../../assets/icon/eyeopen-1.png")} style={{width: 30, height: 30,marginTop:10,margin:6}} />
+                          }                      
+                      </TouchableOpacity>
                     </View>
+
+
+
+
+
                     <TouchableOpacity onPress={()=>{this.props.navigation.navigate("forgotpassword")}}>
                     <Text style={Styles.forgotPwd}>Mot de passe oublié?</Text>
                     </TouchableOpacity>
@@ -212,7 +246,7 @@ export default class index extends Component {
                         </TouchableOpacity>
                     </View>  
 
-                  <View style={{flexDirection:'row',margin:0,alignSelf:'center'}}>
+                  {/* <View style={{flexDirection:'row',margin:0,alignSelf:'center'}}>
                     <TouchableOpacity onPress={()=>{this.props.navigation.navigate("facebooklogin")}}>
                     <Image source={facebook} style={Styles.socialLogo} />
                     </TouchableOpacity>
@@ -220,9 +254,9 @@ export default class index extends Component {
                     <TouchableOpacity onPress={()=>{this.props.navigation.navigate("googlelogin")}}>
                     <Image source={require("../../../assets/icon/google.png")} style={Styles.socialLogo} />
                     </TouchableOpacity>
-                  </View>
+                  </View> */}
 
-                    <View  style={{flexDirection:'row',margin:3,alignSelf:'center'}}>
+                    <View  style={{flexDirection:'row',margin:3,alignSelf:'center',marginTop:30}}>
                     <Text style={Styles.txtStyle2}>Nouvel Utilisateur ?</Text>
                       <TouchableOpacity onPress={()=>{this.props.navigation.navigate("singup")}}>
                       <Text style={Styles.txtStyle3}> S'inscrire</Text>

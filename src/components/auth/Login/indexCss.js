@@ -15,11 +15,12 @@ export default StyleSheet.create({
     width: '100%',
   },
   continueBtn: {
-    backgroundColor: '#FF1493',
+    backgroundColor: '#b41565',
     margin: 3,
     borderRadius: 5,
     width: '50%',
     alignSelf: 'center',
+    justifyContent:"center"
   },
   headerView: {
     marginTop: 0,
@@ -53,8 +54,9 @@ export default StyleSheet.create({
     margin: 10,
   },
   subHeader: {
-    marginTop: 50,
+    marginTop: 80,
     margin: 10,
+    width:"94%",
   },
   txtStyle1: {
     fontSize: 16,
@@ -105,5 +107,6 @@ export default StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
     alignSelf: 'center',
+    textAlign:"center",
   },
 });

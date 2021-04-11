@@ -11,7 +11,7 @@ export default StyleSheet.create({
     },
     header:{
         height:70,
-        backgroundColor:'blue',       
+        backgroundColor:'#5541E1',       
         borderColor:'red',
         borderWidth:0,
         width:'103%',    
@@ -38,8 +38,9 @@ export default StyleSheet.create({
         marginEnd:15,
     },
     continueBtn: {
-        backgroundColor: '#FF1493',
+        backgroundColor: '#b41565',
         margin: 3,
+        marginBottom:20,
         borderRadius: 5,
         
         justifyContent:'flex-end',

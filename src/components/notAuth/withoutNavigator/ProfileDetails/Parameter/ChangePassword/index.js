@@ -98,13 +98,16 @@ export default class index extends Component {
     const { old_password,new_password, confirm_new_password } = this.state;
 
     if (old_password.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre ancien_mot de passe!');
+      this.myAlert('Message', 'Veuillez entrer votre ancien mot de passe!');
     } else if (new_password.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre nouveau_mot de passe!');
+      this.myAlert('Message', 'Veuillez entrer votre nouveau mot de passe!');
     }
     else if (confirm_new_password.length === 0) {
       this.myAlert('Message', 'Veuillez entrer votre nouveau mot de passe!');
     } 
+    else if (new_password != confirm_new_password) {
+      this.myAlert('Message', 'Le nouveau mot de passe et la confirmation du nouveau mot de passe ne correspondent pas!');
+    }
     else {     
       this.ChangePasswordFunction();
     }
@@ -175,7 +178,9 @@ export default class index extends Component {
     return (
       <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
          <View style={Styles.header}>
+           <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
           <Image source={back} style={Styles.headertxtInputImg} />
+          </TouchableOpacity>
           <Text style={Styles.headerTxt}>Changer le mot de passe</Text>
           <Text style={Styles.headerTxt}>     </Text>
           {/* <Image source={logo} style={Styles.headertxtInputImg1} /> */}

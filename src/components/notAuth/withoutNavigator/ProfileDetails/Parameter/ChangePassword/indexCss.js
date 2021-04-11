@@ -14,7 +14,7 @@ export default StyleSheet.create({
     borderColor: 'red',
     borderWidth: 0,
     width: '103%',
-    backgroundColor: 'blue',
+    backgroundColor: '#5541E1',
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
@@ -48,7 +48,7 @@ export default StyleSheet.create({
   },
 
   continueBtn: {
-    backgroundColor: '#FF1493',
+    backgroundColor: '#b41565',
     margin: 3,
     borderRadius: 5,
     width: '40%',

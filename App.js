@@ -57,9 +57,7 @@ export default class App extends React.Component {
       seconds:0,
       secondBetweenTwoDate:0,
       isButtonEnable:true,
-
       //send in API
-
       transaction_id:0,
       reservation_request_id:0,
 
@@ -67,20 +65,20 @@ export default class App extends React.Component {
   }
 
 
-  Show_Custom_Alert(visible) {
-    this.setState({Alert_Visibility: visible});
-  }
-  Hide_Custom_Alert() {
-    console.log("inside hidfe ==============")
-    this.setState({Alert_Visibility: false});
-    // this.props.navigation.navigate("home")
+  // Show_Custom_Alert(visible) {
+  //   this.setState({Alert_Visibility: visible});
+  // }
+  // Hide_Custom_Alert() {
+  //   console.log("inside hidfe ==============")
+  //   this.setState({Alert_Visibility: false});
+  //   // this.props.navigation.navigate("home")
 
-  }
+  // }
 
-  Hide_Custom_Alert1() {
-    this.setState({Alert_Visibility: false});
+  // Hide_Custom_Alert1() {
+  //   this.setState({Alert_Visibility: false});
 
-  }
+  // }
 
   async componentDidMount() {
 
@@ -92,28 +90,6 @@ export default class App extends React.Component {
 
 
 
-
-    // messaging().onNotificationOpenedApp(remoteMessage => {
-    //   console.log(
-    //     'Notification caused app to open from background state:',
-    //     remoteMessage.notification,
-    //   );
-    //   navigation.navigate(remoteMessage.data.type);
-    // });
-
-    // // Check whether an initial notification is available
-    // messaging()
-    //   .getInitialNotification()
-    //   .then(remoteMessage => {
-    //     if (remoteMessage) {
-    //       console.log(
-    //         'Notification caused app to open from quit state:',
-    //         remoteMessage.notification,
-    //       );
-    //       setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-    //     }
-    //     setLoading(false);
-    //   })
 
 
 
@@ -141,40 +117,7 @@ export default class App extends React.Component {
     }
   }
 
-  // async createNotificationListeners() {
-  //   const user_id = await AsyncStorage.getItem('user_id');
-  //   const UserId = JSON.parse(user_id)
-    
-  //   this.notificationListener = firebase.notifications().onNotification((notification) => {
-  //      console.log("getting irts time+++++++++++++",notification)
-       
-  //     });      
-  //     this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
- 
- 
- 
-  //       console.log("Notification is Background$$$" + notificationOpen);
-      
-  //        Alert.alert("Message","THE NOTIFICATIN GET!")
-    
-            
-  //     });
-      
-  //     const notificationOpen = await firebase.notifications().getInitialNotification();     
-  //     if (notificationOpen) {
-      
-    
-  //       console.log("on the notfication open value ?????????????????????",notificationOpen)
-      
-  //     }
-      
-  //     this.messageListener = firebase.messaging().onMessage((message) => {
-  //     // console.log(JSON.stringify(message));
-      
-  //     });
-     
-  // }
- 
+
 
 
 
@@ -198,7 +141,11 @@ export default class App extends React.Component {
 
         var request_end = new Date(newData.request_end)
 
-        var secondBetweenTwoDate = parseInt((request_end.getTime() - new Date().getTime()) / 1000);
+
+
+        var realEndTime =    new Date(request_end.setHours(request_end.getHours() - 1))
+
+        var secondBetweenTwoDate = parseInt((realEndTime.getTime() - new Date().getTime()) / 1000);
 
          const objchatscreens= {
               transaction_id: newData.transaction_id,
@@ -228,11 +175,7 @@ export default class App extends React.Component {
 
     
      
-      if(notificationOpen._data.reciever_id == UserId ){
-
-     
-  
-      
+      if(notificationOpen._data.reciever_id == UserId){             
         var notificationData = notificationOpen.notification.data.extra_param;
 
         var newData = JSON.parse(notificationData)
@@ -240,9 +183,21 @@ export default class App extends React.Component {
         var reservation_request_id = newData.reservation_request_id
   
         var request_end = new Date(newData.request_end)
+
+        var realEndTime =    new Date(request_end.setHours(request_end.getHours() - 1))
+
+      
+
+
+
+
         var request_start = new Date(newData.request_start)
 
-        var secondBetweenTwoDate = parseInt((request_end.getTime() - new Date().getTime()) / 1000);
+        var secondBetweenTwoDate = parseInt((realEndTime.getTime() - new Date().getTime()) / 1000);
+
+           
+
+
         // this.setState({newData,secondBetweenTwoDate,transaction_id,reservation_request_id})
 
 
@@ -280,19 +235,6 @@ export default class App extends React.Component {
         var notificationData = notificationOpen.notification.data.extra_param;
         await AsyncStorage.setItem("notification", "true");      
         await AsyncStorage.setItem("notificationData",notificationData)
-
-
-
-
-
-
-
-
-        
-
-       
-     
-
 
 
 
@@ -404,91 +346,6 @@ export default class App extends React.Component {
 
 
 
-  // fetchreservation_request_Accept = async () => {
-  //   // this.setState({ spinner: true }, async () => {
-  //   console.log("getting inside the function of acceprt+++++++++++++++++ " + this.state.transaction_id,              this.state.reservation_request_id)
-
-  //   const {transaction_id,reservation_request_id,} = this.state;
-  //   const reservation_requestAcceptResponse = await reservation_request_accept_reject({
-  //     transaction_id,
-  //     reservation_request_id,
-  //   accept_reject:"1"
-  //   });
-  //   if (reservation_requestAcceptResponse.result == true) {
-  //    console.log("getting after filter response====================",reservation_requestAcceptResponse.response)
-  //   var filteredData = reservation_requestAcceptResponse.response.revenue_list;
-  //   var totalFilterAmount = reservation_requestAcceptResponse.response.total_amount
-  //   this.setState({isBodyLoaded:true,isSpinner:false,filteredData,filterKay:true,totalFilterAmount})
-  //   Alert.alert("Message",reservation_requestAcceptResponse.response.message)
-  //   this.Hide_Custom_Alert()
-   
-  //   // Alert.alert("Message",reservation_requestAcceptResponse.response.status)
-      
-  //   }
-  //   else {
-  //     this.setState({ spinner: false }, () => {
-  //       setTimeout(() => {
-  //         Alert.alert("Message", "Something went wrong!", [
-  //           {
-  //             text: 'Ok',
-  //             onPress: () => {
-  //               this.props.navigation.goBack();
-  //             }
-  //           }
-  //         ])
-  //       }, 200)
-  //     })
-  //   }
-  //   // this.setState({ChatData,isBodyLoaded:true,isSpinner:false});
-  // // })
-  // };
-
-
-
-
-
-
-
-
-
-  
-  // fetchreservation_request_Reject = async () => {
-  //   // this.setState({ spinner: true }, async () => {
-  //   console.log("getting inside the function of REJECt+++++++++++++++++ " + this.state.transaction_id,              this.state.reservation_request_id)
-
-  //   const {transaction_id,reservation_request_id,} = this.state;
-  //   const reservation_requestREjectResponse = await reservation_request_accept_reject({
-  //     transaction_id,
-  //     reservation_request_id,
-  //   accept_reject:"0"
-  //   });
-  //   if (reservation_requestREjectResponse.result == true) {
-  //    console.log("getting after filter response====================",reservation_requestREjectResponse.response)
-  //   var filteredData = reservation_requestREjectResponse.response.revenue_list;
-  //   var totalFilterAmount = reservation_requestREjectResponse.response.total_amount
-  //   this.setState({isBodyLoaded:true,isSpinner:false,filteredData,filterKay:true,totalFilterAmount})
-  //   this.Hide_Custom_Alert()
-  //   // Alert.alert("Message",reservation_requestREjectResponse.response.status)
-      
-  //   }
-  //   else {
-  //     this.setState({ spinner: false }, () => {
-  //       setTimeout(() => {
-  //         Alert.alert("Message", "Something went wrong!", [
-  //           {
-  //             text: 'Ok',
-  //             onPress: () => {
-  //               this.props.navigation.goBack();
-  //             }
-  //           }
-  //         ])
-  //       }, 200)
-  //     })
-  //   }
-  //   // this.setState({ChatData,isBodyLoaded:true,isSpinner:false});
-  // // })
-  // };
-
 
   render() {
 
@@ -533,7 +390,6 @@ export default class App extends React.Component {
                   }}>
                   Demande de coaching (request)
                 </Text>
-
                 <View
                   style={{
                     marginTop: 27,
@@ -559,7 +415,6 @@ export default class App extends React.Component {
                    {newData.course_date} {newData.course_time}
                   </Text>
                 </View>
-
                 <View
                   style={{
                     marginTop: 27,
@@ -586,8 +441,6 @@ export default class App extends React.Component {
                   {newData.student_name}  
                   </Text>
                 </View>
-
-
               <View style={{justifyContent:'center',alignItems:'center'}}>
                    <ImageBackground
                     source={require("./src/assets/icon/timer.png")}
@@ -600,23 +453,19 @@ export default class App extends React.Component {
                   // until={10}
                   //  onFinish={() => this.setState({secondBetweenTwoDate:0,isButtonEnable:false})}
                    onFinish={() => this.Hide_Custom_Alert()}
-                   digitStyle={{backgroundColor: '#FFF', borderWidth: 0, borderColor: '#FF1493',}}
-                   digitTxtStyle={{color: '#FF1493'}}
+                   digitStyle={{backgroundColor: '#FFF', borderWidth: 0, borderColor: '#b41565',}}
+                   digitTxtStyle={{color: '#b41565'}}
                    timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
-                   separatorStyle={{color: '#FF1493'}}
+                   separatorStyle={{color: '#b41565'}}
                    timeToShow={['H', 'M', 'S']}
                    timeLabels={{m: null, s: null}}
                    showSeparator
                  />
                  </View>
-
-
                    </ImageBackground>
               </View> 
-
                 {
                   this.state.isButtonEnable == true ?
-
                   <View
                   style={{
                     flexDirection: 'row',
@@ -629,7 +478,7 @@ export default class App extends React.Component {
                     // onPress={()=>{this.Hide_Custom_Alert1()}}
                     onPress={()=>{this.fetchreservation_request_Accept()}}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                       marginStart: 25,
@@ -650,14 +499,13 @@ export default class App extends React.Component {
                       Accepter
                     </Text>
                   </TouchableOpacity>
-
                   <TouchableOpacity
                     // onPress={() => {
                     //   this.Hide_Custom_Alert();
                     // }}
                     onPress={()=>{this.fetchreservation_request_Reject()}}
                     style={{
-                      backgroundColor: '#FF1493',
+                      backgroundColor: '#b41565',
                       justifyContent: 'center',
                       margin: 10,
                       marginStart: 25,
@@ -679,9 +527,7 @@ export default class App extends React.Component {
                     </Text>
                   </TouchableOpacity>
                 </View>
-
                   :
-
                 <View
                 style={{
                   flexDirection: 'row',
@@ -693,7 +539,7 @@ export default class App extends React.Component {
                 <TouchableOpacity
                   onPress={()=>{this.Hide_Custom_Alert1()}}
                   style={{
-                    borderColor: '#FF1493',
+                    borderColor: '#b41565',
                     justifyContent: 'center',
                     margin: 10,
                     borderWidth:1,
@@ -715,13 +561,12 @@ export default class App extends React.Component {
                     Accepter
                   </Text>
                 </TouchableOpacity>
-
                 <TouchableOpacity
                   onPress={() => {
                     this.Hide_Custom_Alert1();
                   }}
                   style={{
-                    borderColor: '#FF1493',
+                    borderColor: '#b41565',
                     justifyContent: 'center',
                     margin: 10,
                     marginStart: 25,
@@ -744,16 +589,11 @@ export default class App extends React.Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-
                 }
-
               </View>
             </View>
           </Modal>
-
-
         
-
           </View> */}
         </SafeAreaView>
       )
