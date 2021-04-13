@@ -54,7 +54,7 @@ export default StyleSheet.create({
     margin: 10,
   },
   subHeader: {
-    marginTop: 50,
+    marginTop: 70,
     margin: 10,
   },
   txtStyle1: {
