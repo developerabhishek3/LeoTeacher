@@ -149,7 +149,7 @@ componentDidMount = async () => {
 
 
 <ImageBackground source={bgImg} resizeMode="cover" style={{flex:2,borderWidth:0,width:'100%'}}>
-        <View style={Styles.header}>
+        {/* <View style={Styles.header}>
         <TouchableOpacity
             onPress={() => {
               this.props.navigation.goBack();
@@ -165,13 +165,31 @@ componentDidMount = async () => {
            <Image source={Edit} style={Styles.headertxtInputImg2} />
           </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
+          <ImageBackground source={require("../../../../../assets/icon/bg1.png")} resizeMode="cover" style={{height:200,width:"100%",flexDirection:"row",justifyContent:"space-between"}}> 
+<TouchableOpacity
+            onPress={() => {
+              this.props.navigation.goBack();
+            }}>
+          <Image source={back} style={Styles.headertxtInputImg} />
+          </TouchableOpacity>
+          <Text style={Styles.headerTxt}>        Mon profil</Text>
+          <View style={{flexDirection:'row'}}>
+          <Image source={logo} style={Styles.headertxtInputImg1} />
+          <TouchableOpacity 
+              onPress={()=>{this.props.navigation.navigate("editprofile",{profile_url:this.state.profile_url,birthDate:this.state.birth_date})}}
+          >
+           <Image source={Edit} style={Styles.headertxtInputImg2} />
+          </TouchableOpacity>
+          </View>
+
+        </ImageBackground>
 
         {
           isBodyLoaded == true ? 
         <Fragment>
 
-          <View style={{borderWidth:0,marginTop:30}}> 
+          <View style={{borderWidth:0,marginTop:-70}}> 
           {
             this.state.profile_url == "" ?
 

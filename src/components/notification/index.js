@@ -127,7 +127,7 @@ export default class App extends React.Component {
     const reservation_requestAcceptResponse = await reservation_request_accept_reject({
       transaction_id,
       reservation_request_id,
-    accept_reject:"1"
+      accept_reject:"1"
     });
     if (reservation_requestAcceptResponse.result == true) {
      console.log("getting after filter response====================",reservation_requestAcceptResponse.response)

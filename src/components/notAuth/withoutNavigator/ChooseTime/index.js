@@ -20,7 +20,7 @@ import logo from '../../../../assets/icon/96.png';
 import back from '../../../../assets/icon/20.png';
 import rightIcon from '../../../../assets/icon/33.png';
 import calenderIcon from '../../../../assets/icon/10.png';
-import moment from 'moment';
+import moment, { months } from 'moment';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 
 import Styles from './indexCss';
@@ -307,7 +307,7 @@ set_availabilityData = async () => {
       timeslot.push(i.value);
     }
   });
-  console.log("checking time slot value ++++++++++++++++",timeslot)
+  console.log("checking time slot value ++++++++++++++++",this.state.date_slot)
   const set_availabilityResponse = await set_availability({
     date_slot,
     time_slot:timeslot
@@ -317,7 +317,7 @@ set_availabilityData = async () => {
      if(set_availabilityResponse.response.status == true){
       console.log("getting seat availablivty response+++++++++++++++++",set_availabilityResponse.response) 
       Alert.alert("Message",set_availabilityResponse.response.message)
-      this.props.navigation.navigate("home")
+      // this.props.navigation.navigate("home")
      }
      else{
       Alert.alert("Message",set_availabilityResponse.response.message)
@@ -374,13 +374,13 @@ set_availabilityData = async () => {
                 <Calendar
                   style={Styles.calenderStyle}
                   minDate={today}
-
+                  onMonthChange={(month) => {console.log('month changed  - - - - - - - -  - - --',month.month,     month.year)}}
+                  // onPressArrowRight={console.log("getting current month and year on right arrow -  - - - -  - -",new Date())}
+                  // onPressArrowLeft={console.log("getting current month and year on left arrow -  - - - -  - -",new Date())}
                   onDayPress={(day) => this.set_date(day)}
                   onDateSelect={(date) => { console.log('selected Date', date) }}
-
-
-                  markedDates={this.state.markedDates}
-
+                                                    
+                  markedDates={this.state.markedDates}                
                   theme={{
                   backgroundColor: '#5495ED',
                   calendarBackground: '#5495ED',

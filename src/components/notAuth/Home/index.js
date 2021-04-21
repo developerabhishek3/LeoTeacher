@@ -18,7 +18,7 @@ import {
 import BottomNavigator from '../../../router/BottomNavigator';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
-
+import Stars from 'react-native-stars';
 import {CheckBox, Overlay, Button} from 'react-native-elements';
 
 import {ECharts} from 'react-native-echarts-wrapper';
@@ -33,6 +33,7 @@ import {
   online_offlineFunction,
   home_count_data,
   bussiness_monthly,
+  my_rate_review
 } from '../../../Api/afterAuth';
 
 import {VictoryBar, VictoryChart,VictoryTheme} from 'victory-native';
@@ -50,6 +51,8 @@ export default class index extends Component {
       Model_Visibility: false,
       Alert_Visibility: false,
       isCurrenetComponentRefreshing:false,
+      ratingCount:0,
+      reviewCount:0,
 
       //check switch value
 
@@ -133,15 +136,18 @@ export default class index extends Component {
 
   componentDidMount() {
     // setTimeout(() => {
+      
+    setTimeout(() => {
       this.FetchBusinessData();
-    
-
+      this.my_rate_reviewData()
+      this.Getonline_offline_status();
     this.fetchHomeCountData();
     this.FetchForCourseInstant()
+    }, 1000);
     // setTimeout(() => {
     //   this.checkCourseInstant()
     // }, 100);
-    this.Getonline_offline_status();
+    
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
     );
@@ -303,6 +309,41 @@ export default class index extends Component {
     return;
   };
 
+
+
+
+
+
+  my_rate_reviewData = async () => {
+    const my_rate_reviewDataResponse = await my_rate_review();
+    if (my_rate_reviewDataResponse.result == true) {
+      var ratingCount =  my_rate_reviewDataResponse.response.rating;
+      var reviewCount =  my_rate_reviewDataResponse.response.review;
+      console.log("response in the rating API-----------",my_rate_reviewDataResponse.response)
+      this.setState({ratingCount,reviewCount});
+      // console.log(
+      //   'getting result here ----------------->>>>>>>>>>>>>>>>>>>-',
+      //   my_rate_reviewDataResponse.response,
+      // );
+    } else {
+      // console.log('getting error here-------------');
+    }
+    return;
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   FetchBusinessData = async () => {
     const bussiness_monthlyResponse = await bussiness_monthly({
       year: '2021',
@@ -351,7 +392,7 @@ export default class index extends Component {
         let categoryValue11  = Object.values(singleMap)[10]
         let categoryValue12  = Object.values(singleMap)[11]
         
-        let newcategoryValue1 = 1
+        let newcategoryValue1 = 0.1
        
           // this.setState({
           //   categoryKey1,categoryKey2,categoryKey3,categoryKey4,categoryKey5,categoryKey6,
@@ -460,7 +501,8 @@ checkReserveCourse(){
 
   render() {
   
-      // console.log("inside render------------",this.state.ComposeData)
+      // console.log("inside render------------",this.state.SwitchOnValueHolder)
+      const {ratingCount,reviewCount}  = this.state;
 
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -517,7 +559,7 @@ checkReserveCourse(){
                     justifyContent: 'center',
                   }}>
                   <Image
-                    source={require('../../../assets/icon/books.png')}
+                    source={require('../../../assets/icon/wallet.png')}
                     style={{height: 35, width: 35, margin: 4}}
                   />
                   <Text
@@ -581,25 +623,68 @@ checkReserveCourse(){
             </ImageBackground>
           </View>
 
+
+
+
+
+
+                          <View style={{flexDirection: 'row',justifyContent:"center"}}>
+                                    <Stars
+                                    // update={(rating)=>{this.setState({rating: rating})}}
+                                      default={this.state.ratingCount}
+                                      count={5}
+                                      half={true}
+                                      starSize={30}
+                                      fullStar={<Image source={require("../../../assets/icon/111.png")} style={{height:27,width:27,margin:3}} />}
+                                      emptyStar={<Image source={require("../../../assets/icon/112.png")} style={{height:27,width:27,margin:3}} />}
+                                      halfStar={<Image source={require("../../../assets/icon/113.png")} style={{height:27,width:27,margin:3}} />}
+                                    />
+                                    <Text style={{marginStart:10,color:"gray",fontSize:24,fontWeight:"600",margin: 3}}>{reviewCount} Avis </Text>
+
+
+
+                                  </View>
+
+
+
+
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               margin: 10,
             }}>
-            <Text
-              style={{
-                width: 280,
-                margin: 10,
-                color:"gray",
-                borderWidth: 0,
-                fontWeight: '700',
-                fontSize: 14,
-              }}>
-              Vous êtes hors ligne maintenant. Mettez - vous en mode "en ligne"
-              pour être visible par les étudiants et être contacté pour un call
-              in English.
-            </Text>
+              {
+                this.state.SwitchOnValueHolder == true ?
+
+
+                <Text
+                style={{
+                  width: 280,
+                  margin: 10,
+                  color:"gray",
+                  borderWidth: 0,
+                  fontWeight: '700',
+                  fontSize: 14,
+                }}>
+               Vous êtes en ligne. Les membres peuvent réserver
+                un coaching immédiat avec vous. 
+              </Text>
+                :
+                <Text
+                style={{
+                  width: 280,
+                  margin: 10,
+                  color:"gray",
+                  borderWidth: 0,
+                  fontWeight: '700',
+                  fontSize: 14,
+                }}>
+              Vous êtes en mode hors ligne. Les membres ne peuvent pas vous contacter pour un
+              coaching immédiat.
+              </Text>
+              }
+          
 
             {/* <Text style={{fontWeight:'600',fontSize:16,paddingStart:20}}>Email Notification</Text> */}
             <Switch

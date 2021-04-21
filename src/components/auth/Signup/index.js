@@ -18,7 +18,7 @@ import logo from '../../../assets/icon/96.png';
 import DatePicker from 'react-native-date-picker';
 import facebook from '../../../assets/icon/fb.png';
 import {TextInput} from 'react-native-gesture-handler';
-import downArrow from '../../../assets/icon/downArrow.png';
+import downArrow from '../../../assets/icon/ArrowDown.png';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import {createUser,getCountryList} from '../../../Api/auth'; 
@@ -78,7 +78,7 @@ export default class index extends Component {
     const GetCountryListResponse = await getCountryList();
     if (GetCountryListResponse.result == true) {
       var countryData = GetCountryListResponse.response.country_list;
-      console.log("getting country data----------",countryData)
+      // console.log("getting country data----------",countryData)
     }
     this.setState({countryData});
     // console.log("getting country response----------------",countryData.country_list)
@@ -165,7 +165,7 @@ export default class index extends Component {
       if(createUserResponse.response.status == true){
         await AsyncStorage.setItem("user_id", JSON.stringify(createUserResponse.response.user_id));
         console.log("getting inide5555555 response ---",createUserResponse.response.message)
-        Alert.alert("Message",createUserResponse.response.message)
+        // Alert.alert("Message",createUserResponse.response.message)
         this.props.navigation.navigate("question")
         // this.props.navigation.navigate('aftersignupwelcome',{email:email})
       }
@@ -303,7 +303,7 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder="  Nom"
+                    placeholder="Nom"
                     onChangeText={(first_name) => this.setState({first_name})}
               />
                 </View>
@@ -311,7 +311,7 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder="  Prénom"
+                    placeholder="Prénom"
                     onChangeText={(last_name) => this.setState({last_name})}
                   />
                 </View>
@@ -350,8 +350,9 @@ export default class index extends Component {
                           }}
                         /> */}
 
-
-                  <DatePicker                    
+                  <Text style={{fontWeight:"600",color:"gray",margin:3,fontSize:14}}>Date de naissance</Text>
+                  <DatePicker   
+                    style={{width:SCREEN_WIDTH*0.8}}                 
                     mode="date"    
                     maximumDate={this.state.date}                                                        
                     date={this.state.date}
@@ -364,7 +365,7 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder="  Adresse postale"
+                    placeholder="Adresse postale"
                     onChangeText={(address) => this.setState({address})}
                   />
                 </View>
@@ -372,14 +373,14 @@ export default class index extends Component {
                   <TextInput
                     keyboardType="number-pad"
                     style={Styles.textInputField}
-                    placeholder="  Code postal"
+                    placeholder="Code postal"
                     onChangeText={(postcode) => this.setState({postcode})}
                   />
                 </View>
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder="  Ville"
+                    placeholder="Ville"
                     onChangeText={(city) => this.setState({city})}  
                   />
                 </View>
@@ -424,7 +425,7 @@ export default class index extends Component {
                                 paddingStart: 20,
                                 padding:5,
                                 fontWeight:'600',
-                                fontSize: 15,
+                                fontSize: 14,
                                 marginTop:6
                                                               
 
@@ -433,10 +434,10 @@ export default class index extends Component {
                             </Text>
                               :  <Text
                               style={{
-                                color: 'gray',
-                                paddingStart: 10,
+                                color: '#000000',
+                                paddingStart: 20,
                                 fontWeight:'600',
-                                fontSize: 16,
+                                fontSize: 14,
                                 padding:5,
                                 marginTop:6
                                
@@ -465,14 +466,14 @@ export default class index extends Component {
                   <TextInput
                     style={Styles.textInputField}
                     keyboardType="phone-pad"
-                    placeholder="  Numéro de téléphone"
+                    placeholder="Numéro de téléphone"
                     onChangeText={(telephone_no) => this.setState({telephone_no})}
                   />
                 </View>
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder="  Email"
+                    placeholder="Email"
                     onChangeText={(email) => this.setState({email})}
                   />
                 </View>
@@ -510,6 +511,7 @@ export default class index extends Component {
                   paddingStart: 10,}}>
                   <TextInput
                      style={{borderWidth:0,width:"85%"}}
+                     keyboardType="numbers-and-punctuation"
                      value={this.state.password}
                     // secureTextEntry={this.state.showPassword}
                     secureTextEntry={this.state.showPassword && this.state.password.length > 0 ? true:false}
@@ -536,6 +538,7 @@ export default class index extends Component {
                         <TextInput
                           style={{borderWidth:0,width:"85%"}}
                           value={this.state.confirm_password}
+                          keyboardType="numbers-and-punctuation"
                           secureTextEntry={this.state.showPassword2 && this.state.confirm_password.length > 0 ? true:false}
                           // secureTextEntry={ this.state.showPassword2}
                           placeholder="Confirmation Mot de passe"
@@ -608,12 +611,12 @@ export default class index extends Component {
                 }}>
                 <View
                   style={{
-                    width: '80%',
+                    width: '70%',
                     height: SCREEN_HEIGHT /2.6,
                     backgroundColor: '#FFFFFF',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    alignSelf:'center',
+                    alignSelf:'flex-start',
                     margin: 10,
 
                   }}>

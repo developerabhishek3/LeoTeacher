@@ -63,6 +63,13 @@ import demandAmountPending from '../components/notAuth/withoutNavigator/ProfileD
 
 
 
+import FirstCheck from '../components/notAuth/withoutNavigator/ProfileDetails/Parameter/ChangePassword/FirstChceck';
+import SecondCheck from '../components/notAuth/withoutNavigator/ProfileDetails/Parameter/ChangePassword/SecondCheck';
+import ThirdCheck from '../components/notAuth/withoutNavigator/ProfileDetails/Parameter/ChangePassword/ThirdCheck';
+import FourthCheck from '../components/notAuth/withoutNavigator/ProfileDetails/Parameter/ChangePassword/FourthCheck';
+
+
+
 
 const AppNavigator = createStackNavigator(
   {
@@ -182,7 +189,30 @@ const AppNavigator = createStackNavigator(
     },
 
 
-
+    firstcheck: {
+      screen: FirstCheck,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    secondcheck: {
+      screen: SecondCheck,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    thirdcheck: {
+      screen: ThirdCheck,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    fourthcheck: {
+      screen: FourthCheck,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
 
 
     home: {
