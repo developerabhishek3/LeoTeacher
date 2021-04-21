@@ -69,7 +69,7 @@ export default class index extends Component {
       if (add_update_bank_infoResponse.response.status === true) {           
           console.log("getting response >>>>>>>>>>>>>>>>",add_update_bank_infoResponse.response)      
           this.props.navigation.navigate("levelchoice")
-          Alert.alert("Message", add_update_bank_infoResponse.response.message)
+          // Alert.alert("Message", add_update_bank_infoResponse.response.message)
       }
       else {
         Alert.alert("Message", add_update_bank_infoResponse.response.message)
@@ -98,12 +98,12 @@ export default class index extends Component {
         this.myAlert('Message', 'Veuillez entrer votre iban!');
     } 
     else if(paypal_email.length === 0){
-      this.myAlert('Message', 'Veuillez entrer votre email paypal !');
+      this.myAlert('Message', 'Veuillez entrer votre email paypal!');
     }
     else {
       const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!paypal_email.match(mailformat)) {
-        this.myAlert('Message', 'Adresse email invalide');
+        this.myAlert('Message', 'Adresse email invalide!');
         return false;
       }
       this.add_update_bank_infoFunction();
@@ -177,7 +177,7 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder=" Nom de la banque"
+                    placeholder="Nom de la banque"
                     onChangeText={(bank_name) => this.setState({ bank_name })}
               />
                 </View>
@@ -185,7 +185,7 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder=" Code BIC"
+                    placeholder="Code BIC"
                     onChangeText={(bic_code) => this.setState({ bic_code })}
               />
                 </View>
@@ -193,7 +193,7 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder=" IBAN"
+                    placeholder="IBAN"
                     onChangeText={(iban) => this.setState({ iban })}
               />
                 </View>
@@ -201,7 +201,7 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder=" Email  de votre compte Paypal"
+                    placeholder="Email  de votre compte Paypal"
                     onChangeText={(paypal_email) => this.setState({ paypal_email })}
               />
                 </View>

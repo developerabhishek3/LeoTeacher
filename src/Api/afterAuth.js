@@ -1593,3 +1593,39 @@ export async function demand_amount_pending() {
   }
 }
 
+
+
+export async function my_rate_review() {
+  const token = await AsyncStorage.getItem('token');
+  const user_id = await AsyncStorage.getItem('user_id');
+
+  const TokenValue = JSON.parse(token);
+  const UserId = JSON.parse(user_id);
+
+  // console.log(
+  //   'ghetting incomplete transactoin tokena dn ujserId =========',
+  //   TokenValue,
+  //   UserId,
+  // );
+
+  try {
+    const my_rate_reviewResponse = await Axios.get(
+      `https://www.spyk.fr/api_teacher/my_rate_review`,
+      {
+        headers: {
+          ...commonHeader,
+          'user-id': `${UserId}`,
+          token: `${TokenValue}`,
+        },
+      },
+    );
+    if (my_rate_reviewResponse.status) {
+      // console.log("getting response on the function--------",my_rate_reviewResponse.data)
+      return {result: true, response: my_rate_reviewResponse.data};
+    } else {
+      return {result: false, error: my_rate_reviewResponse.data};
+    }
+  } catch (error) {
+    return {result: false, error};
+  }
+}

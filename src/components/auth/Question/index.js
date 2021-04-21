@@ -75,11 +75,25 @@ export default class index extends Component {
       ],
       data4:[
         {"id": "1",
+        "value":"Débutant"
+          },
+          {"id": "2",
+          "value":"Intermédiaire"
+          },    
+          {"id": "3",
+          "value":"Avancé"
+          }, 
+          {"id": "3",
+          "value":"Natif"
+          },                           
+      ],
+      data5:[
+        {"id": "1",
         "value":"Oui"
           },
           {"id": "2",
           "value":"Non"
-          },                           
+          },                                      
       ],    
       
 
@@ -90,6 +104,8 @@ export default class index extends Component {
       q_4_ans:"",
       q_5_ans:"",
       q_6_ans:"",
+      q_7_ans:"",
+      q_8_ans:"",
     };
   }
 
@@ -107,14 +123,18 @@ export default class index extends Component {
       q_4_ans,
       q_5_ans,
       q_6_ans,
+      q_7_ans,
+      q_8_ans,
     } = this.state;
     const add_update_academic_infoResponse = await add_update_academic_info({
-      q_1_ans:"bfdf",
-      q_2_ans:"bfsd",
-      q_3_ans:"bsdfb",
-      q_4_ans:"sdf",
-      q_5_ans:"fvbfs",
-      q_6_ans:"dfd", 
+      q_1_ans,
+      q_2_ans,
+      q_3_ans,
+      q_4_ans,
+      q_5_ans,
+      q_6_ans,
+      q_7_ans,
+      q_8_ans 
     });
     if (add_update_academic_infoResponse.result == true) {
       console.log("getting result here --------", add_update_academic_infoResponse.response)
@@ -139,12 +159,16 @@ export default class index extends Component {
   };
 
   validateUser = () => {
-    const {  q_1_ans,
+    const {  
+      q_1_ans,
       q_2_ans,
       q_3_ans,
       q_4_ans,
       q_5_ans,
-      q_6_ans, } = this.state;
+      q_6_ans,
+      q_7_ans,
+      q_8_ans
+      } = this.state;
 
     if (q_1_ans.length === 0) {
       this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
@@ -162,6 +186,12 @@ export default class index extends Component {
     this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
   } 
   else if (q_6_ans.length === 0) {
+    this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
+  }
+  else if (q_7_ans.length === 0) {
+    this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
+  }
+  else if (q_8_ans.length === 0) {
     this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
   } 
     else {
@@ -184,8 +214,6 @@ export default class index extends Component {
 
   componentDidMount = async () => {
  
-
-
     BackHandler.addEventListener('hardwareBackPress', () =>
            this.handleBackButton(this.props.navigation),
          );
@@ -409,6 +437,75 @@ export default class index extends Component {
 
 
 
+                <View style={Styles.subHeader}>
+                  <Text style={Styles.txtStyle1}>
+                  Etes-vous natif d'un pays anglophone ?
+                  </Text>
+                </View>
+
+                <View style={Styles.radiobtnMainView}>
+                {
+                    this.state.data3.map((singleMAp,key)=>{
+                      return(
+                        <View>
+                           
+                                  {
+                                      this.state.q_7_ans == singleMAp.value ? 
+                                      <TouchableOpacity  onPress={()=>{this.setState({q_7_ans:singleMAp.value})}} style={{flexDirection:'row',alignItems:'center'}}>
+                                          <Image source={require("../../../assets/icon/8.png")} style={{height:20,width:20,margin:7,marginStart:10,marginEnd:10}} />
+                                          <Text style={{color:"lightgreen"}}>{singleMAp.value}</Text>
+                                      </TouchableOpacity>
+  
+                                      :
+                                      <TouchableOpacity onPress={()=>{this.setState({q_7_ans:singleMAp.value})}} style={{flexDirection:'row',alignItems:'center'}}>
+                                          <Image source={require("../../../assets/icon/4.png")} style={{height:20,width:20,margin:7,marginStart:10,marginEnd:10}} />
+                                          <Text style={{color:"gray"}}>{singleMAp.value}</Text>
+                                      </TouchableOpacity>
+                                  }
+                                 
+                        </View>
+                      )
+                    })
+                  }
+                </View>
+
+
+
+
+
+
+
+                <View style={Styles.subHeader}>
+                  <Text style={Styles.txtStyle1}>
+                  Etes-vous natif anglophone ?
+                  </Text>
+                </View>
+
+                <View style={Styles.radiobtnMainView}>
+                {
+                    this.state.data3.map((singleMAp,key)=>{
+                      return(
+                        <View>                           
+                                  {
+                                      this.state.q_8_ans == singleMAp.value ? 
+                                      <TouchableOpacity  onPress={()=>{this.setState({q_8_ans:singleMAp.value})}} style={{flexDirection:'row',alignItems:'center'}}>
+                                          <Image source={require("../../../assets/icon/8.png")} style={{height:20,width:20,margin:7,marginStart:10,marginEnd:10}} />
+                                          <Text style={{color:"lightgreen"}}>{singleMAp.value}</Text>
+                                      </TouchableOpacity>
+  
+                                      :
+                                      <TouchableOpacity onPress={()=>{this.setState({q_8_ans:singleMAp.value})}} style={{flexDirection:'row',alignItems:'center'}}>
+                                          <Image source={require("../../../assets/icon/4.png")} style={{height:20,width:20,margin:7,marginStart:10,marginEnd:10}} />
+                                          <Text style={{color:"gray"}}>{singleMAp.value}</Text>
+                                      </TouchableOpacity>
+                                  }
+                                 
+                        </View>
+                      )
+                    })
+                  }
+                </View>
+
 
 
 
@@ -422,6 +519,9 @@ export default class index extends Component {
                     <Text style={Styles.continueBtnTxt}>Valider</Text>
                   </TouchableOpacity>
                 </View>
+
+
+
               </View>
             </View>
           </ScrollView>

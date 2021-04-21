@@ -20,7 +20,7 @@ import FastImage from 'react-native-fast-image';
 // sleceted route image.....
 import SelectedReservation from '../assets/BottomIcon/5.png'
 import SelectedHome from '../assets/BottomIcon/1.png'
-import SelectedChat from '../assets/BottomIcon/6.png'
+import SelectedChat from '../assets/../assets/icon/10.png'
 import SelectedProfie from '../assets/BottomIcon/8.png'
 
 
@@ -28,7 +28,7 @@ import SelectedProfie from '../assets/BottomIcon/8.png'
 
 import UnSelectedReservation from '../assets/BottomIcon/3.png'
 import UnSelectedHome from '../assets/BottomIcon/7.png'
-import UnSelectedChat from '../assets/BottomIcon/2.png'
+import UnSelectedChat from '../assets/../assets/icon/10-1.png'
 import UnSelectedProfie from '../assets/BottomIcon/4.png'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -92,18 +92,18 @@ class BottomNavigator extends Component{
                 <TouchableOpacity
                    style={{width: '25%',borderWidth:0}}
                   onPress={() => {
-                    if (currentRoute != 'chat2') {
-                      this.props.navigation.navigate('chat2', {
+                    if (currentRoute != 'choosetime') {
+                      this.props.navigation.navigate('choosetime', {
                         proceedView: undefined,
                       });
                     }
                   }}>
-                  {currentRoute == 'chat2' ? (
+                  {currentRoute == 'choosetime' ? (
                     <Image source={SelectedChat} style={styles.routesImageView} />
                   ) : (
                     <Image source={UnSelectedChat} style={styles.routesImageView} />
                   )}  
-                  {currentRoute == 'chat2' ? (
+                  {currentRoute == 'choosetime' ? (
                     <Text style={{color:'#b41565',margin:0,fontWeight:'700',textAlign:'center'}}>Disponibilités</Text>
                     ) : (
                       <Text style={{color:'gray',margin:0,textAlign:'center'}}>Disponibilités</Text>

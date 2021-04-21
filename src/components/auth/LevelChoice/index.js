@@ -91,7 +91,7 @@ export default class index extends Component {
         if (update_levelResponse.response.status === true) {           
             console.log("getting response >>>>>>>>>>>>>>>>",update_levelResponse.response)      
             this.props.navigation.navigate("login")
-            // Alert.alert("Message", update_levelResponse.response.message)
+            Alert.alert("Message", update_levelResponse.response.message)
         }
         else {
           Alert.alert("Message", update_levelResponse.response.message)
@@ -201,7 +201,6 @@ export default class index extends Component {
                     return(
                       <View style={{margin:10,marginTop:20}}>
                              {
-
                                                singleMap.isSelected ? 
                                                <TouchableOpacity 
                                                onPress={()=>{
@@ -211,7 +210,7 @@ export default class index extends Component {
                                               }}
                                                style={{flexDirection:'row',alignItems:'center'}}>
                                                    <Image source={require("../../../assets/icon/8.png")} style={{height:20,width:20,margin:3}} />
-                                                   <Text style={{color:"lightgreen"}}>{singleMap.level_en}</Text>
+                                                   <Text style={{color:"lightgreen"}}>{singleMap.level_fr}</Text>
                                                </TouchableOpacity>
 
                                                :
@@ -223,7 +222,7 @@ export default class index extends Component {
                                               }} 
                                                style={{flexDirection:'row',alignItems:'center'}}>
                                                    <Image source={require("../../../assets/icon/4.png")} style={{height:20,width:20,margin:3}} />
-                                                   <Text style={{color:"gray"}}>{singleMap.level_en}</Text>
+                                                   <Text style={{color:"gray"}}>{singleMap.level_fr}</Text>
                                                </TouchableOpacity>
                                            }
 
