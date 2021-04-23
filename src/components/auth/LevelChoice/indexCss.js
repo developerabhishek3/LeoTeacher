@@ -83,7 +83,7 @@ export default StyleSheet.create({
     margin:1
   },
   subHeader: {
-    marginTop: 30,
+    marginTop: 40,
     margin: 10,
     marginBottom:-5
   },

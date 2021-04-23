@@ -185,23 +185,41 @@ export default class index extends Component {
     return (
       <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
         <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#5541E1" translucent = {false}/>
-        <ImageBackground source={bgImg} resizeMode="cover" style={{flex:2,borderWidth:0,width:'100%'}}>
-        <View style={Styles.header}>
+        {/* <ImageBackground source={bgImg} resizeMode="cover" style={{flex:2,borderWidth:0,width:'100%'}}> */}
+        {/* <View style={Styles.header}>
         <TouchableOpacity onPress={()=>{this.props.navigation.navigate("home")}}>
           <Image source={back} style={Styles.headertxtInputImg} />
           </TouchableOpacity>
           <Text style={Styles.headerTxt}>Mon compte</Text>
           <Image source={logo} style={Styles.headertxtInputImg1} />
-        </View>
+        </View> */}
+
+
+
+
+<ImageBackground source={require("../../../assets/icon/bg1.png")} resizeMode="cover" style={{height:200,width:"100%",flexDirection:"row",justifyContent:"space-between"}}> 
+          <TouchableOpacity onPress={()=>{this.props.navigation.navigate("home")}}>
+          <Image source={back} style={Styles.headertxtInputImg} />
+          </TouchableOpacity>
+          <Text style={Styles.headerTxt}>  Profil</Text>
+          <Image source={logo} style={Styles.headertxtInputImg1} />
+        </ImageBackground>
         <Spinner visible={this.state.isSpinner} />
 
-      <ScrollView>
-        <View>
+
+        <View style={{flex:2,width:"100%"}}>
+
+
+
+
           {
+
             this.state.isBodyLoaded == true ?
 
-          <Fragment>
-          <View style={{marginTop:-15}}> 
+            <Fragment>
+
+
+<View style={{marginTop:-105}}> 
           {
             this.state.profile_url == "" ?
 
@@ -212,95 +230,98 @@ export default class index extends Component {
             }}  style={Styles.peopleStyle} />
           }
           </View>
-          {/* <Text style={{fontSize:13,color:'gray',fontWeight:'700',alignSelf:'center'}}>Votre client</Text> */}
+
           <Text style={{alignSelf:'center',fontWeight:'700',fontSize:16,color:"#000000"}}>{profileData.first_name} {profileData.last_name}</Text>          
+
+          <ScrollView style={{margin:10}}> 
         
-            <Fragment>
-              <ScrollView>
-            <View>
-            {/* <View style={{flex:2,margin:0}}>  */}
+
+
+          <View>
+        
       
-                <TouchableOpacity 
-                  onPress={()=>{this.props.navigation.navigate("myprofile",{profileImg:this.state.profile_url})}}
-                >
-                  <View style={{flexDirection:'row',margin:1}}>
-                      <Image source={profileIcon} style={{height:24,width:24,margin:10}}  />
-                      <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Mon profil</Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                     onPress={()=>{this.props.navigation.navigate("revenue")}}
-                >
-                <View style={{flexDirection:'row',margin:1}}>
-                    <Image source={revenueIcon} style={{height:24,width:24,margin:10}}  />
-                    <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Mes revenus</Text>
-                </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                  onPress={()=>{this.props.navigation.navigate('notificationdata')}}
-                >
-                <View style={{flexDirection:'row',margin:0}}>
-                    <Image source={require("../../../assets/ProfileIcon/notification.png")} style={{height:24,width:24,margin:10}}  />
-                    <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Notifications</Text>
-                    {
-                      this.state.notificationCountValue != 0 ?
-                      <Badge status="error" value={this.state.notificationCountValue} badgeStyle={{margin:-20,marginTop:4,marginStart:-15,righ:-30,width:27,height:27,borderRadius:30}}></Badge>
-                      :null
-                    }
-                    
-                </View>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity
-                    onPress={()=>{this.props.navigation.navigate('parameter')}}
-                >
-                <View style={{flexDirection:'row',margin:1}}>
-                    <Image source={settingIcon} style={{height:24,width:24,margin:10}}  />
-                    <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Paramètres</Text>
-                </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={()=>{this.props.navigation.navigate('demandamount')}}
-                >
-                <View style={{flexDirection:'row',margin:1}}>
-                <Image source={revenueIcon} style={{height:24,width:24,margin:10}}  />
-                    <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Montant demandé</Text>
-                </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                  onPress={()=>{this.props.navigation.navigate('support')}}
-                >
-                <View style={{flexDirection:'row',margin:1}}>
-                    <Image source={supporIcon} style={{height:24,width:24,margin:10}}  />
-                    <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Support</Text>
-                </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={()=>{this.Show_Custom_Alert()}}>
-                <View style={{flexDirection:'row',margin:1}}>
-                    <Image source={logoutIcon} style={{height:24,width:24,margin:10}}  />
-                    <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Déconnexion</Text>
-                </View>
-                </TouchableOpacity>
-                </View>
-                </ScrollView>
-                </Fragment>
-            {/* </View> */}
-
-            <Text style={{alignSelf:'center',fontSize:14,fontWeight:'700',margin:10,color:"#b41565"}}>Version de l'application : {packageContent.version}</Text>
-            
-          </Fragment> 
-            : null            
-          }
-
+        <TouchableOpacity 
+          onPress={()=>{this.props.navigation.navigate("myprofile",{profileImg:this.state.profile_url})}}
+        >
+          <View style={{flexDirection:'row',margin:1}}>
+              <Image source={profileIcon} style={{height:24,width:24,margin:10}}  />
+              <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Mon profil</Text>
           </View>
-          </ScrollView>
-          
+        </TouchableOpacity>
+        <TouchableOpacity
+             onPress={()=>{this.props.navigation.navigate("revenue")}}
+        >
+        <View style={{flexDirection:'row',margin:1}}>
+            <Image source={revenueIcon} style={{height:24,width:24,margin:10}}  />
+            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Mes revenus</Text>
+        </View>
+        </TouchableOpacity>
 
+        <TouchableOpacity 
+          onPress={()=>{this.props.navigation.navigate('notificationdata')}}
+        >
+        <View style={{flexDirection:'row',margin:0}}>
+            <Image source={require("../../../assets/ProfileIcon/notification.png")} style={{height:24,width:24,margin:10}}  />
+            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Notifications</Text>
+            {
+              this.state.notificationCountValue != 0 ?
+              <Badge status="error" value={this.state.notificationCountValue} badgeStyle={{margin:-20,marginTop:4,marginStart:-15,righ:-30,width:27,height:27,borderRadius:30}}></Badge>
+              :null
+            }
+            
+        </View>
+        </TouchableOpacity>
+
+
+        <TouchableOpacity
+            onPress={()=>{this.props.navigation.navigate('parameter')}}
+        >
+        <View style={{flexDirection:'row',margin:1}}>
+            <Image source={settingIcon} style={{height:24,width:24,margin:10}}  />
+            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Paramètres</Text>
+        </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+            onPress={()=>{this.props.navigation.navigate('demandamount')}}
+        >
+        <View style={{flexDirection:'row',margin:1}}>
+        <Image source={revenueIcon} style={{height:24,width:24,margin:10}}  />
+            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Montant demandé</Text>
+        </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          onPress={()=>{this.props.navigation.navigate('support')}}
+        >
+        <View style={{flexDirection:'row',margin:1}}>
+            <Image source={supporIcon} style={{height:24,width:24,margin:10}}  />
+            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Support</Text>
+        </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={()=>{this.Show_Custom_Alert()}}>
+        <View style={{flexDirection:'row',margin:1}}>
+            <Image source={logoutIcon} style={{height:24,width:24,margin:10}}  />
+            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Déconnexion</Text>
+        </View>
+        </TouchableOpacity>
+        </View> 
+
+
+            </ScrollView>
+            <Text style={{alignSelf:'center',fontSize:14,fontWeight:'700',margin:10,color:"#b41565"}}>Version de l'application : {packageContent.version}</Text>            
+            </Fragment>
+
+            
+
+            :<View>
+              <Text></Text>
+            </View>
+
+
+          }
+       
           <Modal
           visible={this.state.Alert_Visibility}
           animationType={'fade'}
@@ -459,8 +480,8 @@ export default class index extends Component {
 
 
 
-
-        </ImageBackground>
+</View>
+        {/* </ImageBackground> */}
           <BottomNavigator
             currentRoute={'profile2'}
             navigation={this.props.navigation}

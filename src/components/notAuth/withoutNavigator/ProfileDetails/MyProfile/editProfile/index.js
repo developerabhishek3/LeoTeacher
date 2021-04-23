@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component,Fragment} from 'react';
 import {
   View,
   Text,
@@ -39,6 +39,8 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 import { StudentProfile,get_academic_info } from "../../../../../../Api/afterAuth"
 
+
+import Spinner from 'react-native-loading-spinner-overlay';
 import 'moment/locale/zh-cn'
 import moment from  'moment/locale/fr'
 
@@ -71,6 +73,8 @@ export default class index extends Component {
       birth_date:  new Date(),
       date: new Date(),
       profileData:[],
+      isBodyLoaded:false,
+      isSpinner:true,
       // filePath: {},
        
 
@@ -114,10 +118,16 @@ export default class index extends Component {
       ],
       data4:[
         {"id": "1",
-        "value":"Qui"
+        "value":"Débutant"
           },
           {"id": "2",
-          "value":"Non"
+          "value":"Intermédiaire"
+          }, 
+          {"id": "3",
+          "value":"Avancé"
+          },  
+          {"id": "3",
+          "value":"Natif"
           },                  
       ],
     };
@@ -134,84 +144,86 @@ export default class index extends Component {
 
 
 
-async uploadWholeData(){
+ uploadWholeData(){
 
-  const token = await AsyncStorage.getItem('token');
-  const user_id = await AsyncStorage.getItem('user_id');
-
-  const TokenValue = JSON.parse(token);
-  const UserId = JSON.parse(user_id);
+  this.setState({ isSpinner: true }, async () => { 
 
 
 
-  var ActualDate = new Date( this.state.birth_date)
-  var birth_date =JSON.stringify(ActualDate)
-  let birth_date_new =  birth_date.substr(1,10)
-  console.log("getting now velue rere===================",birth_date_new)  
-
-  console.log("here token and user id===============",TokenValue,UserId)
-
-
-  console.log("inside the function calling for upload form data------------------------------",this.state.filePath)
-
-  const URL = `https://www.spyk.fr/api_teacher/update_profile`
-
-
-  let headers = {
-    'Content-Type': 'multipart/form-data',
-    'x-api-key':'leo@2020',
-    'user-id': `${UserId}`,
-    token: `${TokenValue}`,
-    };
+    const token = await AsyncStorage.getItem('token');
+    const user_id = await AsyncStorage.getItem('user_id');
   
-    RNFetchBlob.fetch("post",URL,headers,[      
-      { name: 'profile_pic', filename: 'photo.jpg', type: 'image/png', data: this.state.filePath},
-      { name: 'first_name', data: this.state.first_name },
-      { name: 'last_name', data: this.state.last_name },
-      { name: 'birth_date', data: birth_date_new },
-      { name: 'email', data: this.state.email },
-      { name: 'telephone_no', data: this.state.telephone_no },
-      { name: 'address', data: this.state.address },
-      { name: 'postcode', data: this.state.postcode },
-      { name: 'city', data: this.state.city },
-      { name: 'country', data: this.state.country },   
-      { name: 'q_1_ans', data: this.state.q_1_ans },
-      { name: 'q_2_ans', data: this.state.q_2_ans },
-      { name: 'q_3_ans', data: this.state.q_3_ans },
-      { name: 'q_4_ans', data: this.state.q_4_ans },
-      { name: 'q_5_ans', data: this.state.q_5_ans },
-      { name: 'q_6_ans', data: this.state.q_6_ans }
-
+    const TokenValue = JSON.parse(token);
+    const UserId = JSON.parse(user_id);
+  
+  
+  
+    var ActualDate = new Date( this.state.birth_date)
+    var birth_date =JSON.stringify(ActualDate)
+    let birth_date_new =  birth_date.substr(1,10)
+    console.log("getting now velue rere===================",birth_date_new)  
+  
+    console.log("here token and user id===============",TokenValue,UserId)
+  
+  
+    console.log("inside the function calling for upload form data------------------------------",)
+  
+    const URL = `https://www.spyk.fr/api_teacher/update_profile`
+  
+  
+    let headers = {
+      'Content-Type': 'multipart/form-data',
+      'x-api-key':'leo@2020',
+      'user-id': `${UserId}`,
+      token: `${TokenValue}`,
+      };
     
-      ]).then((resp) => {        
-       
-    console.log("response:::::::" + JSON.stringify(resp.text()));
-    Alert.alert("Message","Mise à jour du profil réussie!")
-    this.props.navigation.navigate("home")
-    
-    
-    if(resp.json().error === "false"){
-    this.setState({
-    
-    });
-
-    }else if(resp.json().error=== "true"){
-    // alert(resp.json().errorMessage)
-    this.showalerts(resp.json().errorMessage)
-    this.setState({
-    animating: false,
-    lodingDialog: false,
-    });
-    
-    }
-    }).catch((err) => {
-    this.setState({
-    animating: false,
-    lodingDialog: false,
-    });
-    console.log("response::::err:::" + err);
-    });
-
+      RNFetchBlob.fetch("post",URL,headers,[      
+        { name: 'profile_pic', filename: 'photo.jpg', type: 'image/png', data: this.state.filePath},
+        { name: 'first_name', data: this.state.first_name },
+        { name: 'last_name', data: this.state.last_name },
+        { name: 'birth_date', data: birth_date_new },
+        { name: 'email', data: this.state.email },
+        { name: 'telephone_no', data: this.state.telephone_no },
+        { name: 'address', data: this.state.address },
+        { name: 'postcode', data: this.state.postcode },
+        { name: 'city', data: this.state.city },
+        { name: 'country', data: this.state.country },   
+        { name: 'q_1_ans', data: this.state.q_1_ans },
+        { name: 'q_2_ans', data: this.state.q_2_ans },
+        { name: 'q_3_ans', data: this.state.q_3_ans },
+        { name: 'q_4_ans', data: this.state.q_4_ans },
+        { name: 'q_5_ans', data: this.state.q_5_ans },
+        { name: 'q_6_ans', data: this.state.q_6_ans }
+        
+        ]).then((resp) => {        
+          this.setState({
+            isSpinner:false
+          }); 
+      console.log("response:::::::" + JSON.stringify(resp.text()));
+      Alert.alert("Message","Mise à jour du profil réussie!")
+      this.props.navigation.navigate("home")
+      
+      
+      if(resp.json().error === "false"){
+      this.setState({
+        isSpinner:false
+      });
+  
+      }else if(resp.json().error=== "true"){
+      // alert(resp.json().errorMessage)
+      this.setState({
+        isSpinner:false
+      });  
+      this.showalerts(resp.json().errorMessage)        
+      }
+      }).catch((err) => {
+      this.setState({
+        isSpinner:false
+      });
+      console.log("response::::err:::" + err);
+      });    
+   })
   }
 
 
@@ -340,21 +352,21 @@ async uploadWholeData(){
     else if (email.length === 0) {
       this.myAlert('Message', 'Veuillez entrer votre adresse électronique!');
     }   
-    else if (q_1_ans.length === 0) {
-      this.myAlert('Message', 'Veuillez choisir votre réponse !');
-    }
-    else if (q_2_ans.length === 0 ) {
-      this.myAlert('Message', 'Veuillez entrer votre réponse');
-    }
-    else if (q_3_ans.length === 0 ) {
-      this.myAlert('Message', 'Veuillez entrer votre réponse".');
-    }
-    else if (q_4_ans.length === 0 ) {
-      this.myAlert('Message', 'Veuillez entrer votre réponse".');
-    }
-    else if (q_5_ans.length === 0 ) {
-      this.myAlert('Message', 'Veuillez choisir votre réponse !');
-    }
+    // else if (q_1_ans.length === 0) {
+    //   this.myAlert('Message', 'Veuillez choisir votre réponse !');
+    // }
+    // else if (q_2_ans.length === 0 ) {
+    //   this.myAlert('Message', 'Veuillez entrer votre réponse');
+    // }
+    // else if (q_3_ans.length === 0 ) {
+    //   this.myAlert('Message', 'Veuillez entrer votre réponse".');
+    // }
+    // else if (q_4_ans.length === 0 ) {
+    //   this.myAlert('Message', 'Veuillez entrer votre réponse".');
+    // }
+    // else if (q_5_ans.length === 0 ) {
+    //   this.myAlert('Message', 'Veuillez choisir votre réponse !');
+    // }
     else if(q_6_ans.length == 0){
       this.myAlert('Message', 'Veuillez choisir votre réponse !');
     }
@@ -373,20 +385,22 @@ async uploadWholeData(){
  
 
 
-
-
-
   chooseFile = () => {
     var options = {
-      title: 'Choisir une photo',
-      // customButtons: [
-      //   { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-      // ],
+      title: 'Choisir une photo',     
       storageOptions: {
-        skipBackup: true,
+        skipBackup: false,
         path: 'images',
       },
     };
+    // let options = {
+    //   title: 'Choisir une photo',
+    //   maxWidth: 256,
+    //   maxHeight: 256,
+    //   storageOptions: {
+    //     skipBackup: true
+    //   }
+    // };
     ImagePicker.showImagePicker(options, response => {
       // console.log('Response = ', response);
 
@@ -459,13 +473,13 @@ async uploadWholeData(){
 
     const { profileData,isBodyLoaded,isSpinner } = this.state;
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{flex: 1,}}>
           <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#5541E1" translucent = {false}/>
-        <ImageBackground
+        {/* <ImageBackground
           source={bgImg}
           resizeMode="cover"
-          style={{flex: 2, borderWidth: 0, width: '100%'}}>
-          <View style={Styles.header}>
+          style={{flex: 2, borderWidth: 0, width: '100%'}}> */}
+          {/* <View style={Styles.header}>
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.goBack();
@@ -479,43 +493,57 @@ async uploadWholeData(){
               </TouchableOpacity>
               <Image source={logo} style={Styles.headertxtInputImg1} />
             </View>
-          </View>
-          {/* {
-            this.state.path == "" ?
-              <View style={{marginTop: 60}}>
-                <Image  source={{
-              uri: `https://www.spyk.fr/${profileImg}`,
-            }}  style={Styles.peopleStyle} />
-              </View> 
-            : this.state.path == "" ?
+          </View> */}
 
-            <View style={{marginTop: 60}}>
-            <Image  source={require("../../../../../../assets/icon/avatar.png")} style={Styles.peopleStyle} />
-          </View>
 
-            : <View style={{marginTop: 60}}>
-            <Image  source={{ uri: this.state.path }} style={Styles.peopleStyle} />
-          </View>
+          <ImageBackground source={require("../../../../../../assets/icon/bg1.png")} resizeMode="cover" style={{height:200,width:"100%",flexDirection:"row",justifyContent:"space-between"}}>                 
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.goBack();
+              }}>
+              <Image source={back} style={Styles.headertxtInputImg} />
+            </TouchableOpacity>
+            <Text style={Styles.headerTxt}>       Editer le Profil</Text>
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity onPress={()=>{this.validateUser()}}>
+                <Image source={Right} style={Styles.headertxtInputImg2} />
+              </TouchableOpacity>
+              <Image source={logo} style={Styles.headertxtInputImg1} />
+            </View>
+          
+          </ImageBackground>
 
-           
-          } */}
 
-          {
-            this.state.path == "" ?
-            <View style={{marginTop: 60}}>
-            <Image  source={require("../../../../../../assets/icon/avatar.png")} style={Styles.peopleStyle} />
-          </View>
-          :
-          this.state.path == "" ?
-          <View style={{marginTop: 60}}>
-            <Image  source={{
-          uri: `https://www.spyk.fr/${profileImg}`,
-        }}  style={Styles.peopleStyle} />
-          </View> :
-            <View style={{marginTop: 60}}>
-            <Image  source={{ uri: this.state.path }} style={Styles.peopleStyle} />
-          </View>
-          }
+
+          <Spinner visible={this.state.isSpinner}/>   
+              {
+                this.state.isBodyLoaded == true ?
+                <Fragment>
+
+
+
+
+
+               
+            {
+              this.state.path == "" ?
+              <View style={{marginTop: -60}}>
+              <Image  source={require("../../../../../../assets/icon/avatar.png")} style={Styles.peopleStyle} />
+            </View>
+            :
+          //   this.state.path == "" ?
+          //   <View style={{marginTop: -60}}>
+          //     <Image  source={{
+          //   uri: `https://www.spyk.fr/${profileImg}`,
+          // }}  style={Styles.peopleStyle} />
+
+
+
+          //   </View> :
+              <View style={{marginTop: -60}}>
+              <Image  source={{ uri: this.state.path }} style={Styles.peopleStyle} />
+            </View>
+            }
 
 
 
@@ -631,7 +659,7 @@ async uploadWholeData(){
                onChangeText={(email) => this.setState({email})}              
               style={Styles.txtInput} >{profileData.email}</TextInput>
 
-              <View style={{alignSelf: 'flex-start'}}>
+              {/* <View style={{alignSelf: 'flex-start'}}>
                 <Text style={Styles.txtStyle1}>Diplôme</Text>
                 <View style={Styles.radiobtnMainView}>
                 <View style={{flexDirection:'row',flexWrap:'wrap'}}>
@@ -660,9 +688,9 @@ async uploadWholeData(){
                         }
                     </View>
                 </View>
-              </View>
+              </View> */}
 
-              <View style={{alignSelf: 'flex-start'}}>
+              {/* <View style={{alignSelf: 'flex-start'}}>
                 <Text style={Styles.txtStyle1}>
                   Vos compétences linguistiques{' '}
                 </Text>
@@ -694,18 +722,18 @@ async uploadWholeData(){
                     </View>
                 
                 </View>
-              </View>
+              </View> */}
 
-              <View style={{alignSelf: 'center', width: '90%'}}>
+              {/* <View style={{alignSelf: 'center', width: '90%'}}>
                 <Text style={{fontSize: 14, fontWeight: '600', color: 'gray'}}>
                   Devenez coach d'anglais LEO aujourd'hui et gagnez un revenu
                   depuis chez vous avec des horaires que vous choisissez !
                 </Text>
-              </View>
+              </View> */}
 
              
 
-              <View
+              {/* <View
                 style={{
                   margin: 6,
                   borderColor: 'gray',
@@ -726,9 +754,9 @@ sur l'application LEO ?
                 >{this.state.q_3_ans}</TextInput>
 
 
-              </View>
+              </View> */}
 
-              <View
+              {/* <View
                 style={{
                   margin: 6,
                   borderColor: 'gray',
@@ -746,13 +774,13 @@ sur l'application LEO ?
                     onChangeText={(q_4_ans) => this.setState({q_4_ans})}
                 // style={Styles.txtInput1}
                 >{this.state.q_4_ans}</TextInput>
-              </View>
+              </View> */}
 
 
 
 
 
-
+{/* 
               <Text style={{fontSize:16,fontWeight:'700',alignSelf:'flex-start',marginStart:30,color:"gray"}}>Avez-vous deja enseigne l'anglais ? </Text>
 
               <View style={Styles.radiobtnMainView}>
@@ -781,11 +809,11 @@ sur l'application LEO ?
                             })                         
                         }
                     </View>
-                </View>
+                </View> */}
 
 
 
-                <Text style={{fontSize:16,fontWeight:'700',alignSelf:'flex-start',marginStart:30,color:"gray"}}>Pouvez-vous parler francais ?</Text>
+                <Text style={{fontSize:16,fontWeight:'700',alignSelf:'flex-start',marginStart:30,color:"gray"}}>Quel est votre niveau de français ?</Text>
 
                   <View style={Styles.radiobtnMainView}>
                     <View style={{flexDirection:'row',flexWrap:'wrap'}}>
@@ -815,10 +843,64 @@ sur l'application LEO ?
                         </View>
                     </View>
 
+
+
+
+
             </View>
           </ScrollView>
           </KeyboardAwareScrollView>
-        </ImageBackground>
+
+
+
+
+
+
+
+
+
+
+
+                  
+                  </Fragment>
+
+
+
+
+
+                :
+
+                <View>
+              <Text></Text>
+            </View>
+
+
+              }
+
+
+
+
+          {/* {
+            this.state.path == "" ?
+              <View style={{marginTop: 60}}>
+                <Image  source={{
+              uri: `https://www.spyk.fr/${profileImg}`,
+            }}  style={Styles.peopleStyle} />
+              </View> 
+            : this.state.path == "" ?
+
+            <View style={{marginTop: 60}}>
+            <Image  source={require("../../../../../../assets/icon/avatar.png")} style={Styles.peopleStyle} />
+          </View>
+
+            : <View style={{marginTop: 60}}>
+            <Image  source={{ uri: this.state.path }} style={Styles.peopleStyle} />
+          </View>
+
+           
+          } */}
+
+                {/* </ImageBackground> */}
       </View>
     );
   }

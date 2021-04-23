@@ -34,6 +34,15 @@ constructor(props){
     q_4_ans:"",
     q_5_ans:"", 
     q_6_ans:"",
+    
+    diploma:"",
+    interest:"",
+    aboutYouYourInterest:"",
+    YourEnglishNeeds:"",
+    languageSkills:"",
+    frenchLevel:"",
+    englishLevel:"",
+    coach_type:"",
   }
 }
 
@@ -56,8 +65,9 @@ componentDidMount = async () => {
       var profileData = GetProfileDetails.response.my_profile;
       var profile_url  = GetProfileDetails.response.my_profile.profile_url;
       var birth_date = GetProfileDetails.response.my_profile.dob
+      var coach_type = GetProfileDetails.response.my_profile.coach_type
       console.log("getting GetProfileDetails data----------",profileData)
-      this.setState({ isBodyLoaded: true,isSpinner: false,profileData,profile_url,birth_date});
+      this.setState({ isBodyLoaded: true,isSpinner: false,profileData,profile_url,birth_date,coach_type});
     }
    
     else{
@@ -69,24 +79,23 @@ componentDidMount = async () => {
     }   
     // console.log("getting country response----------------",countryData.country_list)
   };
-
 
 
   fetchget_academic_info = async () => {
     const get_academic_infoResponse = await get_academic_info();
     if (get_academic_infoResponse.result == true) {
      var AcademicDetails = get_academic_infoResponse.response.academic_info;
-     var q_1_ans = get_academic_infoResponse.response.academic_info.q_1
-     var q_2_ans = get_academic_infoResponse.response.academic_info.q_2
-     var q_3_ans = get_academic_infoResponse.response.academic_info.q_3
-     var q_4_ans = get_academic_infoResponse.response.academic_info.q_4
-     var q_5_ans = get_academic_infoResponse.response.academic_info.q_5
-     var q_6_ans = get_academic_infoResponse.response.academic_info.q_6
+     var diploma = get_academic_infoResponse.response.academic_info.q_1
+     var languageSkills = get_academic_infoResponse.response.academic_info.q_2
+     var frenchLevel = get_academic_infoResponse.response.academic_info.q_6
+     var englishLevel = get_academic_infoResponse.response.academic_info.q_8
 
-      console.log("getting get academic detail data----------",AcademicDetails)
-      this.setState({ isBodyLoaded: true,isSpinner: false,AcademicDetails,
-        q_1_ans,q_2_ans,q_3_ans,q_4_ans,q_5_ans,q_6_ans  
-      });
+     var aboutYouYourInterest = get_academic_infoResponse.response.academic_info.q_4
+     var YourEnglishNeeds = get_academic_infoResponse.response.academic_info.q_5;
+    //  var languageSkills = get_academic_infoResponse.response.academic_info.q_5;
+
+      console.log("getting get academic detail data----------",get_academic_infoResponse.response.academic_info)
+      this.setState({frenchLevel,diploma,languageSkills,aboutYouYourInterest,YourEnglishNeeds,englishLevel})
     }
    
     else{
@@ -98,6 +107,7 @@ componentDidMount = async () => {
     }   
     // console.log("getting country response----------------",countryData.country_list)
   };
+
 
   ratingCompleted(rating) {
     console.log("Rating is: " + rating)
@@ -139,7 +149,7 @@ componentDidMount = async () => {
 
     // const userMap = Object.assign(profileData)
     return (
-      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+      <View style={{flex:1,}}>
         <Spinner visible={this.state.isSpinner}/>
         <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#5541E1" translucent = {false}/>
         {/* {
@@ -148,24 +158,8 @@ componentDidMount = async () => {
 
 
 
-<ImageBackground source={bgImg} resizeMode="cover" style={{flex:2,borderWidth:0,width:'100%'}}>
-        {/* <View style={Styles.header}>
-        <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.goBack();
-            }}>
-          <Image source={back} style={Styles.headertxtInputImg} />
-          </TouchableOpacity>
-          <Text style={Styles.headerTxt}>        Mon profil</Text>
-          <View style={{flexDirection:'row'}}>
-          <Image source={logo} style={Styles.headertxtInputImg1} />
-          <TouchableOpacity 
-              onPress={()=>{this.props.navigation.navigate("editprofile",{profile_url:this.state.profile_url,birthDate:this.state.birth_date})}}
-          >
-           <Image source={Edit} style={Styles.headertxtInputImg2} />
-          </TouchableOpacity>
-          </View>
-        </View> */}
+{/* <ImageBackground source={bgImg} resizeMode="cover" style={{flex:2,borderWidth:0,width:'100%'}}> */}
+     
           <ImageBackground source={require("../../../../../assets/icon/bg1.png")} resizeMode="cover" style={{height:200,width:"100%",flexDirection:"row",justifyContent:"space-between"}}> 
 <TouchableOpacity
             onPress={() => {
@@ -200,7 +194,7 @@ componentDidMount = async () => {
             }}  style={Styles.peopleStyle} />
           }        
           </View>          
-          <ScrollView>
+          <ScrollView style={{marginTop:4,marginBottom:15}}>
             
 
           <View style={{flex:2,borderWidth:0,width:'99%',alignSelf:'center',marginTop:6,marginBottom:15}}>
@@ -217,7 +211,7 @@ componentDidMount = async () => {
             <View style={Styles.nameStyleView}>
               <Text style={Styles.nameHeading}> Numéro de téléphone</Text>
 
-    <Text style={Styles.nameHeadingTxt}>+{profileData.phone}</Text>
+              <Text style={Styles.nameHeadingTxt}>{profileData.phone}</Text>
 
             </View>
             </View>
@@ -229,7 +223,7 @@ componentDidMount = async () => {
             <View style={Styles.nameStyleView}>
               <Text style={Styles.nameHeading}>Email</Text>
 
-    <Text style={Styles.nameHeadingTxt}>{profileData.email}</Text>
+              <Text style={Styles.nameHeadingTxt}>{profileData.email}</Text>
 
             </View>
 
@@ -248,46 +242,57 @@ componentDidMount = async () => {
 
 
 
-            <View style={Styles.maincontentContaine}>
-            <View style={Styles.nameStyleView}>
-              <Text style={Styles.nameHeading}>Diplôme</Text>
-
-              <Text style={Styles.nameHeadingTxt}>{} </Text>
-
-            </View>
-
-            <View style={Styles.nameStyleView}>
-              <Text style={Styles.nameHeading}>Vos compétences linguistiques</Text>
-
-              <Text style={Styles.nameHeadingTxt}>anglais professionnel</Text>
-
-            </View>
-            </View>
 
             <View style={Styles.maincontentContaine}>
-
             <View style={Styles.nameStyleView}>
               <Text style={Styles.nameHeading}>Address </Text>
-
               <Text style={Styles.nameHeadingTxt}>{profileData.address} </Text>
-
             </View>
             <View style={Styles.nameStyleView}>
               <Text style={Styles.nameHeading}>Code postal </Text>
-
               <Text style={Styles.nameHeadingTxt}>{profileData.postcode} </Text>
+            </View>          
+            </View>
+
+
+
+
+            
+         
+
+
+           
+           <View style={Styles.maincontentContaine}>
+            <View style={Styles.nameStyleView}>
+              <Text style={Styles.nameHeading}>Diplôme</Text>
+
+            <Text style={Styles.nameHeadingTxt}>{this.state.diploma}</Text>
 
             </View>
 
-          
+            <View style={Styles.nameStyleView}>
+              <Text style={Styles.nameHeading}>Compétences linguistiques</Text>
+              <Text style={Styles.nameHeadingTxt}>{this.state.languageSkills}</Text>        
+              </View>
             </View>
 
-            {/* <View style={Styles.addressView}>
-                <Text style={Styles.nameHeading}>Objectif</Text>
-                <Text style={Styles.nameHeadingTxt}>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century .</Text>
-                <Text style={Styles.nameHeadingTxt}>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century .</Text>
+            <View style={Styles.maincontentContaine}>
+               <View style={Styles.nameStyleView}>           
+                <Text style={Styles.nameHeading}>Niveau d'français</Text>
+                <Text style={Styles.nameHeadingTxt}>{this.state.frenchLevel}</Text>
+           </View> 
 
-            </View> */}
+
+           <View style={Styles.nameStyleView}>           
+                <Text style={Styles.nameHeading}>Type d'entraîneur</Text>
+                <Text style={Styles.nameHeadingTxt}>{this.state.coach_type}</Text>  
+                                              
+           </View> 
+           </View>
+          {/* <View style={Styles.nameStyleView1}>                   
+                    <Text style={Styles.nameHeading1}>Niveau d'anglais</Text>
+                    <Text style={Styles.nameHeadingTxt}></Text>
+          </View> */}
 
 
 
@@ -302,7 +307,7 @@ componentDidMount = async () => {
           </Fragment>  
           
           :null}
-        </ImageBackground>      
+        {/* </ImageBackground>       */}
 
 
             </Fragment>     
