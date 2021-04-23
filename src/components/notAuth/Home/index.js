@@ -506,7 +506,12 @@ checkReserveCourse(){
 
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#5541E1" translucent = {false}/>
+        {/* <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#5541E1" translucent = {false}/> */}
+        <StatusBar
+          barStyle={'light-content'}
+          backgroundColor="#5541E1"
+          hidden={false}
+        />
         <Spinner visible={this.state.isSpinner} />
         <View style={Styles.header}>
           <Text style={Styles.headerTxt}></Text>
@@ -631,6 +636,7 @@ checkReserveCourse(){
                           <View style={{flexDirection: 'row',justifyContent:"center"}}>
                                     <Stars
                                     // update={(rating)=>{this.setState({rating: rating})}}
+                                    disabled={true}
                                       default={this.state.ratingCount}
                                       count={5}
                                       half={true}
@@ -640,9 +646,6 @@ checkReserveCourse(){
                                       halfStar={<Image source={require("../../../assets/icon/113.png")} style={{height:27,width:27,margin:3}} />}
                                     />
                                     <Text style={{marginStart:10,color:"gray",fontSize:24,fontWeight:"600",margin: 3}}>{reviewCount} Avis </Text>
-
-
-
                                   </View>
 
 
@@ -724,10 +727,10 @@ checkReserveCourse(){
 
           <View style={Styles.continueBtn}>
             <TouchableOpacity
-              onPress={() => {
-                this.Show_Custom_Alert();
-              }}
-              // onPress={()=>{this.props.navigation.navigate("levelchoice")}}
+              // onPress={() => {
+              //   this.Show_Custom_Alert();
+              // }}
+              onPress={()=>{this.props.navigation.navigate('choosetime');}}
             >
               <Text style={Styles.continueBtnTxt}>
                 Définissez votre disponibilité

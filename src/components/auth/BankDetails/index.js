@@ -16,7 +16,7 @@ import logo from '../../../assets/icon/96.png';
 import facebook from '../../../assets/icon/fb.png';
 import {TextInput} from 'react-native-gesture-handler';
 
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {add_update_bank_info} from '../../../Api/auth'
 
 export default class index extends Component {
@@ -155,12 +155,13 @@ export default class index extends Component {
           resizeMethod="resize"
           resizeMode="stretch"
           style={Styles.bgImgStyle}>
+             <KeyboardAwareScrollView enableOnAndroid={true} extraHeight={70} extraScrollHeight={70} showsVerticalScrollIndicator={false}>
           <ScrollView>
             <View style={{borderWidth: 0, marginBottom: 20, marginTop: 20}}>
               <View style={Styles.headerView}>
                 <Image source={logo} style={Styles.headerLogo} />
 
-                <View >
+                <View style={{marginStart:30}}>
                 <Text style={Styles.headerTxt}>Coordonnées</Text>
                 <Text style={Styles.headerTxt1}>bancaires</Text> 
 
@@ -208,7 +209,7 @@ export default class index extends Component {
 
               </View>
 
-              <View style={Styles.subHeader}>
+              <View style={Styles.subHeader1}>
                 <Text style={Styles.txtStyle2}>Vos coordonnées et votre profil seront envoyés au service administratif & RH de SPYK.
 Après confirmation, votre compte coach d'anglais SPYK sera activé dans un délai de 48h si votre profil est retenu.</Text>
                 {/* <Text style={Styles.txtStyle1}>vous enverrons un lien pour réinitialiser</Text>
@@ -237,6 +238,7 @@ Après confirmation, votre compte coach d'anglais SPYK sera activé dans un dél
               </View> */}
             </View>
           </ScrollView>
+          </KeyboardAwareScrollView>
         </ImageBackground>
       </View>
     );

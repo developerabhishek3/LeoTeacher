@@ -166,9 +166,9 @@ export default class index extends Component {
                                     <Image source={require("../../../../../assets/icon/euro-currency-symbol-1.png")} style={{height:12,width:12,margin:7}} />
                                  </View>
                               
-                                 <View style={{flexDirection:'row',margin:2}}> 
-                            <Text style={{margin:3,fontWeight:'600',color:"gray"}}>Mode de paiement :</Text>
-                            <Text style={{margin:3,fontWeight:'700',color:"#b41565"}}>{singleMap.to_bank_or_paypal_account}</Text>
+                            <View style={{flexDirection:'row',margin:2}}> 
+                              <Text style={{margin:3,fontWeight:'600',color:"gray"}}>Mode de paiement :</Text>
+                              <Text style={{margin:3,fontWeight:'700',color:"#b41565"}}>{singleMap.to_bank_or_paypal_account}</Text>
                             </View>
 
                                
@@ -206,8 +206,7 @@ export default class index extends Component {
 
 
           
-        </ImageBackground>
-          
+        </ImageBackground>          
       </View>
     )
   }

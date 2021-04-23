@@ -44,8 +44,23 @@ export default StyleSheet.create({
     marginTop:15,
     marginEnd: 25,
   },
+  nameStyleView1:{
+    margin:7,borderWidth:0,  
+  },
+  nameHeading1:{
+    fontSize:10,color:'#b41565',
+    fontWeight:'700',
 
-  
+    borderWidth:0,
+    padding:3,margin:0,marginStart:12
+  },
+  nameHeadingTxt1:{
+    fontSize:12,color:'gray',
+    fontWeight:'700',
+    padding:2,
+    marginStart:12
+    
+  },
   mainContainer:{
     borderWidth: 0,
     flex: 2,
@@ -80,7 +95,7 @@ export default StyleSheet.create({
     padding:3
   },
   nameHeadingTxt:{
-    fontSize:13,color:'gray',
+    fontSize:12,color:'gray',
     fontWeight:'700',
     padding:2,
     

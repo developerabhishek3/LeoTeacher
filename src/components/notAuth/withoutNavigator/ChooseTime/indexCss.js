@@ -52,10 +52,13 @@ export default StyleSheet.create({
     width: '96%',
     alignSelf: 'center',
     borderRadius: 12,
-    marginBottom: 20,
+    marginBottom: 30,
+    borderWidth:1,
+    
+    borderColor:"#5495ED"
   },
   headertxtInputImg: {
-    height: 30,
+    height: 40,
     width: 30,
     margin: 10,
     marginEnd: 15,

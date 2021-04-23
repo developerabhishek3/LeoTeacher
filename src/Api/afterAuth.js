@@ -1629,3 +1629,118 @@ export async function my_rate_review() {
     return {result: false, error};
   }
 }
+
+
+
+    
+export async function availability_dates(body ={}) {
+
+  const token = await AsyncStorage.getItem('token');
+  const user_id = await AsyncStorage.getItem('user_id');
+  
+  const TokenValue = JSON.parse(token);
+  const UserId = JSON.parse(user_id)
+
+  // console.log("ready body before send - - - - - -",body)
+  
+  try {      
+    const availability_datesResponse = await Axios.post(
+      'https://www.spyk.fr/api_teacher/availability_dates',
+      body,
+      {
+               headers: {...commonHeader, 'user-id' : `${UserId}`, 'token' :`${TokenValue}`}   
+      },
+    );
+    if (availability_datesResponse.status) {
+      return {result: true, response: availability_datesResponse.data};
+    } else {
+      return {result: false, response: availability_datesResponse.data};
+    }
+  } catch (err) {
+    let error = new Error();
+    const {data, status} = err.response;
+    error.response = err.response;
+    if (status == 400 && data.error === 'invalid_grant') {
+      error.message = 'Invalid Credentials';
+    } else {
+      error.message = 'Request Failed';
+    }
+    throw error;
+  }
+  }
+
+
+  export async function availability_times(body ={}) {
+
+    const token = await AsyncStorage.getItem('token');
+    const user_id = await AsyncStorage.getItem('user_id');
+    
+    const TokenValue = JSON.parse(token);
+    const UserId = JSON.parse(user_id)
+  
+    // console.log("ready body before send - - - - - -",body)
+    
+    try {      
+      const availability_timesResponse = await Axios.post(
+        'https://www.spyk.fr/api_teacher/availability_times',
+        body,
+        {
+                 headers: {...commonHeader, 'user-id' : `${UserId}`, 'token' :`${TokenValue}`}   
+        },
+      );
+      if (availability_timesResponse.status) {
+        return {result: true, response: availability_timesResponse.data};
+      } else {
+        return {result: false, response: availability_timesResponse.data};
+      }
+    } catch (err) {
+      let error = new Error();
+      const {data, status} = err.response;
+      error.response = err.response;
+      if (status == 400 && data.error === 'invalid_grant') {
+        error.message = 'Invalid Credentials';
+      } else {
+        error.message = 'Request Failed';
+      }
+      throw error;
+    }
+    }
+  
+
+    export async function availability_times_delete(body ={}) {
+
+      const token = await AsyncStorage.getItem('token');
+      const user_id = await AsyncStorage.getItem('user_id');
+      
+      const TokenValue = JSON.parse(token);
+      const UserId = JSON.parse(user_id)
+    
+      console.log("ready body before send - - - - - -",body,TokenValue,UserId)
+      
+      try {      
+        const availability_times_deleteResponse = await Axios.post(
+          'https://www.spyk.fr/api_teacher/availability_times_delete',
+          body,
+          {
+                   headers: {...commonHeader, 'user-id' : `${UserId}`, 'token' :`${TokenValue}`}   
+          },
+        );
+        if (availability_times_deleteResponse.status) {
+          return {result: true, response: availability_times_deleteResponse.data};
+        } else {
+          return {result: false, response: availability_times_deleteResponse.data};
+        }
+      } catch (err) {
+        let error = new Error();
+        const {data, status} = err.response;
+        error.response = err.response;
+        if (status == 400 && data.error === 'invalid_grant') {
+          error.message = 'Invalid Credentials';
+        } else {
+          error.message = 'Request Failed';
+        }
+        throw error;
+      }
+      }
+    
+  

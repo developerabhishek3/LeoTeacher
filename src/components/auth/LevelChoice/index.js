@@ -171,7 +171,7 @@ export default class index extends Component {
                 </View>
               </View>
 
-              <View style={{marginTop: 30}}>
+              <View style={{marginTop: 50}}>
                 <View style={Styles.subHeader}>
                   <Text style={Styles.txtStyle1}>Sélectionner les niveaux de coachings que vous souhaitez donner :</Text>
                 </View>

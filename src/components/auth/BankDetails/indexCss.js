@@ -62,7 +62,11 @@ export default StyleSheet.create({
     margin: 10,
   },
   subHeader: {
-    marginTop: 10,
+    marginTop: 80,
+    margin: 10,
+  },
+  subHeader1: {
+    marginTop: 0,
     margin: 10,
   },
   txtStyle1: {

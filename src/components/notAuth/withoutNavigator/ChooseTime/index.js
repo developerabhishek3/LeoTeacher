@@ -22,15 +22,15 @@ import rightIcon from '../../../../assets/icon/33.png';
 import calenderIcon from '../../../../assets/icon/10.png';
 import moment, { months } from 'moment';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 import Styles from './indexCss';
-
+import BottomNavigator from '../../../../router/BottomNavigator';
 import {RadioButton} from 'react-native-paper';
-
+// window.location.reload(false);
 let today = '';
+let newDaysObject4 = [];
 
-
-import {get_waiting_timeFunction,set_availability} from '../../../../Api/afterAuth';
+import {get_waiting_timeFunction,set_availability,availability_dates,availability_times,availability_times_delete} from '../../../../Api/afterAuth';
 
 
 
@@ -51,6 +51,8 @@ export default class index extends Component {
       value: 'first',
       Model_Visibility: false,
       Alert_Visibility: false,
+      isBodyLoaded:false,
+      isSpinner: true,
       waitingTime:0,
 
       reserve_time:'',
@@ -65,6 +67,11 @@ export default class index extends Component {
       date_slot:"",
       time_slot:"",
       exacttime_new:"",
+      DatesData:[],
+      currentYear:0,
+      currenMonth:0,
+      TimesSlot:[],
+      currentSelectedDate:"",
       time_slot:[     
         {
           "id":"2",
@@ -188,7 +195,27 @@ export default class index extends Component {
 
 
   componentDidMount = async () => {
-    this.fetchget_waiting_timeFunction()
+    // this.fetchget_waiting_timeFunction()
+
+    let currentYear  = new Date().getFullYear()
+    let currenMonth = new Date().getMonth()+1
+
+    
+
+    setTimeout(() => {
+      this.setState({currenMonth,currentYear})  
+    }, 10);
+
+
+
+
+    setTimeout(() => {
+      this.fetchavailability_dates()        
+    }, 400);
+    
+    
+    
+    
 
     // this.fetchTimeSlot()
     BackHandler.addEventListener('hardwareBackPress', () =>
@@ -203,12 +230,124 @@ export default class index extends Component {
         var waitingTime = get_waiting_timeFunctionResponse.response.waiting_time
         console.log("getting get_waiting_timeFunctionResponse data----------",waitingTime)
       }
-      this.setState({waitingTime});
+      this.setState({waitingTime,isBodyLoaded: true,isSpinner: false});
+      // console.log("getting country response----------------",levelsData.country_list)
+    };
+
+
+    fetchavailability_times =  (day) => {
+
+      this.setState({ isSpinner: true }, async () => {    
+
+        const currentSelectedDate = moment(day.dateString).format('YYYY-MM-DD');
+        console.log("getting inside the time function time date-  - - - - - -  -",currentSelectedDate) 
+        this.setState({currentSelectedDate})       
+        const availability_timesResponse = await availability_times({
+        av_date:currentSelectedDate
+        });
+        if (availability_timesResponse.result == true) {      
+           console.log("getting timsslots inside API fcunction - - - - - -",availability_timesResponse.response)
+           var TimesSlot = availability_timesResponse.response.time_data
+       
+        }
+        this.setState({TimesSlot,isBodyLoaded: true,isSpinner: false}); 
+       })
+
+    };
+
+
+    
+    fetchavailability_times_delete = async (currentTime) => {  
+      console.log("inside delete time slot API - - - - -  - - - - - -",currentTime,this.state.currentSelectedDate)                  
+      const availability_times_deleteResponse = await availability_times_delete({
+        av_date:this.state.currentSelectedDate,
+        av_time:currentTime
+      });
+      if (availability_times_deleteResponse.result == true) {     
+        //  Alert.alert("Message",availability_times_deleteResponse.response.message) 
+         this.fetchavailability_dates()
+        //  this.fetchavailability_times(day)
+         this.setState({TimesSlot:[]})
+        //  this.forceUpdate();
+        // if(this.state.currentSelectedDate != "" || this.state.currentSelectedDate != undefined || this.state.currentSelectedDate != null){
+        //   this.fetchavailability_times()
+        // }
+         
+         console.log("getting timsslots inside API fcunction - - - - - -",availability_times_deleteResponse.response)
+        //  var TimesSlot = availability_timesResponse.response.time_data     
+      }         
+    };
+
+
+    
+    
+
+
+
+
+
+    fetchavailability_dates =  () => {
+
+      this.setState({ isSpinner: true }, async () => {   
+
+
+
+      
+        const {currenMonth,currentYear} = this.state;
+        // console.log("insdie API FUNCTIon  - - - - - - - -",month,year)
+         
+      
+        const availability_datesResponse = await availability_dates({
+          month:currenMonth,
+          year:currentYear
+        }
+        );
+        if(availability_datesResponse.result == true) {
+          // console.log("getting availability_datesResponse data----------",DatesData)
+          var DatesData = availability_datesResponse.response.date_data;
+          var obj1 = availability_datesResponse.response.date_data;
+          var count1 = Object.keys(obj1).length;
+  
+  
+          for (var i = 0; i < count1; i++) {
+            // var dates;
+            // var startdates = moment(obj1[i].startDate).format("YYYY-MM-DD");
+            // console.log('Available Date ' + obj1[i].date_slot);
+    
+            var pay = obj1[i].date_slot;
+            newDaysObject4[i] = pay;
+          }
+          var posttt = newDaysObject4;
+    
+          posttt.forEach((day) => {
+            this.state.markedDates = {
+              ...this.state.markedDates,
+              [day]: {
+                selected: true,
+                selectedColor: '#5c4ccc',
+              },
+            };
+          });
+    
+          var posttt2 = newDaysObject4;
+          // console.log('Post Data:@@@::' + posttt2);
+    
+          posttt2.forEach((day) => {
+            this.state.markedDates_blue = {
+              ...this.state.markedDates_blue,
+              [day]: {
+                selected: true,
+                selectedColor: '#5c4ccc',
+              },
+            };
+          });
+        
+        }
+        this.setState({DatesData,isBodyLoaded: true,isSpinner: false});
+       })
       // console.log("getting country response----------------",levelsData.country_list)
     };
   
-
-
 
 
 
@@ -237,19 +376,56 @@ export default class index extends Component {
   
   
   
+// set_date = (day) => {
+//   const d = moment(day.dateString).format("YYYY-MM-DD")
+// this.setState({date_slot: d});
+//   // let color = 'rgba(255,100,120,10)'
+//   let color = "#b41565"
+//   if (this.state.markedDates[d]) {
+//     // Alert.alert('Message', 'Veuillez choisir les dates!');
+//   } else{
+
+//     const markedDates_blue = {
+
+//       ...this.state.markedDates_blue,
+      
+//       [d]: {
+//       ...this.state.markedDates_blue[d],
+//       selected:true,
+//       selectedColor: color,
+//       marked: true
+//       }
+//       }
+//       this.setState({ markedDates: markedDates_blue })
+//   }
+//   // console.log("selected marked date --------",markedDates_blue)
+// };
+
+
 set_date = (day) => {
+  // console.log('getting inside the funcation-=------------', day);
+  const d = moment(day.dateString).format('YYYY-MM-DD');
+  this.setState({date_slot: d});
+  // console.log('Selected Date ', d);
+    // let color = 'rgba(255,100,120,10)'
+    let color = "#b41565";
+    // console.log('Selected Marked Date ', this.state.markedDates);
 
-  const d = moment(day.dateString).format("YYYY-MM-DD")
-this.setState({date_slot: d});
-  // let color = 'rgba(255,100,120,10)'
+  
 
-  let color = "#b41565"
+  if (this.state.markedDates_blue[d]) {
+    const color = '#b41565';
 
+    const markedDates_blue = {
+      ...this.state.markedDates_blue,
+      [d]: {
+        ...this.state.markedDates_blue[d],
+        selectedColor: color,
+      },
+    };
 
-  if (this.state.markedDates[d]) {
-    Alert.alert('Message', 'Veuillez choisir les dates!');
+    this.setState({markedDates: markedDates_blue});
   } else{
-
     const markedDates_blue = {
 
       ...this.state.markedDates_blue,
@@ -262,9 +438,11 @@ this.setState({date_slot: d});
       }
       }
       this.setState({ markedDates: markedDates_blue })
+    let showTime = [];
+    this.setState({ChooseDay: ''});
+  
+    
   }
-
-  // console.log("selected marked date --------",markedDates_blue)
 };
 
 
@@ -314,10 +492,13 @@ set_availabilityData = async () => {
   });
  
   if (set_availabilityResponse.result == true) {
+  
      if(set_availabilityResponse.response.status == true){
       console.log("getting seat availablivty response+++++++++++++++++",set_availabilityResponse.response) 
+      
       Alert.alert("Message",set_availabilityResponse.response.message)
-      // this.props.navigation.navigate("home")
+      // this.setState({timeslot:[],date_slot:""})
+      this.props.navigation.navigate("home")
      }
      else{
       Alert.alert("Message",set_availabilityResponse.response.message)
@@ -342,6 +523,8 @@ set_availabilityData = async () => {
 
 
   render() {
+    const {TimesSlot} = this.state;
+    console.log("getting time slot here inside render - - - -  - - -- -",TimesSlot)
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <StatusBar
@@ -353,31 +536,51 @@ set_availabilityData = async () => {
           <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
           <Image source={back} style={Styles.headertxtInputImg1} />
           </TouchableOpacity>
-          <Text style={Styles.headerTxt}>Définir sa disponibilité</Text>
+          <Text style={Styles.headerTxt}>Mes disponibilités</Text>
           <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => {
                 this.Show_Custom_Alert();
               }}>
               <Image source={rightIcon} style={Styles.headertxtInputImg2} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <Image source={logo} style={Styles.headertxtInputImg} />
           </View>
         </View>
-
+        <Spinner visible={this.state.isSpinner} />
         <View style={Styles.mainContentView}>
           <ScrollView>
-            <View style={Styles.subheaderView}>
+
+        {
+          this.state.isBodyLoaded == true ?
+
+
+          <Fragment>
+
+                <View style={Styles.subheaderView}>
               <Text style={Styles.subheaderTxt}>Choisissez une date</Text>
               <Image source={calenderIcon} style={Styles.headertxtInputImg1} />
             </View>          
                 <Calendar
                   style={Styles.calenderStyle}
-                  minDate={today}
-                  onMonthChange={(month) => {console.log('month changed  - - - - - - - -  - - --',month.month,     month.year)}}
+                  // minDate={today}
+                  onMonthChange={
+                    (month) =>
+                     { 
+                       let currenMonth = month.month
+                       let currentYear = month.year
+                       this.setState({currenMonth:month.month,currentYear:month.year});
+                       {
+                        setTimeout(() => {
+                          this.fetchavailability_dates()
+                        }, 1000);                                                  
+                       }
+                     
+                    //  ,console.log('month changed  - - - - - - - -  - - --',month.month,     month.year)
+                  }}
                   // onPressArrowRight={console.log("getting current month and year on right arrow -  - - - -  - -",new Date())}
                   // onPressArrowLeft={console.log("getting current month and year on left arrow -  - - - -  - -",new Date())}
-                  onDayPress={(day) => this.set_date(day)}
+                  onDayPress={(day) => {this.set_date(day);this.fetchavailability_times(day)}}
                   onDateSelect={(date) => { console.log('selected Date', date) }}
                                                     
                   markedDates={this.state.markedDates}                
@@ -389,6 +592,7 @@ set_availabilityData = async () => {
                   dayTextColor: '#000000',
                   dotColor: 'red',
                   selectedDotColor: 'red',
+                  margin:-3,
                   // todayTextColor: '#000000',
                   todayTextColor: 'red',
                   arrowColor: '#000000',
@@ -400,67 +604,79 @@ set_availabilityData = async () => {
               <Text style={Styles.subheaderTxt}>
                 Choisissez l'horaire du coaching
               </Text>
+            
+            
+               {
+                      TimesSlot == undefined || TimesSlot == null || TimesSlot == "" || TimesSlot == [] || TimesSlot.length === 0 ?
 
-              <View style={Styles.txtMainView}>
-                {/* <View style={{flexDirection: 'column'}}>
-                  <Text style={Styles.txtHeaderView}>Durée de démarrage</Text>
-                  <View style={Styles.SubTxtview}>
-                    <Text style={Styles.timeTxtView}>14 H 30</Text>
-                  </View>
-                </View>
-
-                <View style={{flexDirection: 'column'}}>
-                  <Text style={Styles.txtHeaderView}> La fin du temps</Text>
-                  <View style={Styles.SubTxtview}>
-                    <Text style={Styles.timeTxtView}>15 H 00</Text>
-                  </View>
-                </View> */}
-            <ScrollView horizontal={true}>
-                {
-                  this.state.time_slot.map((singletimeslot,key)=>{
-                    return(
-                      <Fragment>
+                    <View style={Styles.txtMainView}>             
+                    <ScrollView horizontal={true}>
                         {
-                          singletimeslot.isSelected ?
-
-                          <TouchableOpacity 
-                              onPress={()=>{
-                              let oldState = [...this.state.time_slot];
-                              oldState[key].isSelected = !oldState[key].isSelected;
-                              this.setState({ time_slot: oldState });
-                            }}
-                           
-                           >                           
-                               <View style={{margin:6,borderColor:"#b41565",borderWidth:1,borderRadius:6,backgroundColor:"#b41565"}}>
-                               <Text style={{margin:7,fontWeight:'700',color:"#FFFFFF",}}>{singletimeslot.value}</Text>
-                               </View>
-                               </TouchableOpacity>
-                            :
-
-                            <TouchableOpacity 
-                            onPress={()=>{
-                             let oldState = [...this.state.time_slot];
-                             oldState[key].isSelected = !oldState[key].isSelected;
-                             this.setState({ time_slot: oldState });
-                           }}                             
-                             >                           
-                                 <View style={{margin:6,borderColor:'#b41565',borderWidth:1,borderRadius:6}}>
-                                 <Text style={{margin:7,fontWeight:"700"}}>{singletimeslot.value}</Text>
-                                 </View>
-                                 </TouchableOpacity>
-
+                          this.state.time_slot.map((singletimeslot,key)=>{
+                            return(
+                              <Fragment>
+                                {
+                                  singletimeslot.isSelected ?
+        
+                                  <TouchableOpacity 
+                                      onPress={()=>{
+                                      let oldState = [...this.state.time_slot];
+                                      oldState[key].isSelected = !oldState[key].isSelected;
+                                      this.setState({ time_slot: oldState });
+                                    }}
+                                   
+                                   >                           
+                                       <View style={{margin:6,borderColor:"#b41565",borderWidth:1,borderRadius:6,backgroundColor:"#b41565"}}>
+                                       <Text style={{margin:7,fontWeight:'700',color:"#FFFFFF",}}>{singletimeslot.value}</Text>
+                                       </View>
+                                       </TouchableOpacity>
+                                    :
+        
+                                    <TouchableOpacity 
+                                    onPress={()=>{
+                                     let oldState = [...this.state.time_slot];
+                                     oldState[key].isSelected = !oldState[key].isSelected;
+                                     this.setState({ time_slot: oldState });
+                                   }}                             
+                                     >                           
+                                         <View style={{margin:6,borderColor:'#b41565',borderWidth:1,borderRadius:6}}>
+                                         <Text style={{margin:7,fontWeight:"700",color:"gray"}}>{singletimeslot.value}</Text>
+                                         </View>
+                                         </TouchableOpacity>
+        
+                                }
+                               
+                              </Fragment>
+                            )
+                          })
                         }
-                       
-                      </Fragment>
-                    )
-                  })
-                }
-             </ScrollView>
-
-
-
-              </View>
+                     </ScrollView>
+                      </View>
+                    :                    
+                         <View>
+                         {                          
+                       this.state.TimesSlot.map((singleMap,index)=>{
+                         let currentTime  = singleMap
+  
+                         console.log("getting current time from here -  - - - - - - -",singleMap)
+  
+                         return(
+                           <View style={{justifyContent: "flex-start",alignItems:"flex-start",flexDirection:"row"}}>
+                             <Text  style={{borderColor:"gray",borderWidth:1,color:"gray",fontSize:14,marginStart:10,margin:10,padding:10}}>{singleMap}</Text>
+                             <TouchableOpacity style={{margin:1}} 
+                                onPress={()=>{this.fetchavailability_times_delete(currentTime)}}
+                             >
+                                 <Image source={require("../../../../assets/icon/delete.png")} style={{height:24,width:24,margin:18}} />
+                             </TouchableOpacity>
+                           </View>
+                         )
+                       })
+                     }
+                 </View>
+                      }
+                                 
             </View>
+
 
             <View style={Styles.continueBtn}>
               <TouchableOpacity
@@ -469,6 +685,27 @@ set_availabilityData = async () => {
                 <Text style={Styles.continueBtnTxt}>+ Ajouter un créneau</Text>
               </TouchableOpacity>
             </View>
+
+          </Fragment>
+
+
+
+
+
+
+          :
+          <View>
+              <Text></Text>
+          </View>
+
+
+
+
+        }
+
+       
+
+          
           </ScrollView>
 
           <Modal
@@ -648,6 +885,10 @@ set_availabilityData = async () => {
             </View>
           </Modal>
         </View>
+        <BottomNavigator
+          currentRoute={'choosetime'}
+          navigation={this.props.navigation}
+        />
       </View>
     );
   }
