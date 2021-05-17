@@ -6,6 +6,17 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+
+      
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+
     <application
       android:usesCleartextTraffic="true"   
       android:requestLegacyExternalStorage="true"
@@ -39,12 +50,15 @@
       
         <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
           <intent-filter>
-          <action android:name="com.google.firebase.MESSAGING_EVENT" />
-          <!-- <action android:name="fcm.Action.FCM_PLUGIN_ACTIVITY" />
-          <action android:name="com.examle.leoteacher.fcmwithappserver_TARGET_NOTIFICATION" />
-          <category android:name="android.intent.category.DEFAULT"></category> -->
+          <action android:name="com.google.firebase.MESSAGING_EVENT" />          
           </intent-filter>
         </service>
+
+         <!-- <service android:name="io.invertase.firebase.messaging.RNFirebaseMessagingService">
+          <intent-filter>
+          <action android:name="com.google.firebase.MESSAGING_EVENT" />
+          </intent-filter>
+        </service> -->
 
 
           <receiver android:name="io.invertase.firebase.notifications.RNFirebaseNotificationReceiver"/>

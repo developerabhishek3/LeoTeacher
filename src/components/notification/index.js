@@ -134,7 +134,7 @@ export default class App extends React.Component {
     var filteredData = reservation_requestAcceptResponse.response.revenue_list;
     var totalFilterAmount = reservation_requestAcceptResponse.response.total_amount
     this.setState({isBodyLoaded:true,isSpinner:false,filteredData,filterKay:true,totalFilterAmount})
-    Alert.alert("Message",reservation_requestAcceptResponse.response.message)
+    // Alert.alert("Message",reservation_requestAcceptResponse.response.message)
     this.Hide_Custom_Alert()
       
     }
@@ -180,7 +180,7 @@ export default class App extends React.Component {
     var filteredData = reservation_requestREjectResponse.response.revenue_list;
     var totalFilterAmount = reservation_requestREjectResponse.response.total_amount
     this.setState({isBodyLoaded:true,isSpinner:false,filteredData,filterKay:true,totalFilterAmount})
-    Alert.alert("Message",reservation_requestREjectResponse.response.message)
+    // Alert.alert("Message",reservation_requestREjectResponse.response.message)
     this.Hide_Custom_Alert()
       
     }

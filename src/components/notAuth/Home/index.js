@@ -13,7 +13,7 @@ import {
   Alert,
   Switch,
   ImageBackground,
-  RefreshControl
+  RefreshControl,  
 } from 'react-native';
 import BottomNavigator from '../../../router/BottomNavigator';
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -42,7 +42,7 @@ let email_global;
 let switch_global;
 let push_global;
 let switch_global2;
-
+import RNRestart from 'react-native-restart';
 export default class index extends Component {
   constructor(props) {
     super(props);
@@ -53,7 +53,8 @@ export default class index extends Component {
       isCurrenetComponentRefreshing:false,
       ratingCount:0,
       reviewCount:0,
-
+      Model_Visibility1: false,
+      Alert_Visibility1: false,
       //check switch value
 
       switchValue: false,
@@ -88,6 +89,8 @@ export default class index extends Component {
       checked1: false,
       checked2: false,
       reserveCourseCheck:false,
+      backHandlerTitle:"", 
+      alertValue:"",
       online_offline: 1,
       bussiness_data: {
         Jan: 0,
@@ -134,6 +137,17 @@ export default class index extends Component {
   this.FetchForCourseInstant()
   }
 
+
+  Show_Custom_Alert1(visible,) {
+    this.setState({Alert_Visibility1: visible});
+  }
+  Hide_Custom_Alert2() {
+    this.setState({Alert_Visibility1: false}); 
+    // this.props.navigation.navigate("login")    
+  }
+
+
+
   componentDidMount() {
     // setTimeout(() => {
       
@@ -143,11 +157,11 @@ export default class index extends Component {
       this.Getonline_offline_status();
     this.fetchHomeCountData();
     this.FetchForCourseInstant()
-    }, 1000);
+    }, 100);
     // setTimeout(() => {
     //   this.checkCourseInstant()
     // }, 100);
-    
+    // RNRestart.Restart();
     BackHandler.addEventListener('hardwareBackPress', () =>
       this.handleBackButton(this.props.navigation),
     );
@@ -163,24 +177,28 @@ export default class index extends Component {
       // console.log('getting inside the if conditin--------------');
       return true;
     } else {
+      let backHandlerTitle = "Quitter Spyk"
+      let alertValue = "Voulez-vous vraiment quitter l'application Spyk ?"
+      this.setState({alertValue,backHandlerTitle})
+      this.Show_Custom_Alert1()
       // console.log('getting inside the else conditin---------------');
-      Alert.alert(
-        'Exit App',
-        'Do you want to Exit..',
-        [
-          {
-            text: 'Cancel',
-            style: 'cancel',
-          },
-          {
-            text: 'Exit',
-            onPress: () => BackHandler.exitApp(),
-          },
-        ],
-        {
-          cancelable: false,
-        },
-      );
+      // Alert.alert(
+      //   'Exit App',
+      //   'Do you want to Exit..',
+      //   [
+      //     {
+      //       text: 'Cancel',
+      //       style: 'cancel',
+      //     },
+      //     {
+      //       text: 'Exit',
+      //       onPress: () => BackHandler.exitApp(),
+      //     },
+      //   ],
+      //   {
+      //     cancelable: false,
+      //   },
+      // );
       return true;
     }
   };
@@ -1086,6 +1104,147 @@ checkReserveCourse(){
             </View>
           </View>
         </Modal>
+
+
+
+
+
+        
+        <Modal
+            visible={this.state.Alert_Visibility1}
+            animationType={'fade'}
+            transparent={true}
+            onRequestClose={() => {
+              this.Show_Custom_Alert1(!this.state.Alert_Visibility1);
+            }}>
+            <View
+              style={{
+                backgroundColor: 'rgba(85,65,225,0.900)',
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  width: '80%',
+                  height: 221,
+                  backgroundColor: '#ffffff',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: 10,
+                  borderRadius: 10,
+                }}>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      height: 100,
+                      width: 100,
+                      borderRadius: 50,
+                      borderWidth: 0,
+                      marginTop: -50,
+                    }}>
+                    <Image
+                      source={require("../../../assets/icon/17.png")}
+                      style={{height: 80, width: 80, margin: 10}}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      alignSelf: 'center',
+                      fontWeight: '700',
+                      margin: 6,                      
+                      color: 'gray',
+                      textAlign: 'center',                      
+                    }}>
+                     {/* Veuillez entrer votre nouveau mot de passe de confirmation */}
+                     {this.state.backHandlerTitle}
+                  </Text>
+
+
+
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      alignSelf: 'center',
+                      fontWeight: '700',
+                      margin: 10,    
+                      marginTop:-6,                  
+                      color: 'gray',
+                      textAlign: 'center',                      
+                    }}>
+                     {/* Veuillez entrer votre nouveau mot de passe de confirmation */}
+                     {this.state.alertValue}
+                  </Text>
+                </View>                 
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',                    
+                    borderRadius: 6,
+                    justifyContent:'space-around',
+                    alignItems: 'center',                    
+                    margin: 5,
+                  }}>
+                  <TouchableOpacity                 
+                    onPress={() => {                      
+                      this.Hide_Custom_Alert2();
+                    }}
+                    style={{
+                      backgroundColor: '#b41565',
+                      justifyContent: 'center',
+                      margin: 20,                
+                      borderRadius: 6,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#FFF',
+                        fontSize: 13,
+                        marginStart: 20,
+                        marginEnd: 20,
+                        margin:9,
+                        fontWeight: '700',
+                        textAlign: 'center',
+                        fontFamily: 'Montserrat-Regular',
+                      }}>
+                         Annuler
+                    </Text>
+                  </TouchableOpacity>                
+
+
+
+                  <TouchableOpacity                 
+                    onPress={() => {                      
+                      BackHandler.exitApp()
+                    }}
+                    style={{
+                      backgroundColor: '#b41565',
+                      justifyContent: 'center',
+                      margin: 20,                   
+                      height: 35,
+                      borderRadius: 6,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#FFF',
+                        fontSize: 13,
+                        marginStart: 20,
+                        marginEnd: 20,
+                        margin:9,
+                        fontWeight: '700',
+                        textAlign: 'center',
+                        fontFamily: 'Montserrat-Regular',
+                      }}>
+                        Quitter Spyk
+                    </Text>
+                  </TouchableOpacity> 
+                </View>
+              </View>
+            </View>
+          </Modal> 
+
+
 
         <BottomNavigator
           currentRoute={'home'}

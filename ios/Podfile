@@ -12,6 +12,8 @@ target 'LEOTeacher' do
 
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
 
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+
   target 'LEOTeacherTests' do
     inherit! :complete
     # Pods for testing

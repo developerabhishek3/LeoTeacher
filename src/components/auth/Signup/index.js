@@ -51,6 +51,9 @@ export default class index extends Component {
       countryData: [],
       Model_Visibility: false,
       Alert_Visibility: false,  
+      Model_Visibility1: false,
+      Alert_Visibility1: false,  
+      alertValue:"",
       checked1:false,     
       
       showPassword: true,
@@ -61,7 +64,13 @@ export default class index extends Component {
   }
 
 
-
+  Show_Custom_Alert1(visible,) {
+    this.setState({Alert_Visibility1: visible});
+  }
+  Hide_Custom_Alert1() {
+    this.setState({Alert_Visibility1: false}); 
+    // this.props.navigation.navigate("login")    
+  }
 
 
   toggleSwitch() {
@@ -199,38 +208,74 @@ export default class index extends Component {
       country,        
     } = this.state;
      if (first_name.length === 0) {
-      this.myAlert('Message', 'Veuillez saisir votre prénom!');
+      alertValue = "Veuillez saisir votre prénom!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez saisir votre prénom!');
     } else if (last_name.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre nom de famille!');
+      alertValue = "Veuillez entrer votre nom de famille!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()  
+      // this.myAlert('Message', 'Veuillez entrer votre nom de famille!');      
     }
     else if (birth_date.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre date de naissance!');
+      alertValue = "Veuillez entrer votre date de naissance!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez entrer votre date de naissance!');
     }
     else if (address.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre adresse!');
+      alertValue = "Veuillez entrer votre adresse!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez entrer votre adresse!');
     }
     else if (postcode.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre code postal!');
+      alertValue = "Veuillez entrer votre code postal!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez entrer votre code postal!');
     }
     else if (city.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre ville!');
+      alertValue = "Veuillez entrer votre ville!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez entrer votre ville!');
     } else if (country.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre pays!');
+      alertValue = "Veuillez entrer votre pays!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez entrer votre pays!');
     } 
      else if (telephone_no.length === 0) {
-      this.myAlert('Message', 'Veuillez saisir votre numéro de téléphone!');
+      alertValue = "Veuillez saisir votre numéro de téléphone!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez saisir votre numéro de téléphone!');
     } 
     else if (email.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre adresse électronique!');
+      alertValue = "Veuillez entrer votre adresse électronique!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez entrer votre adresse électronique!');
     }   
     else if (password.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre mot de passe!');
+      alertValue = "Veuillez entrer votre mot de passe!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez entrer votre mot de passe!');
     }
     else if (confirm_password.length === 0 ) {
-      this.myAlert('Message', 'Veuillez entrer votre mot de passe de confirmation!');
+      alertValue = "Veuillez entrer votre mot de passe de confirmation!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez entrer votre mot de passe de confirmation!');
     }
     else if( password != confirm_password){
-      this.myAlert("Message","Le mot de passe et le mot de passe de confirmation ne correspondent pas!")
+      alertValue = "Le mot de passe et le mot de passe de confirmation ne correspondent pas!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert("Message","Le mot de passe et le mot de passe de confirmation ne correspondent pas!")
     }
   
     else {
@@ -304,6 +349,7 @@ export default class index extends Component {
                   <TextInput
                     style={Styles.textInputField}
                     placeholder="Nom"
+                    placeholderTextColor="gray"
                     onChangeText={(first_name) => this.setState({first_name})}
               />
                 </View>
@@ -312,6 +358,7 @@ export default class index extends Component {
                   <TextInput
                     style={Styles.textInputField}
                     placeholder="Prénom"
+                    placeholderTextColor="gray"
                     onChangeText={(last_name) => this.setState({last_name})}
                   />
                 </View>
@@ -354,7 +401,7 @@ export default class index extends Component {
                   <DatePicker   
                     style={{width:SCREEN_WIDTH*0.8}}                 
                     mode="date"    
-                    maximumDate={this.state.date}                                                        
+                    // maximumDate={this.state.date}                                                        
                     date={this.state.date}
                     locale={'fr'}                    
                     onDateChange={(birth_date) => {
@@ -366,6 +413,7 @@ export default class index extends Component {
                   <TextInput
                     style={Styles.textInputField}
                     placeholder="Adresse postale"
+                    placeholderTextColor="gray"
                     onChangeText={(address) => this.setState({address})}
                   />
                 </View>
@@ -374,6 +422,7 @@ export default class index extends Component {
                     keyboardType="number-pad"
                     style={Styles.textInputField}
                     placeholder="Code postal"
+                    placeholderTextColor="gray"
                     onChangeText={(postcode) => this.setState({postcode})}
                   />
                 </View>
@@ -381,6 +430,7 @@ export default class index extends Component {
                   <TextInput
                     style={Styles.textInputField}
                     placeholder="Ville"
+                    placeholderTextColor="gray"
                     onChangeText={(city) => this.setState({city})}  
                   />
                 </View>
@@ -467,6 +517,7 @@ export default class index extends Component {
                     style={Styles.textInputField}
                     keyboardType="phone-pad"
                     placeholder="Numéro de téléphone"
+                    placeholderTextColor="gray"
                     onChangeText={(telephone_no) => this.setState({telephone_no})}
                   />
                 </View>
@@ -474,6 +525,7 @@ export default class index extends Component {
                   <TextInput
                     style={Styles.textInputField}
                     placeholder="Email"
+                    placeholderTextColor="gray"
                     onChangeText={(email) => this.setState({email})}
                   />
                 </View>
@@ -516,6 +568,7 @@ export default class index extends Component {
                     // secureTextEntry={this.state.showPassword}
                     secureTextEntry={this.state.showPassword && this.state.password.length > 0 ? true:false}
                     placeholder="Mot de passe"
+                    placeholderTextColor="gray"
                     onChangeText={(password) => this.setState({password})}
                   />
                    <TouchableOpacity  
@@ -542,6 +595,7 @@ export default class index extends Component {
                           secureTextEntry={this.state.showPassword2 && this.state.confirm_password.length > 0 ? true:false}
                           // secureTextEntry={ this.state.showPassword2}
                           placeholder="Confirmation Mot de passe"
+                          placeholderTextColor="gray"
                           onChangeText={(confirm_password) => this.setState({confirm_password})}
                         />
                         <TouchableOpacity  
