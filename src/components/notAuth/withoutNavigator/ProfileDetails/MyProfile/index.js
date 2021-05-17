@@ -34,6 +34,7 @@ constructor(props){
     q_4_ans:"",
     q_5_ans:"", 
     q_6_ans:"",
+    city:"",
     
     diploma:"",
     interest:"",
@@ -65,9 +66,10 @@ componentDidMount = async () => {
       var profileData = GetProfileDetails.response.my_profile;
       var profile_url  = GetProfileDetails.response.my_profile.profile_url;
       var birth_date = GetProfileDetails.response.my_profile.dob
+      var city = GetProfileDetails.response.my_profile.city
       var coach_type = GetProfileDetails.response.my_profile.coach_type
       console.log("getting GetProfileDetails data----------",profileData)
-      this.setState({ isBodyLoaded: true,isSpinner: false,profileData,profile_url,birth_date,coach_type});
+      this.setState({ isBodyLoaded: true,isSpinner: false,profileData,city,profile_url,birth_date,coach_type});
     }
    
     else{
@@ -263,22 +265,26 @@ componentDidMount = async () => {
 
            
            <View style={Styles.maincontentContaine}>
+           
+
             <View style={Styles.nameStyleView}>
+              <Text style={Styles.nameHeading}>Ville</Text>
+              <Text style={Styles.nameHeadingTxt}>{this.state.city}</Text>        
+              </View>
+
+
+
+              <View style={Styles.nameStyleView}>
               <Text style={Styles.nameHeading}>Diplôme</Text>
 
             <Text style={Styles.nameHeadingTxt}>{this.state.diploma}</Text>
 
             </View>
-
-            <View style={Styles.nameStyleView}>
-              <Text style={Styles.nameHeading}>Compétences linguistiques</Text>
-              <Text style={Styles.nameHeadingTxt}>{this.state.languageSkills}</Text>        
-              </View>
             </View>
 
             <View style={Styles.maincontentContaine}>
                <View style={Styles.nameStyleView}>           
-                <Text style={Styles.nameHeading}>Niveau d'français</Text>
+                <Text style={Styles.nameHeading}>Niveau de français</Text>
                 <Text style={Styles.nameHeadingTxt}>{this.state.frenchLevel}</Text>
            </View> 
 
@@ -289,6 +295,17 @@ componentDidMount = async () => {
                                               
            </View> 
            </View>
+
+
+           <View style={Styles.maincontentContaine}>
+           <View style={Styles.nameStyleView}>
+              <Text style={Styles.nameHeading}>Compétences linguistiques</Text>
+              <Text style={Styles.nameHeadingTxt}>{this.state.languageSkills}</Text>        
+              </View>
+         
+           </View>
+
+           
           {/* <View style={Styles.nameStyleView1}>                   
                     <Text style={Styles.nameHeading1}>Niveau d'anglais</Text>
                     <Text style={Styles.nameHeadingTxt}></Text>

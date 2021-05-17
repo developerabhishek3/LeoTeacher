@@ -273,7 +273,7 @@ export default class index extends Component {
 
          
             :<View style={{alignItems:'center',justifyContent:'center'}}>
-            <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>Record non trouvé</Text>
+            <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160,color:"#000000"}}>Aucune réservation passée</Text>
            </View>
           }
 
@@ -282,7 +282,7 @@ export default class index extends Component {
 
           </ScrollView>
             :<View style={{alignItems:'center',justifyContent:'center'}}>
-            <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>chargement...</Text>
+            <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160,color:"#000000"}}></Text>
             </View>
         }
 

@@ -146,8 +146,8 @@ export default class index extends Component {
   
   
               <View style={{flexDirection:'column',marginTop:20}}>
-                    <Text style={{fontSize:14,fontWeight:'700',color:'gray',alignSelf:'center'}}>{supportData.address}</Text>
-                    <Text style={{fontSize:14,fontWeight:'700',color:'gray',alignSelf:'center'}}>{supportData.contact_no}</Text>
+                    {/* <Text style={{fontSize:14,fontWeight:'700',color:'gray',alignSelf:'center'}}>{supportData.address}</Text>
+                    <Text style={{fontSize:14,fontWeight:'700',color:'gray',alignSelf:'center'}}>{supportData.contact_no}</Text> */}
                     {/* <Text style={{fontSize:14,fontWeight:'700',color:'gray',alignSelf:'center'}}>{supportData.contact_no}</Text>
                     <Text style={{fontSize:14,fontWeight:'700',color:'gray',alignSelf:'center'}}>{supportData.contact_no}</Text> */}
                               {/* <Text style={{fontSize:16,fontWeight:'700'}}>14 H 00 - 14 H 30</Text> */}
@@ -165,7 +165,7 @@ export default class index extends Component {
                 }}
                 >
                     <Image source={require("../../../../../assets/icon/call1.png")} style={{height:60,width:60,margin:1,alignSelf:'center'}} />
-                    <Text style={{fot:16,fontWeight:'600',color:"gray",textAlign:"center"}}>Appelez-nous</Text>
+                    <Text style={{fontSize:18,fontWeight:'600',color:"gray",textAlign:"center"}}>Appelez-nous</Text>
                 </TouchableOpacity>
   
   
@@ -175,7 +175,7 @@ export default class index extends Component {
                   title="support@example.com"
                 >
                 <Image source={require("../../../../../assets/icon/mssg1.png")} style={{height:60,width:60,margin:1,alignSelf:"center"}} />
-                <Text style={{fot:16,fontWeight:'600',color:"gray",textAlign:"center"}}> Envoyez-nous un message</Text>
+                <Text style={{fontSize:18,fontWeight:'600',color:"gray",textAlign:"center"}}> Envoyez-nous un message</Text>
                   </TouchableOpacity>
     
     

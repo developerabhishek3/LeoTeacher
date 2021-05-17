@@ -248,7 +248,8 @@ validateFunction(){
             numberOfLines={4}
             onChangeText={(comment) => this.setState({ comment })}
             placeholder="Commentaire supplémentaire"
-            style={{textAlign:'left',textAlignVertical:'top',width:'90%',alignSelf:'center',margin:10,paddingVertical:3,backfaceVisibility:'hidden',backgroundColor:'#FFFFFF',elevation:3,borderRadius:7,}}
+            placeholderTextColor="gray"
+            style={{textAlign:'left',color:'gray',textAlignVertical:'top',width:'90%',alignSelf:'center',margin:10,paddingVertical:3,backfaceVisibility:'hidden',backgroundColor:'#FFFFFF',elevation:3,borderRadius:7,}}
           />
           </View>
 

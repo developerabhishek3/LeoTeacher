@@ -95,7 +95,7 @@ export default class index extends Component {
         this.myAlert('Message', 'Veuillez entrer votre code BIC!');
     }
     else if (iban.length === 0) {
-        this.myAlert('Message', 'Veuillez entrer votre iban!');
+        this.myAlert('Message', 'Veuillez entrer votre IBAN!');
     } 
     else if(paypal_email.length === 0){
       this.myAlert('Message', 'Veuillez entrer votre email paypal!');
@@ -179,6 +179,7 @@ export default class index extends Component {
                   <TextInput
                     style={Styles.textInputField}
                     placeholder="Nom de la banque"
+                    placeholderTextColor="gray"
                     onChangeText={(bank_name) => this.setState({ bank_name })}
               />
                 </View>
@@ -187,6 +188,7 @@ export default class index extends Component {
                   <TextInput
                     style={Styles.textInputField}
                     placeholder="Code BIC"
+                    placeholderTextColor="gray"
                     onChangeText={(bic_code) => this.setState({ bic_code })}
               />
                 </View>
@@ -195,6 +197,7 @@ export default class index extends Component {
                   <TextInput
                     style={Styles.textInputField}
                     placeholder="IBAN"
+                    placeholderTextColor="gray"
                     onChangeText={(iban) => this.setState({ iban })}
               />
                 </View>
@@ -202,7 +205,8 @@ export default class index extends Component {
                 <View>
                   <TextInput
                     style={Styles.textInputField}
-                    placeholder="Email  de votre compte Paypal"
+                    placeholder="Email de votre compte Paypal"
+                    placeholderTextColor="gray"
                     onChangeText={(paypal_email) => this.setState({ paypal_email })}
               />
                 </View>

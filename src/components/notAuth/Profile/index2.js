@@ -245,7 +245,7 @@ export default class index extends Component {
         >
           <View style={{flexDirection:'row',margin:1}}>
               <Image source={profileIcon} style={{height:24,width:24,margin:10}}  />
-              <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Mon profil</Text>
+              <Text style={{fontSize:14,fontWeight:'700',margin:15,color:'gray'}}>Mon profil</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -253,7 +253,7 @@ export default class index extends Component {
         >
         <View style={{flexDirection:'row',margin:1}}>
             <Image source={revenueIcon} style={{height:24,width:24,margin:10}}  />
-            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Mes revenus</Text>
+            <Text style={{fontSize:14,fontWeight:'700',margin:15,color:'gray'}}>Mes revenus</Text>
         </View>
         </TouchableOpacity>
 
@@ -262,7 +262,7 @@ export default class index extends Component {
         >
         <View style={{flexDirection:'row',margin:0}}>
             <Image source={require("../../../assets/ProfileIcon/notification.png")} style={{height:24,width:24,margin:10}}  />
-            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Notifications</Text>
+            <Text style={{fontSize:14,fontWeight:'700',margin:15,color:'gray'}}>Notifications</Text>
             {
               this.state.notificationCountValue != 0 ?
               <Badge status="error" value={this.state.notificationCountValue} badgeStyle={{margin:-20,marginTop:4,marginStart:-15,righ:-30,width:27,height:27,borderRadius:30}}></Badge>
@@ -278,7 +278,7 @@ export default class index extends Component {
         >
         <View style={{flexDirection:'row',margin:1}}>
             <Image source={settingIcon} style={{height:24,width:24,margin:10}}  />
-            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Paramètres</Text>
+            <Text style={{fontSize:14,fontWeight:'700',margin:15,color:'gray'}}>Paramètres</Text>
         </View>
         </TouchableOpacity>
 
@@ -287,7 +287,7 @@ export default class index extends Component {
         >
         <View style={{flexDirection:'row',margin:1}}>
         <Image source={revenueIcon} style={{height:24,width:24,margin:10}}  />
-            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Montant demandé</Text>
+            <Text style={{fontSize:14,fontWeight:'700',margin:15,color:'gray'}}>Coachings à facturer</Text>
         </View>
         </TouchableOpacity>
 
@@ -296,14 +296,14 @@ export default class index extends Component {
         >
         <View style={{flexDirection:'row',margin:1}}>
             <Image source={supporIcon} style={{height:24,width:24,margin:10}}  />
-            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Support</Text>
+            <Text style={{fontSize:14,fontWeight:'700',margin:15,color:'gray'}}>Support</Text>
         </View>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={()=>{this.Show_Custom_Alert()}}>
         <View style={{flexDirection:'row',margin:1}}>
             <Image source={logoutIcon} style={{height:24,width:24,margin:10}}  />
-            <Text style={{fontSize:14,fontWeight:'700',margin:15}}>Déconnexion</Text>
+            <Text style={{fontSize:14,fontWeight:'700',margin:15,color:'gray'}}>Déconnexion</Text>
         </View>
         </TouchableOpacity>
         </View> 

@@ -118,17 +118,14 @@ export default class index extends Component {
       ],
       data4:[
         {"id": "1",
-        "value":"Débutant"
+        "value":"Anglais général"
           },
           {"id": "2",
-          "value":"Intermédiaire"
+          "value":"Anglais business"
           }, 
           {"id": "3",
-          "value":"Avancé"
-          },  
-          {"id": "3",
-          "value":"Natif"
-          },                  
+          "value":"Anglais général et business"
+          },                             
       ],
     };
   }
@@ -576,10 +573,12 @@ export default class index extends Component {
                 alignItems: 'center',
               }}>
               <TextInput placeholder="  Nom" 
+               placeholderTextColor="gray"
                 onChangeText={(first_name) => this.setState({first_name})}
               style={Styles.txtInput} >{profileData.first_name}</TextInput>
 
               <TextInput placeholder="  Prénom" 
+              placeholderTextColor="gray"
                 onChangeText={(last_name) => this.setState({last_name})}
               style={Styles.txtInput} >{profileData.last_name}</TextInput>
             <View   style={{
@@ -634,6 +633,7 @@ export default class index extends Component {
                 </View>
               <TextInput
                 placeholder="  Adresse postale"
+                placeholderTextColor="gray"
                 style={Styles.txtInput}
                 onChangeText={(address) => this.setState({address})}
               >
@@ -641,21 +641,26 @@ export default class index extends Component {
               </TextInput>
               <TextInput placeholder="  Code postal"
                  keyboardType="number-pad"
+                 placeholderTextColor="gray"
                  onChangeText={(postcode) => this.setState({postcode})}
               style={Styles.txtInput} >{profileData.postcode}</TextInput>
-              <TextInput placeholder="  Ville" 
+              <TextInput placeholder="  Ville"
+              placeholderTextColor="gray" 
                 onChangeText={(city) => this.setState({city})}  
               style={Styles.txtInput} >{profileData.city}</TextInput>
               <TextInput placeholder="  Pays" 
+              placeholderTextColor="gray"
                onChangeText={(country) => this.setState({country})} 
               style={Styles.txtInput} >{profileData.country}</TextInput>
               <TextInput
                 placeholder="  Numéro de téléphone"
+                placeholderTextColor="gray"
                 style={Styles.txtInput}
                 keyboardType="phone-pad"
                 onChangeText={(telephone_no) => this.setState({telephone_no})}
               >{profileData.phone}</TextInput>
               <TextInput placeholder="  Email" 
+              placeholderTextColor="gray"
                onChangeText={(email) => this.setState({email})}              
               style={Styles.txtInput} >{profileData.email}</TextInput>
 

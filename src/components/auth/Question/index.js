@@ -334,10 +334,10 @@ export default class index extends Component {
                 <View style={{borderWidth:1,borderColor:'#DDDDDD',flexWrap:'wrap',width:'90%',borderRadius:10,alignSelf:'center',margin:10,flexDirection:'column'}}>
                 
                     <View style={{flexDirection:'column',}}>
-                      <Text style={{flexDirection:'column',flexWrap:'wrap',alignSelf:'flex-start',margin:10}}>Pourquoi voulez-vous devenir un coach d'anglais sur l'application SPYK ?</Text>
+                      <Text style={{flexDirection:'column',flexWrap:'wrap',alignSelf:'flex-start',margin:10,color:"gray"}}>Pourquoi voulez-vous devenir un coach d'anglais sur l'application SPYK ?</Text>
                      <TextInput 
                      style={Styles.textInputField}
-                     numberOfLines={3}
+                     numberOfLines={3}                     
                      onChangeText={(q_3_ans)=>this.setState({q_3_ans })}
                      />
                     </View>
@@ -350,7 +350,7 @@ export default class index extends Component {
                 <View style={{borderWidth:1,borderColor:'#DDDDDD',flexWrap:'wrap',width:'90%',borderRadius:10,alignSelf:'center',margin:10,flexDirection:'column'}}>
                 
                     <View style={{flexDirection:'column',}}>
-                      <Text style={{flexDirection:'column',flexWrap:'wrap',alignSelf:'flex-start',margin:10}}>Qu'est-ce qui fait de vous un bon candidat au poste de coach d'anglais ?</Text>
+                      <Text style={{flexDirection:'column',color:"gray",flexWrap:'wrap',alignSelf:'flex-start',margin:10}}>Qu'est-ce qui fait de vous un bon candidat au poste de coach d'anglais ?</Text>
                     <TextInput 
                     numberOfLines={3}
                     onChangeText={(q_4_ans)=>this.setState({q_4_ans })}
