@@ -9,7 +9,8 @@ import {
   StatusBar,
   TextInput,
   Alert,
-  BackHandler
+  BackHandler,
+  Modal
 } from 'react-native';
 import Styles from './indexCss';
 import bgImg from '../../../assets/bgImages/3.png';
@@ -29,7 +30,10 @@ export default class index extends Component {
       value: 'second',
       value: 'third',  
       levelsData:[]  ,
-      level_id:[],     
+      level_id:[],   
+      Model_Visibility1: false,
+      Alert_Visibility1: false,  
+      alertValue:"",  
     };
   }
 
@@ -59,6 +63,14 @@ export default class index extends Component {
     };
   
 
+
+    Show_Custom_Alert1(visible,) {
+      this.setState({Alert_Visibility1: visible});
+    }
+    Hide_Custom_Alert1() {
+      this.setState({Alert_Visibility1: false}); 
+      // this.props.navigation.navigate("login")    
+    }
 
     update_levelFunction = async () => {
       // console.log("getting inside the function uuid --------",this.state.fcm_token)
@@ -121,10 +133,14 @@ export default class index extends Component {
 
 
     validateFunction(){
-       
+      let alertValue;
         let filters = this.state.levelsData.filter(i => i.isSelected);
         if(filters && filters.length == 0) {
-          return Alert.alert('Message','Veuillez sélectionner le niveau!');
+          alertValue = "Veuillez sélectionner le niveau!"
+          this.setState({alertValue})
+          this.Show_Custom_Alert1()
+         
+          //  Alert.alert('Message','Veuillez sélectionner le niveau!');
         }
         this.update_levelFunction()
       
@@ -247,6 +263,118 @@ export default class index extends Component {
               </View>
             </View>
           </ScrollView>
+
+
+
+
+
+
+
+
+
+          <Modal
+            visible={this.state.Alert_Visibility1}
+            animationType={'fade'}
+            transparent={true}
+            onRequestClose={() => {
+              this.Show_Custom_Alert1(!this.state.Alert_Visibility1);
+            }}>
+            <View
+              style={{
+                backgroundColor: 'rgba(85,65,225,0.900)',
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  width: '80%',
+                  height: 221,
+                  backgroundColor: '#ffffff',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: 10,
+                  borderRadius: 10,
+                }}>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      height: 100,
+                      width: 100,
+                      borderRadius: 50,
+                      borderWidth: 0,
+                      marginTop: -50,
+                    }}>
+                    <Image
+                      source={require("../../../assets/icon/17.png")}
+                      style={{height: 80, width: 80, margin: 10}}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      alignSelf: 'center',
+                      fontWeight: '700',
+                      margin: 10,
+                      marginTop: 10,
+                      color: 'gray',
+                      textAlign: 'center',                      
+                    }}>
+                     {/* Veuillez entrer votre nouveau mot de passe de confirmation */}
+                     {this.state.alertValue}
+                  </Text>
+                </View>                 
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',                    
+                    borderRadius: 6,
+                    justifyContent:'center',
+                    alignSelf:'center',
+                    margin: 5,
+                  }}>
+                  <TouchableOpacity                 
+                    onPress={() => {                      
+                      this.Hide_Custom_Alert1();
+                    }}
+                    style={{
+                      backgroundColor: '#b41565',
+                      justifyContent: 'center',
+                      margin: 20,
+                   
+                      height: 35,
+                      borderRadius: 6,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#FFF',
+                        fontSize: 13,
+                        marginStart: 50,
+                        marginEnd: 50,
+                        fontWeight: '700',
+                        textAlign: 'center',
+                        fontFamily: 'Montserrat-Regular',
+                      }}>
+                          OK
+                    </Text>
+                  </TouchableOpacity>                
+                </View>
+              </View>
+            </View>
+          </Modal> 
+
+
+
+
+
+
+
+
+
+
+
+
         </ImageBackground>
       </View>
     );

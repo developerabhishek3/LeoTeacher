@@ -9,7 +9,8 @@ import {
   StatusBar,
   TextInput,
   Alert,
-  BackHandler
+  BackHandler,
+  Modal
 } from 'react-native';
 import Styles from './indexCss';
 import bgImg from '../../../assets/bgImages/3.png';
@@ -96,7 +97,9 @@ export default class index extends Component {
           },                                      
       ],    
       
-
+      Model_Visibility1: false,
+      Alert_Visibility1: false,  
+      alertValue:"",
 
       q_1_ans:"",
       q_2_ans:"",
@@ -158,7 +161,21 @@ export default class index extends Component {
     Alert.alert(title, message);
   };
 
+
+
+
+  Show_Custom_Alert1(visible,) {
+    this.setState({Alert_Visibility1: visible});
+  }
+  Hide_Custom_Alert1() {
+    this.setState({Alert_Visibility1: false}); 
+    // this.props.navigation.navigate("login")    
+  }
+
+
   validateUser = () => {
+
+    let alertValue;
     const {  
       q_1_ans,
       q_2_ans,
@@ -171,29 +188,55 @@ export default class index extends Component {
       } = this.state;
 
     if (q_1_ans.length === 0) {
-      this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
+
+      alertValue = "Veuillez sélectionner votre réponse!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
     } 
     else if (q_2_ans.length === 0) {
-        this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
+      alertValue = "Veuillez sélectionner votre réponse!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+        // this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
     }
     else if (q_3_ans.length === 0) {
-        this.myAlert('Message', 'Veuillez entrer votre réponse!');
+      alertValue = "Veuillez entrer votre réponse!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+        // this.myAlert('Message', 'Veuillez entrer votre réponse!');
     } 
     else if (q_4_ans.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre réponse!');
+
+      alertValue = "Veuillez entrer votre réponse!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez entrer votre réponse!');
   } 
   else if (q_5_ans.length === 0) {
-    this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
+    alertValue = "Veuillez sélectionner votre réponse!"
+    this.setState({alertValue})
+    this.Show_Custom_Alert1()
+    // this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
   } 
   else if (q_6_ans.length === 0) {
-    this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
+    alertValue = "Veuillez sélectionner votre réponse!"
+    this.setState({alertValue})
+    this.Show_Custom_Alert1()
+    // this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
   }
   else if (q_7_ans.length === 0) {
-    this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
+    alertValue = "Veuillez sélectionner votre réponse!"
+    this.setState({alertValue})
+    this.Show_Custom_Alert1()
+    // this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
   }
-  else if (q_8_ans.length === 0) {
-    this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
-  } 
+  // else if (q_8_ans.length === 0) {
+  //   alertValue = "Veuillez sélectionner votre réponse!"
+  //   this.setState({alertValue})
+  //   this.Show_Custom_Alert1()
+  //   // this.myAlert('Message', 'Veuillez sélectionner votre réponse!');
+  // } 
     else {
     //   const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     //   if (!email.match(mailformat)) {
@@ -337,7 +380,9 @@ export default class index extends Component {
                       <Text style={{flexDirection:'column',flexWrap:'wrap',alignSelf:'flex-start',margin:10,color:"gray"}}>Pourquoi voulez-vous devenir un coach d'anglais sur l'application SPYK ?</Text>
                      <TextInput 
                      style={Styles.textInputField}
-                     numberOfLines={3}                     
+                     numberOfLines={3}  
+                     multiline={true}         
+                     placeholderTextColor="gray"          
                      onChangeText={(q_3_ans)=>this.setState({q_3_ans })}
                      />
                     </View>
@@ -353,6 +398,8 @@ export default class index extends Component {
                       <Text style={{flexDirection:'column',color:"gray",flexWrap:'wrap',alignSelf:'flex-start',margin:10}}>Qu'est-ce qui fait de vous un bon candidat au poste de coach d'anglais ?</Text>
                     <TextInput 
                     numberOfLines={3}
+                    multiline={true}
+                    placeholderTextColor="gray"
                     onChangeText={(q_4_ans)=>this.setState({q_4_ans })}
                     style={Styles.textInputField}
                     />
@@ -475,7 +522,7 @@ export default class index extends Component {
 
 
 
-                <View style={Styles.subHeader}>
+                {/* <View style={Styles.subHeader}>
                   <Text style={Styles.txtStyle1}>
                   Etes-vous natif anglophone ?
                   </Text>
@@ -504,7 +551,7 @@ export default class index extends Component {
                       )
                     })
                   }
-                </View>
+                </View> */}
 
 
 
@@ -525,6 +572,114 @@ export default class index extends Component {
               </View>
             </View>
           </ScrollView>
+
+
+
+
+
+
+
+
+          <Modal
+            visible={this.state.Alert_Visibility1}
+            animationType={'fade'}
+            transparent={true}
+            onRequestClose={() => {
+              this.Show_Custom_Alert1(!this.state.Alert_Visibility1);
+            }}>
+            <View
+              style={{
+                backgroundColor: 'rgba(85,65,225,0.900)',
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  width: '80%',
+                  height: 221,
+                  backgroundColor: '#ffffff',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: 10,
+                  borderRadius: 10,
+                }}>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      height: 100,
+                      width: 100,
+                      borderRadius: 50,
+                      borderWidth: 0,
+                      marginTop: -50,
+                    }}>
+                    <Image
+                      source={require("../../../assets/icon/17.png")}
+                      style={{height: 80, width: 80, margin: 10}}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      alignSelf: 'center',
+                      fontWeight: '700',
+                      margin: 10,
+                      marginTop: 10,
+                      color: 'gray',
+                      textAlign: 'center',                      
+                    }}>
+                     {/* Veuillez entrer votre nouveau mot de passe de confirmation */}
+                     {this.state.alertValue}
+                  </Text>
+                </View>                 
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',                    
+                    borderRadius: 6,
+                    justifyContent:'center',
+                    alignSelf:'center',
+                    margin: 5,
+                  }}>
+                  <TouchableOpacity                 
+                    onPress={() => {                      
+                      this.Hide_Custom_Alert1();
+                    }}
+                    style={{
+                      backgroundColor: '#b41565',
+                      justifyContent: 'center',
+                      margin: 20,
+                   
+                      height: 35,
+                      borderRadius: 6,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#FFF',
+                        fontSize: 13,
+                        marginStart: 50,
+                        marginEnd: 50,
+                        fontWeight: '700',
+                        textAlign: 'center',
+                        fontFamily: 'Montserrat-Regular',
+                      }}>
+                          OK
+                    </Text>
+                  </TouchableOpacity>                
+                </View>
+              </View>
+            </View>
+          </Modal> 
+
+
+
+
+
+
+
+
+
         </ImageBackground>
       </View>
     );

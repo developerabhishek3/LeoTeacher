@@ -46,20 +46,18 @@ export default StyleSheet.create({
     fontSize: 17,
     fontWeight: '700',
     margin: 7,
-    color:"#000000"
   },
   calenderStyle: {
-    marginTop: 0,
+    marginTop: 10,
+    marginBottom:10,
     width: '96%',
+    height:300,
     alignSelf: 'center',
-    borderRadius: 12,
-    marginBottom: 30,
-    borderWidth:1,
-    
-    borderColor:"#5495ED"
+    // borderRadius: 12,
+    marginBottom: 20,
   },
   headertxtInputImg: {
-    height: 40,
+    height: 45,
     width: 30,
     margin: 10,
     marginEnd: 15,
@@ -88,7 +86,7 @@ export default StyleSheet.create({
   },
   SubTxtview: {
     borderColor: '#DDDDDD',
-    elevation: 1,
+    elevation: 0,
     borderWidth: 1,
     borderRadius: 4,
     margin: 6,
@@ -113,6 +111,7 @@ export default StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '700',
     fontSize: 16,
+    marginStart:30,marginEnd:30,
     alignSelf: 'center',
   },
 });

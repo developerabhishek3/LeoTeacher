@@ -86,7 +86,7 @@ export default StyleSheet.create({
     fontWeight: '700',
     margin: 6,
   },
-  peopleStyle: {height: 70, width: 70, margin: 10},
+  peopleStyle: {height: 70, width: 70, margin: 10,borderRadius:50},
   bookStyle: {height: 16, width: 16, margin: 3},
   thirdHeaderTxt: {
     margin: 10,

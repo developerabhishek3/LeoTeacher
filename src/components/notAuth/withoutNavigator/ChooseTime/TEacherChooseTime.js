@@ -54,6 +54,7 @@ export default class index extends Component {
       isBodyLoaded:false,
       isSpinner: true,
       waitingTime:0,
+      todayDate: new Date(),
 
       reserve_time:'',
       markedDates:'',
@@ -68,9 +69,8 @@ export default class index extends Component {
       Model_Visibility1: false,
       Alert_Visibility1: false,  
       alertValue:"",
-      todayDate:new Date(),
+
       date_slot:"",
-      time_slot:"",
       exacttime_new:"",
       DatesData:[],
       currentYear:0,
@@ -253,7 +253,7 @@ export default class index extends Component {
 
         const currentSelectedDate = moment(day.dateString).format('YYYY-MM-DD');
         console.log("getting inside the time function time date-  - - - - - -  -",currentSelectedDate) 
-        this.setState({currentSelectedDate})       
+        this.setState({currentSelectedDate})             
         const availability_timesResponse = await availability_times({
         av_date:currentSelectedDate
         });
@@ -515,6 +515,13 @@ set_availabilityData = async () => {
      if(set_availabilityResponse.response.status == true){
       console.log("getting seat availablivty response+++++++++++++++++",set_availabilityResponse.response) 
       let alertValue = set_availabilityResponse.response.message
+      // TimesSlot.splice(0, time_slot.length) 
+      // this.setState({TimesSlot:[]})     
+      // this.fetchavailability_dates()
+      // this.fetchavailability_times()
+      // this.state.TimesSlot.length = 0
+      // this.componentDidMount()
+    
       this.setState({alertValue})
       this.Show_Custom_Alert1()
       // Alert.alert("Message",set_availabilityResponse.response.message)
@@ -609,9 +616,9 @@ set_availabilityData = async () => {
                   // onPressArrowLeft={console.log("getting current month and year on left arrow -  - - - -  - -",new Date())}
                   onDayPress={(day) => {this.set_date(day);this.fetchavailability_times(day)}}
                   onDateSelect={(date) => { console.log('selected Date', date) }}
-                  minDate={this.state.todayDate}                                      
+                  minDate={this.state.todayDate}                           
                   markedDates={this.state.markedDates}                
-                  theme={{
+                   theme={{
                   backgroundColor: '#5495ED',
                   calendarBackground: '#5495ED',
                   textSectionTitleColor: '#000000',
@@ -633,9 +640,7 @@ set_availabilityData = async () => {
               </Text>
             
             
-               {/* {
-                      TimesSlot == undefined || TimesSlot == null || TimesSlot == "" || TimesSlot == [] || TimesSlot.length === 0 ? */}
-
+           
                     <View style={Styles.txtMainView}>             
                     <ScrollView horizontal={true}>
                         {
@@ -679,28 +684,35 @@ set_availabilityData = async () => {
                         }
                      </ScrollView>
                       </View>
-                    {/* :                     */}
-                         <View>
-                         {                          
-                       this.state.TimesSlot.map((singleMap,index)=>{
-                         let currentTime  = singleMap
-  
-                         console.log("getting current time from here -  - - - - - - -",singleMap)
-  
-                         return(
-                           <View style={{justifyContent: "flex-start",alignItems:"flex-start",flexDirection:"row"}}>
-                             <Text  style={{borderColor:"gray",borderWidth:1,color:"gray",fontSize:14,marginStart:10,margin:10,padding:10}}>{singleMap}</Text>
-                             <TouchableOpacity style={{margin:1}} 
-                                onPress={()=>{this.fetchavailability_times_delete(currentTime)}}
-                             >
-                                 <Image source={require("../../../../assets/icon/delete.png")} style={{height:24,width:24,margin:18}} />
-                             </TouchableOpacity>
-                           </View>
-                         )
-                       })
-                     }
-                 </View>
-                      {/* } */}
+
+                        {
+                          this.state.TimesSlot != undefined || this.state.TimesSlot != null ?
+                          <View>
+                          {                          
+                        this.state.TimesSlot.map((singleMap,index)=>{
+                          let currentTime  = singleMap
+   
+                          console.log("getting current time from here -  - - - - - - -",singleMap)
+   
+                          return(
+                            <View style={{justifyContent: "flex-start",alignItems:"flex-start",flexDirection:"row"}}>
+                              <Text  style={{borderColor:"gray",borderWidth:1,color:"gray",fontSize:14,marginStart:10,margin:10,padding:10}}>{singleMap}</Text>
+                              <TouchableOpacity style={{margin:1}} 
+                                 onPress={()=>{this.fetchavailability_times_delete(currentTime)}}
+                              >
+                                  <Image source={require("../../../../assets/icon/delete.png")} style={{height:24,width:24,margin:18}} />
+                              </TouchableOpacity>
+                            </View>
+                          )
+                        })
+                      }
+                  </View>
+                   :null
+
+                        } 
+
+                       
+                  
                                  
             </View>
 

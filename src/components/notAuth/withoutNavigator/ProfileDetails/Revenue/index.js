@@ -19,7 +19,7 @@ import cross from '../../../../../assets/icon/26.png';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
-
+import moment from 'moment'
 import DatePicker from 'react-native-datepicker';
 
 import {teacher_revenue,teacher_revenue_filter,demand_amount} from '../../../../../Api/afterAuth'
@@ -57,11 +57,11 @@ export default class index extends Component {
       data1:[
         {
           "id":"1",
-          "value":"vers man compte bancaire"
+          "value":"Vers mon compte bancaire"
         },
         {
           "id":"2",
-          "value":"vers man compte paypal"
+          "value":"Vers mon compte Paypal"
         }
       ]
     };
@@ -319,14 +319,14 @@ amountAfterCheck () {
 
         <View style={Styles.subhaderView}>
           <View style={{flexDirection: 'column'}}>
-          <Text style={Styles.subheadingTxt}>Tiré De</Text>
+          <Text style={Styles.subheadingTxt}>Du</Text>
           
             
               <DatePicker
               style={{width: SCREEN_WIDTH*0.40,borderWidth:0}}
               date={this.state.from_date}
               placeholder="Date of Birth"                    
-              format="DD-MM-YYYY"                   
+              format="DD/MM/YYYY"                   
               // maxDate={this.state.date}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
@@ -355,14 +355,14 @@ amountAfterCheck () {
 
 
           <View style={{flexDirection: 'column'}}>
-            <Text style={Styles.subheadingTxt}>Vers</Text>
+            <Text style={Styles.subheadingTxt}>Au</Text>
           
 
             <DatePicker
               style={{width: SCREEN_WIDTH*0.40,borderWidth:0}}
               date={this.state.to_date}
               placeholder="Date of Birth"                    
-              format="DD-MM-YYYY"                   
+              format="DD/MM/YYYY"                   
               // maxDate={this.state.date}
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
@@ -387,7 +387,7 @@ amountAfterCheck () {
           </View>
 
           <TouchableOpacity onPress={()=>{this.validate()}} style={{margin:10,backgroundColor:"#b41565",justifyContent:'center',alignItems:'center',height:30,marginTop:24}}>            
-            <Text style={{fontSize:14,fontWeight:'700',color:"#FFFFFF",marginStart:15,marginEnd:15,margin:0}}>Go</Text>
+            <Text style={{fontSize:14,fontWeight:'700',color:"#FFFFFF",marginStart:15,marginEnd:15,margin:0}}>Ok</Text>
             </TouchableOpacity>
 
 
@@ -409,6 +409,7 @@ amountAfterCheck () {
               
                 {
                   this.state.TeacherRevenue.map((singleTeacherRevenue,key)=>{
+                    let NewDate = moment(singleTeacherRevenue.course_date).format('DD/MM/YYYY') 
                     return(
                       <Fragment>
                         
@@ -420,11 +421,11 @@ amountAfterCheck () {
                           Numéro de réservation : {singleTeacherRevenue.reservation_no}
                         </Text>
                         <Text style={Styles.subHeader}>
-                          Nom du client : {singleTeacherRevenue.student_name}
+                        Nom du membre : {singleTeacherRevenue.student_name}
                         </Text>
                         <Text style={Styles.subHeader}>Niveau : Débutant</Text>
                         <Text style={Styles.subHeader}>
-                          Date de reservation : {singleTeacherRevenue.course_date}  {singleTeacherRevenue.course_time}
+                        Date du coaching : {NewDate}  {singleTeacherRevenue.course_time}
                         </Text>
                       </View>
                       <View style={{flexDirection:"column"}}>
@@ -521,7 +522,7 @@ amountAfterCheck () {
                         
                         
                         >
-                        <Text style={Styles.continueBtnTxt}>Domainder reglement</Text>
+                        <Text style={Styles.continueBtnTxt}>Demander règlement</Text>
                       </TouchableOpacity>
                     </View>
 
@@ -534,7 +535,7 @@ amountAfterCheck () {
                         //   this.Show_Custom_Alert();
                         // }}
                         >
-                        <Text style={Styles.continueBtnTxt1}>Domainder reglement</Text>
+                        <Text style={Styles.continueBtnTxt1}>Demander règlement</Text>
                       </TouchableOpacity>
                     </View>
                     } 
@@ -605,7 +606,7 @@ amountAfterCheck () {
                             this.Show_Custom_Alert();
                           }}>
                           <Text style={Styles.continueBtnTxt1}>
-                            Grin total : {this.state.totalFilterAmount}
+                          Gain total : {this.state.totalFilterAmount}
                           </Text>
                         </TouchableOpacity>
                       </View>
@@ -616,7 +617,7 @@ amountAfterCheck () {
                           onPress={() => {
                             this.Show_Custom_Alert();
                           }}>
-                          <Text style={Styles.continueBtnTxt}>Domainder reglement</Text>
+                          <Text style={Styles.continueBtnTxt}>Demander règlement</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -684,20 +685,21 @@ amountAfterCheck () {
                       color: '#000000',
                       textAlign: 'center',
                     }}>
-                   Demander le paiement
+                   Demande de paiement
                   </Text>
                 </View>
                 <Text
                   style={{
-                    margin: 2,
+                    margin: 10,
                     fontSize: 12,
                     fontWeight: '700',
                     color: 'gray',
                     alignSelf: 'center',
                   }}>
-                 Saisissez le montant que vous voulez
+                 {/* Saisissez le montant que vous voulez */}
+                 Ce montant vous sera payé à la fin du mois
                 </Text>
-                <Text
+                {/* <Text
                   style={{
                     margin: 2,
                     fontSize: 12,
@@ -706,8 +708,8 @@ amountAfterCheck () {
                     alignSelf: 'center',
                   }}>
                  demander pour le paiement. Ce montant
-                </Text>
-                <Text
+                </Text> */}
+                {/* <Text
                   style={{
                     margin: 2,
                     fontSize: 12,
@@ -716,8 +718,8 @@ amountAfterCheck () {
                     alignSelf: 'center',
                   }}>
                   vous sera payé par virement bancaire à la
-                </Text>
-                <Text
+                </Text> */}
+                {/* <Text
                   style={{
                     margin: 2,
                     fontSize: 12,
@@ -726,7 +728,7 @@ amountAfterCheck () {
                     alignSelf: 'center',
                   }}>
                  fin de chaque mois.
-                </Text>
+                </Text> */}
 
 
 
@@ -790,7 +792,7 @@ amountAfterCheck () {
                         textAlign: 'center',
                         fontFamily: 'Montserrat-Regular',
                       }}>
-                      Demander
+                      Confirmer
                     </Text>
                   </TouchableOpacity>
                 </View>

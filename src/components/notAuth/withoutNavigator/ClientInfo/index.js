@@ -20,7 +20,7 @@ import back from '../../../../assets/icon/20.png';
 import cross from '../../../../assets/icon/17.png';
 
 import Spinner from 'react-native-loading-spinner-overlay';
-
+import moment from 'moment'
 import books from '../../../../assets/icon/12.png';
 import watch from '../../../../assets/icon/14.png';
 import People from '../../../../assets/icon/25.png';
@@ -97,12 +97,14 @@ export default class index extends Component {
   render() {
 
     let historyFlag = this.props.navigation.getParam("historyFlag")
-    let student_id = this.props.navigation.getParam('student_id');
+    let student_id = this.props.navigation.getParam('student_id')
 
     let course_time = this.props.navigation.getParam("course_time")
     let course_date = this.props.navigation.getParam("course_date")
     let student_profile_url = this.props.navigation.getParam("student_profile_url")
     let student_name =  this.props.navigation.getParam("student_name")
+
+    console.log("getting indie render details - -     - - - - ",this.state.studentInfo)
 
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -111,7 +113,7 @@ export default class index extends Component {
         <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
           <Image source={back} style={Styles.headertxtInputImg} />
           </TouchableOpacity>
-          <Text style={Styles.headerTxt}>Info Client</Text>
+          <Text style={Styles.headerTxt}>Info coaching fait</Text>
           <View style={{margin: 7, flexDirection: 'row', marginStart: 10}}>
             {/* <TouchableOpacity
               onPress={() => {
@@ -131,11 +133,15 @@ export default class index extends Component {
               {this.state.studentInfo.length > 0 ? (
                 <Fragment>
                   {this.state.studentInfo.map((singleInfo) => {
+                      let NewDate = moment(singleInfo.course_date).format('DD/MM/YYYY') 
                     return (
                       <Fragment>
                         <View style={Styles.contentView}>
                           <View style={{flexDirection: 'row'}}>
-                            <Image source={People} style={Styles.peopleStyle} />
+                            <Image source={{
+                            uri: `https://www.spyk.fr/${singleInfo.student_profile_url}`,
+                          }}                              
+                            style={Styles.peopleStyle} />
                             <View style={{flexDirection: 'column'}}>
                               <Text
                                 style={{
@@ -143,6 +149,7 @@ export default class index extends Component {
                                   fontWeight: '700',
                                   margin: 2,
                                   marginTop: 10,
+                                  color:"gray"
                                 }}>
                                 {singleInfo.student_name}
                               </Text>
@@ -162,29 +169,18 @@ export default class index extends Component {
                                   style={Styles.bookStyle}
                                 />
                                 <Text style={Styles.contentTextStyle}>
-                                  {singleInfo.course_date}{' '}
+                                  {NewDate}{' '}
                                   {singleInfo.course_time}
                                 </Text>
                               </View>
 
-                              <View
+                              {/* <View
                                 style={{
                                   flexDirection: 'row',
                                   justifyContent: 'space-between',
                                   marginStart: 10,
                                 }}>
-                                {/* <Rating
-                              type="custom"
-                              ratingColor="#b41565"
-                              ratingBackgroundColor="#c8c7c8"
-                              ratingCount={5}
-                            
-                              imageSize={15}
-                              startingValue={0}
-                              fractions={1}
-                              // onFinishRating={this.ratingCompleted}
-                              style={{paddingVertical: 10}}
-                            /> */}
+                              
 
                                 <View style={{alignItems: 'center'}}>
                                   <Stars
@@ -224,7 +220,7 @@ export default class index extends Component {
                                     }
                                   />
                                 </View>
-                              </View>
+                              </View> */}
                             </View>
                           </View>
                         </View>
@@ -238,39 +234,39 @@ export default class index extends Component {
                               {singleInfo.no_of_coaching_followed}
                             </Text>
                           </View>
-                          <View style={Styles.contViewHeader}>
+                          {/* <View style={Styles.contViewHeader}>
                             <Text style={Styles.contViewTxt1}>
                               Compétences :{' '}
                             </Text>
                             <Text style={Styles.contentViewTxt2}>
                               {singleInfo.skill}
                             </Text>
-                          </View>
-                          <View style={Styles.contViewHeader}>
+                          </View> */}
+                          {/* <View style={Styles.contViewHeader}>
                             <Text style={Styles.contViewTxt1}>
                               Profession :{' '}
                             </Text>
                             <Text style={Styles.contentViewTxt2}>
                               {singleInfo.profession}
                             </Text>
-                          </View>
-                          <View style={Styles.contViewHeader}>
+                          </View> */}
+                          {/* <View style={Styles.contViewHeader}>
                             <Text style={Styles.contViewTxt1}>Âge : </Text>
                             <Text style={Styles.contentViewTxt2}>
                               {singleInfo.age}
                             </Text>
-                          </View>
+                          </View> */}
                         </View>
 
-                        <View style={Styles.contentView2}>
+                        {/* <View style={Styles.contentView2}>
                           <Text style={Styles.thirdHeaderTxt}>À propos de</Text>
 
                           <Text style={Styles.thirdHeaderTxtContent}>
                             {singleInfo.about_us}
                           </Text>
-                        </View>
+                        </View> */}
 
-                        {
+                        {/* {
                           historyFlag == true ?
 
                           <View style={Styles.continueBtn}>
@@ -302,6 +298,30 @@ export default class index extends Component {
                           </TouchableOpacity>
                         </View>
 
+                        } */}
+
+
+
+{
+                          historyFlag == false ?
+
+                          <View style={Styles.continueBtn}>
+                          <TouchableOpacity style={{flexDirection:'row',margin:3}}
+                              onPress={()=>{
+                                Linking.openURL(`tel:${9999999999}`)
+                              }}
+                          >
+                            <Image source={require("../../../../assets/icon/call.png")} style={{height:20,width:20,margin:6}} />
+                            <Text style={Styles.continueBtnTxt}>                             
+                              Appeler le tutor pour démarrer le coaching
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+
+
+                          :
+
+                          null
                         }
 
                        

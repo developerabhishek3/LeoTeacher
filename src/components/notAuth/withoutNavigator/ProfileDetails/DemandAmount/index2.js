@@ -12,6 +12,7 @@ import People from '../../../../../assets/icon/25.png';
 import {demand_amount_pending} from '../../../../../Api/afterAuth'
 import Spinner from 'react-native-loading-spinner-overlay';
 
+import moment from 'moment'
 export default class index extends Component {
   constructor(props) {
     super(props);
@@ -115,7 +116,7 @@ export default class index extends Component {
          <TouchableOpacity onPress={()=>{this.props.navigation.goBack()}}>
           <Image source={back} style={Styles.headertxtInputImg} />
           </TouchableOpacity>
-          <Text style={Styles.headerTxt}>Aide</Text>
+          <Text style={Styles.headerTxt}>Coachings facturés</Text>
           <Text style={Styles.headerTxt}>    </Text>
         </View>
         <Spinner visible={this.state.isSpinner}/>
@@ -129,7 +130,7 @@ export default class index extends Component {
               this.props.navigation.navigate('demandamount');
             }}>
             <View style={{flexDirection: 'column'}}>
-              <Text style={Styles.subheadingTxt}>Compléter</Text>
+              <Text style={Styles.subheadingTxt}>Payés</Text>
               <View style={{borderColor: 'gray', borderWidth: 1, width: 100}} />
             </View>
           </TouchableOpacity>
@@ -152,16 +153,17 @@ export default class index extends Component {
                 <Fragment>                
                     {       
                 this.state.demandPendingData.map((singleMap)=>{
+                  let NewDate = moment(singleMap.request_date).format('DD/MM/YYYY') 
                     return(
                         <Fragment>
                             <View style={{borderWidth:1,borderColor:'#DDDDDD',width:'96%',alignSelf:'center',margin:7,borderRadius:7}}>
-                            <View style={{flexDirection:'row',margin:2}}> 
+                            {/* <View style={{flexDirection:'row',margin:2}}> 
                             <Text style={{margin:3,fontWeight:'600',color:"gray"}}>Demande d'identification:</Text>
                             <Text style={{margin:3,fontWeight:'700',color:"#b41565"}}>#{singleMap.id}</Text>
-                            </View>
+                            </View> */}
                               
                                 <View style={{flexDirection:'row',margin:2}}> 
-                                <Text style={{margin:3,fontWeight:'600',color:"gray"}}>montant :</Text>                    
+                                <Text style={{margin:3,fontWeight:'600',color:"gray"}}>Montant :</Text>                    
                                 <Text style={{margin:3,fontWeight:'700',color:"#b41565"}}>{singleMap.amount}</Text>
                                     <Image source={require("../../../../../assets/icon/euro-currency-symbol-1.png")} style={{height:12,width:12,margin:7}} />
                                  </View>
@@ -174,13 +176,13 @@ export default class index extends Component {
                                
                             <View style={{flexDirection:'row',margin:2}}> 
                             <Text style={{margin:3,fontWeight:'600',color:"gray"}}>Date de la demande :</Text>
-                            <Text style={{margin:3,fontWeight:'700',color:"#b41565"}}>{singleMap.request_date}</Text>
+                            <Text style={{margin:3,fontWeight:'700',color:"#b41565"}}>{NewDate}</Text>
                             </View>
 
-                            <View style={{flexDirection:'row',margin:2}}> 
+                            {/* <View style={{flexDirection:'row',margin:2}}> 
                             <Text style={{margin:3,fontWeight:'600',color:"gray"}}>Date de mise à jour :</Text>
                             <Text style={{margin:3,fontWeight:'700',color:"#b41565"}}>{singleMap.update_date}</Text>
-                            </View>
+                            </View> */}
     
                             </View>
                         </Fragment>
@@ -190,7 +192,7 @@ export default class index extends Component {
                 </Fragment>
                 
                 :<View style={{alignItems:'center',justifyContent:'center'}}>
-                <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>Record non trouvé!</Text>
+                <Text style={{textAlign:'center',color:"gray",textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>Aucun paiement en attente</Text>
                </View>
             }
 
@@ -198,7 +200,7 @@ export default class index extends Component {
 
         :
             <View style={{alignItems:'center',justifyContent:'center'}}>
-            <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>chargement...</Text>
+            <Text style={{textAlign:'center',color:"gray",textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>chargement...</Text>
             </View>
           }
           
