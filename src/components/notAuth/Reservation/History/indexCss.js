@@ -73,7 +73,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
     margin: 7,
   },
-  peopleStyle: {height: 70, width: 70, margin: 10},
+  peopleStyle: {height: 70, width: 70, margin: 10,borderRadius:50},
   bookStyle: {height: 16, width: 16, margin: 3},
   contentTextStyle: {
     fontSize: 12,
@@ -81,17 +81,30 @@ export default StyleSheet.create({
     color: 'gray',
     fontWeight: '700',
   },
+  contentTextStyle1: {
+    fontSize: 16,
+    margin: 3,
+    color: 'gray',
+    fontWeight: '700',
+  },
+  contentTextStyle2:{
+    fontSize: 14,
+    margin: 5,
+    marginStart:-3,
+    color: '#b41565',
+    fontWeight: '700',
+  },
   continueBtn: {
     backgroundColor: '#b41565',
     margin: 6,
     borderRadius: 5,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    alignSelf: 'flex-end',
-    marginEnd: -30,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginStart:-20
+   
   },
   continueBtnTxt: {
-    margin: 3,
+    margin: 7,
     marginStart: 20,
     marginEnd: 20,
     color: '#FFFFFF',

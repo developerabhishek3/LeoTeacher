@@ -20,7 +20,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   headerTxt: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     textAlign: 'left',
     color: '#FFFFFF',

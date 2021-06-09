@@ -106,7 +106,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     margin: 10,
     paddingStart: 20,
-    color:"gray"
+    color:"#000000"
   },
   socialLogo: {
     height: 30,

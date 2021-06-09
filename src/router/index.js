@@ -55,7 +55,7 @@ import BankDetails from '../components/auth/BankDetails'
 
 import Notification from "../components/notification/index"
 
-
+import RescheduleReservation from '../components/notAuth/Reservation/RescheduleReservation'
 import notificationData from '../components/notAuth/withoutNavigator/ProfileDetails/Notifications';
 
 import demandAmount from '../components/notAuth/withoutNavigator/ProfileDetails/DemandAmount/index'
@@ -223,6 +223,12 @@ const AppNavigator = createStackNavigator(
     },
     reservation: {
       screen: Reservation,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    reschedulereservation: {
+      screen: RescheduleReservation,
       navigationOptions: {
         headerShown: false,
       },

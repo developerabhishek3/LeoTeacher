@@ -19,6 +19,7 @@ import logo from '../../../assets/icon/96.png';
 import back from '../../../assets/icon/20.png';
 
 import cross from '../../../assets/icon/17.png';
+import moment from 'moment'
 
 import books from '../../../assets/icon/12.png';
 import watch from '../../../assets/icon/14.png';
@@ -61,19 +62,19 @@ export default class index extends Component {
 
   Fetchcancel_reservation = async () => {
     const {reservation_id} = this.state;
-    console.log(
-      'inside the cancel api calling getting reservation -------------------',
-      reservation_id,
-    );
+    // console.log(
+    //   'inside the cancel api calling getting reservation -------------------',
+    //   reservation_id,
+    // );
     const cancel_reservationResponse = await cancel_reservation({
       reservation_id,
     });
     if (cancel_reservationResponse.result === true) {
       this.fetchcurrent_reservationData();
-      console.log(
-        'getting result here ----------------->>>>>>>>>>>>>>>>>>>-',
-        cancel_reservationResponse.response,
-      );
+      // console.log(
+      //   'getting result here ----------------->>>>>>>>>>>>>>>>>>>-',
+      //   cancel_reservationResponse.response,
+      // );
     } else {
       this.myAlert('Error', cancel_reservationResponse.error);
       console.log('getting error here-------------');
@@ -84,7 +85,7 @@ export default class index extends Component {
   fetchcurrent_reservationData = async () => {
     const current_reservationResponse = await current_reservation();
     if (current_reservationResponse.result == true) {
-      console.log("getting levels data ------------------- ",current_reservationResponse.response)
+      // console.log("getting levels data ------------------- ",current_reservationResponse.response)
       var currentReservation =
         current_reservationResponse.response.current_transaction;
       this.setState({currentReservation,isBodyLoaded: true,isSpinner: false,isCurrenetComponentRefreshing:false});
@@ -93,9 +94,10 @@ export default class index extends Component {
   };
 
   componentDidMount = async () => {
-  setTimeout(() => {
+  
+  setInterval(() => {
     this.fetchcurrent_reservationData();
-  }, 700);
+  },2000)
  
 
     BackHandler.addEventListener('hardwareBackPress', () =>
@@ -169,27 +171,33 @@ export default class index extends Component {
              this.state.currentReservation.length > 0 ?
               <Fragment>
               {this.state.currentReservation.map((singleCurrentMap) => {
+                  let NewDate = moment(singleCurrentMap.course_date).format('DD/MM/YYYY') 
               return (
                 <Fragment>
                   <TouchableOpacity onPress={()=>{this.props.navigation.navigate('clientinfo',{
                     reservation_id:singleCurrentMap.reservation_id,
-                    student_id:singleCurrentMap.student_id
+                    student_id:singleCurrentMap.student_id,
+                    student_profile_url:singleCurrentMap.student_profile_url
                   })}}>
                     <View style={Styles.contentView}>
-                      <View style={{flexDirection: 'row'}}>
+                      <View style={{flexDirection: 'row',width:'99%',borderColor:'red',borderWidth:0}}>
+                        <View>
                         <Image
                           source={{
                             uri: `https://www.spyk.fr/${singleCurrentMap.student_profile_url}`,
-                          }}
+                          }}                        
                           style={Styles.peopleStyle}
                         />
-                        <View style={{flexDirection: 'column'}}>
+                        </View>
+
+                        <View style={{flexDirection: 'column',}}>
                           <Text
                             style={{
                               fontSize: 14,
                               fontWeight: '700',
                               margin: 2,
                               marginTop: 10,
+                              color:"gray"
                             }}>
                             {singleCurrentMap.student_name}
                           </Text>
@@ -203,9 +211,31 @@ export default class index extends Component {
                           <View style={{flexDirection: 'row'}}>
                             <Image source={watch} style={Styles.bookStyle} />
                             <Text style={Styles.contentTextStyle}>
-                              {singleCurrentMap.course_date}{' '}
+                              {NewDate}{' '}
                               {singleCurrentMap.course_time}
                             </Text>
+                          </View>
+
+
+
+                          <View style={{flexDirection: 'row'}}>
+                              <Text style={Styles.contentTextStyle1}>Statut : </Text>
+                              {
+                                singleCurrentMap.status == 0 ?
+                                  <Text style={Styles.contentTextStyle2}>en attente</Text>
+                                :   singleCurrentMap.status == 1 ?
+                                <Text style={Styles.contentTextStyle2}>accepté</Text>
+                                : singleCurrentMap.status == 2 ?
+                                <Text style={Styles.contentTextStyle2}>annuler</Text>
+                                :   singleCurrentMap.status == 3 ?
+                                <Text style={Styles.contentTextStyle2}>terminé</Text>
+                                :singleCurrentMap.status == 4 ?
+                                <Text style={Styles.contentTextStyle2}>rééchelonnement</Text>
+                                :null
+
+                                
+                              }
+                                
                           </View>
 
                           <View
@@ -213,19 +243,28 @@ export default class index extends Component {
                               flexDirection: 'row',
                               justifyContent: 'space-between',
                             }}>
-                                <View style={{alignItems:'center',margin:6,marginStart:-25}}>
+                                <View style={{alignItems:'center',margin:6,marginStart:5}}>
                                     <Stars
                                     // update={(rating)=>{this.setState({rating: rating})}}
                                       default={singleCurrentMap.rating}
                                       count={5}
                                       // half={true}
+                                      disabled={true}
                                       starSize={30}
                                       fullStar={<Image source={require("../../../assets/icon/111.png")} style={{height:15,width:15,margin:3}} />}
                                       emptyStar={<Image source={require("../../../assets/icon/112.png")} style={{height:15,width:15,margin:3}} />}
                                       halfStar={<Image source={require("../../../assets/icon/113.png")} style={{height:15,width:15,margin:3}} />}
                                     />
                                   </View>
-                            <View style={Styles.continueBtn}>
+
+                          </View>
+
+
+
+
+                          <View style={{margin:0,justifyContent:'center',marginStart:-4,flexDirection: 'row'}} >
+                            
+                          <View style={Styles.continueBtn}>
                               <TouchableOpacity
                                 onPress={() => {
                                   let reservation_id =
@@ -241,8 +280,37 @@ export default class index extends Component {
                                 </Text>
                               </TouchableOpacity>
                             </View>
+
+
+                            <View style={Styles.continueBtn1}>
+                              <TouchableOpacity
+                              
+
+                                onPress={() => {this.props.navigation.navigate("reschedulereservation",{
+                                  reservation_id:singleCurrentMap.reservation_id,
+                                  course_duration:singleCurrentMap.course_duration
+
+                                })}}
+                                
+                                
+                                >
+                                <Text style={Styles.continueBtnTxt1}>
+                                Rééchelonnement
+                                </Text>
+                              </TouchableOpacity>
+                            </View>
+
+
+
                           </View>
+
+
                         </View>
+
+                         
+
+
+
                       </View>
                     </View>
                   </TouchableOpacity>
@@ -354,7 +422,7 @@ export default class index extends Component {
                   {' '}
                   Voir CGV.
                 </Text>
-                <Text
+                {/* <Text
                   style={{
                     margin: 2,
                     fontSize: 14,
@@ -363,7 +431,7 @@ export default class index extends Component {
                     alignSelf: 'center',
                   }}>
                   Termes et conditions
-                </Text>
+                </Text> */}
 
                 <View
                   style={{

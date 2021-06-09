@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View,Text,ScrollView, ImageBackground,Image,TextInput,TouchableOpacity,BackHandler, Alert,StatusBar} from 'react-native'
+import { View,Text,ScrollView, ImageBackground,Image,TextInput,TouchableOpacity,Modal,BackHandler, Alert,StatusBar} from 'react-native'
 import BottomNavigator from '../../../router/BottomNavigator'
 import Styles from './indexCss'
 import bgImg from '../../../assets/bgImages/6.png'
@@ -25,9 +25,19 @@ export default class index extends Component {
       StudentRating:[],
       isBodyLoaded:false,
       isSpinner:true,
+      alertValue:"",      
+      Model_Visibility1: false,
+      Alert_Visibility1: false,
     }
   }
 
+  Show_Custom_Alert1(visible,) {
+    this.setState({Alert_Visibility1: visible});
+  }
+  Hide_Custom_Alert1() {
+    this.setState({Alert_Visibility1: false}); 
+    // this.props.navigation.navigate("login")    
+  }
 
 
   rating_to_studentFunction = async () => {
@@ -122,10 +132,13 @@ export default class index extends Component {
 
 
 validateFunction(){
-
+  let alertValue;
   const {rating,comment} = this.state;
   if(!rating){
-    Alert.alert("Message","Please give some rating to student!")
+    alertValue = "S'il vous plaît, donnez une note à l'étudiant."
+    this.setState({alertValue})
+    this.Show_Custom_Alert1()
+    // Alert.alert("Message","Please give some rating to student!")
   }  
   else{
     this.rating_to_studentFunction() 
@@ -186,7 +199,7 @@ validateFunction(){
           </View>
 
           <Text style={{fontSize:13,color:'gray',fontWeight:'700',alignSelf:'center'}}>Votre coach</Text>
-          <Text style={{alignSelf:'center',fontWeight:'700',fontSize:16,}}>{student_name}</Text>
+          <Text style={{alignSelf:'center',fontWeight:'700',fontSize:16,color:"#000000"}}>{student_name}</Text>
 
 
 
@@ -197,13 +210,13 @@ validateFunction(){
 
             <View style={{flexDirection:'column'}}>
               <Text style={{fontSize:14,fontWeight:'700',color:'gray'}}>Durée du coaching</Text>
-              <Text style={{fontSize:16,fontWeight:'700'}}>{course_date}</Text>
+              <Text style={{fontSize:16,fontWeight:'700',color:"#000000"}}>{course_date}</Text>
             </View>
 
 
             <View style={{flexDirection:'column'}}>
               <Text style={{fontSize:14,fontWeight:'700',color:'gray'}}>Horaire du cours</Text>
-    <Text style={{fontSize:16,fontWeight:'700'}}>{course_time}</Text>
+    <Text style={{fontSize:16,fontWeight:'700',color:"#000000"}}>{course_time}</Text>
             </View>
 
         </View>
@@ -280,6 +293,99 @@ validateFunction(){
 
         }
 
+
+
+<Modal
+            visible={this.state.Alert_Visibility1}
+            animationType={'fade'}
+            transparent={true}
+            onRequestClose={() => {
+              this.Show_Custom_Alert1(!this.state.Alert_Visibility1);
+            }}>
+            <View
+              style={{
+                backgroundColor: 'rgba(85,65,225,0.900)',
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  width: '80%',
+                  height: 221,
+                  backgroundColor: '#ffffff',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: 10,
+                  borderRadius: 10,
+                }}>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      height: 100,
+                      width: 100,
+                      borderRadius: 50,
+                      borderWidth: 0,
+                      marginTop: -50,
+                    }}>
+                    <Image
+                      source={require("../../../assets/icon/17.png")}
+                      style={{height: 80, width: 80, margin: 10}}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      alignSelf: 'center',
+                      fontWeight: '700',
+                      margin: 10,
+                      marginTop: 10,
+                      color: 'gray',
+                      textAlign: 'center',                      
+                    }}>
+                     {/* Veuillez entrer votre nouveau mot de passe de confirmation */}
+                     {this.state.alertValue}
+                  </Text>
+                </View>                 
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',                    
+                    borderRadius: 6,
+                    justifyContent:'center',
+                    alignSelf:'center',
+                    margin: 5,
+                  }}>
+                  <TouchableOpacity                 
+                    onPress={() => {                      
+                      this.Hide_Custom_Alert1();
+                    }}
+                    style={{
+                      backgroundColor: '#b41565',
+                      justifyContent: 'center',
+                      margin: 20,
+                   
+                      height: 35,
+                      borderRadius: 6,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#FFF',
+                        fontSize: 13,
+                        marginStart: 50,
+                        marginEnd: 50,
+                        fontWeight: '700',
+                        textAlign: 'center',
+                        fontFamily: 'Montserrat-Regular',
+                      }}>
+                          OK
+                    </Text>
+                  </TouchableOpacity>                
+                </View>
+              </View>
+            </View>
+          </Modal> 
 
           
         </ImageBackground>

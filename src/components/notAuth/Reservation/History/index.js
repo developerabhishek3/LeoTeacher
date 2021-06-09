@@ -25,14 +25,14 @@ import watch from '../../../../assets/icon/14.png';
 import People from '../../../../assets/icon/25.png';
 
 import Stars from 'react-native-stars';
-
+import moment from 'moment'
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 import Spinner from 'react-native-loading-spinner-overlay';
 
 
-import {history_reservation} from '../../../../Api/afterAuth'
+import {history_reservation,complete_reservation} from '../../../../Api/afterAuth'
 import { Fragment } from 'react';
 
 
@@ -72,7 +72,7 @@ export default class index extends Component {
   fetchhistory_reservationData = async () => {
     const history_reservationResponse = await history_reservation();
     if (history_reservationResponse.result == true) {
-      console.log("getting levels data ------------------- ",history_reservationResponse.response)
+      // console.log("getting levels data ------------------- ",history_reservationResponse.response)
       var historyReservation = history_reservationResponse.response.history_transaction
       this.setState({historyReservation,isBodyLoaded: true,isSpinner: false,isCurrenetComponentRefreshing:false});
     }
@@ -82,9 +82,17 @@ export default class index extends Component {
 
 
   componentDidMount = async () => {
-   
+      
+      // setInterval(() => { 
+        setTimeout(() => {
+          this.fetchhistory_reservationData()  
+        }, 300);
+        
+
+      // },2000)
+      
+ 
   
-  this.fetchhistory_reservationData()
   
     BackHandler.addEventListener('hardwareBackPress', () =>
         this.handleBackButton(this.props.navigation),
@@ -114,6 +122,32 @@ export default class index extends Component {
 
 
 
+  Fetchcomplete_reservation = async (reservation_id) => {  
+
+    console.log(
+      'inside the Fetchcomplete_reservation api calling getting reservation -------------------',
+      reservation_id,
+    );
+   
+
+    const complete_reservationResponse = await complete_reservation({
+      reservation_id,
+    });
+    if (complete_reservationResponse.result === true) {
+      // setInterval(() => {
+        this.fetchhistory_reservationData();  
+      // }, 1000);
+      
+      // console.log(
+      //   'getting result here ----------------->>>>>>>>>>>>>>>>>>>-',
+      //   complete_reservationResponse.response,
+      // );
+    } else {
+      this.myAlert('Error', complete_reservationResponse.error);
+      console.log('getting error here-------------');
+    }
+    return;
+  };
 
 
 
@@ -176,7 +210,7 @@ export default class index extends Component {
 
 {
                 this.state.historyReservation.map((singlehistoryMap)=>{
-
+                  let NewDate = moment(singlehistoryMap.course_date).format('DD/MM/YYYY') 
                   console.log("checking single history map==========",singlehistoryMap)
                     return(
                         <Fragment>
@@ -203,6 +237,7 @@ export default class index extends Component {
                       fontWeight: '700',
                       margin: 2,
                       marginTop: 10,
+                      color:"#000000"
                     }}>
                    {singlehistoryMap.student_name}
                   </Text>
@@ -211,19 +246,46 @@ export default class index extends Component {
                     <Text style={Styles.contentTextStyle}>{singlehistoryMap.student_level_fr}</Text>
                   </View>
 
+                
+
                   <View style={{flexDirection: 'row'}}>
                     <Image source={watch} style={Styles.bookStyle} />
                     <Text style={Styles.contentTextStyle}>
-                   {singlehistoryMap.course_date}  {singlehistoryMap.course_time}
+                   {NewDate}  {singlehistoryMap.course_time}
                     </Text>
                   </View>
 
-                  <View style={{alignItems:'center',margin:3,marginStart:-25}}>
+
+
+                  <View style={{flexDirection: 'row'}}>
+                  <Text style={Styles.contentTextStyle1}>Statut : </Text>
+                  {
+                    singlehistoryMap.status == 0 ?
+                      <Text style={Styles.contentTextStyle2}>en attente</Text>
+                    :   singlehistoryMap.status == 1 ?
+                    <Text style={Styles.contentTextStyle2}>accepté</Text>
+                    : singlehistoryMap.status == 2 ?
+                    <Text style={Styles.contentTextStyle2}>annuler</Text>
+                    :   singlehistoryMap.status == 3 ?
+                    <Text style={Styles.contentTextStyle2}>coaching fait</Text>
+                    :singlehistoryMap.status == 4 ?
+                    <Text style={Styles.contentTextStyle2}>rééchelonnement</Text>
+                    :null
+
+                    
+                  }
+                    
+                  </View>
+
+
+
+                  <View style={{alignItems:'center',margin:3,marginStart:-35}}>
                                     <Stars
                                     // update={(rating)=>{this.setState({rating: rating})}}
                                       default={singlehistoryMap.rating}
                                       count={5}
                                       // half={true}
+                                      disabled={true}
                                       starSize={30}
                                       fullStar={<Image source={require("../../../../assets/icon/111.png")} style={{height:15,width:15,margin:3}} />}
                                       emptyStar={<Image source={require("../../../../assets/icon/112.png")} style={{height:15,width:15,margin:3}} />}
@@ -250,11 +312,18 @@ export default class index extends Component {
                     />
                    
                   </View> */}
-                   {/* <View style={Styles.continueBtn}>
-                      <TouchableOpacity onPress={()=>{this.Show_Custom_Alert()}}>
-                      <Text style={Styles.continueBtnTxt}>Annuler</Text>
-                      </TouchableOpacity>
-                    </View> */}
+                  {
+                        singlehistoryMap.status == 3 ?
+                          null
+                        :   
+                        <View style={Styles.continueBtn}>
+                        <TouchableOpacity onPress={()=>{this.Fetchcomplete_reservation(singlehistoryMap.reservation_id)}}>
+                        <Text style={Styles.continueBtnTxt}>Terminé</Text>
+                        </TouchableOpacity>
+                      </View>
+
+                  }
+                   
                 </View>
               </View>
             </View>

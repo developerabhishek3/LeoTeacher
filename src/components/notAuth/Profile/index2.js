@@ -52,7 +52,7 @@ export default class index extends Component {
             let keys = ['token'];
             AsyncStorage.multiRemove(keys)           
             this.props.navigation.navigate("login")            
-            Alert.alert("Message","Déconnexion réussie!")
+            // Alert.alert("Message","Déconnexion réussie!")
         }
         else{
             // console.log("getting error on logout -------------",LogoutResponse.error)
@@ -287,7 +287,7 @@ export default class index extends Component {
         >
         <View style={{flexDirection:'row',margin:1}}>
         <Image source={revenueIcon} style={{height:24,width:24,margin:10}}  />
-            <Text style={{fontSize:14,fontWeight:'700',margin:15,color:'gray'}}>Coachings à facturer</Text>
+            <Text style={{fontSize:14,fontWeight:'700',margin:15,color:'gray'}}>Coachings facturés</Text>
         </View>
         </TouchableOpacity>
 

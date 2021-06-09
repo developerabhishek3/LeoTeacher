@@ -8,7 +8,8 @@ import {
   ScrollView,
   Alert,
   StatusBar,
-  BackHandler
+  BackHandler,
+  Modal
 } from 'react-native';
 import Styles from './indexCss';
 import bgImg from '../../../assets/bgImages/3.png';
@@ -33,7 +34,9 @@ export default class index extends Component {
       iban:"",
       paypal_email:"",
 
-
+      Model_Visibility1: false,
+      Alert_Visibility1: false,  
+      alertValue:"",
       token: '',
 
       userLoggedInData: {},
@@ -48,6 +51,14 @@ export default class index extends Component {
 
 
 
+
+  Show_Custom_Alert1(visible,) {
+    this.setState({Alert_Visibility1: visible});
+  }
+  Hide_Custom_Alert1() {
+    this.setState({Alert_Visibility1: false}); 
+    // this.props.navigation.navigate("login")    
+  }
 
   add_update_bank_infoFunction = async () => {
     // console.log("getting inside the function uuid --------",this.state.fcm_token)
@@ -86,24 +97,40 @@ export default class index extends Component {
   };
 
   validateUser = () => {
+    let alertValue;
     const { bank_name,bic_code,iban,paypal_email  } = this.state;
 
     if (bank_name.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer le nom de votre banque!');
+      alertValue = "Veuillez entrer le nom de votre banque!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez entrer le nom de votre banque!');
     } 
     else if (bic_code.length === 0) {
-        this.myAlert('Message', 'Veuillez entrer votre code BIC!');
+      alertValue = "Veuillez entrer votre code BIC!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+        // this.myAlert('Message', 'Veuillez entrer votre code BIC!');
     }
     else if (iban.length === 0) {
-        this.myAlert('Message', 'Veuillez entrer votre IBAN!');
+      alertValue = "Veuillez entrer votre IBAN!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+        // this.myAlert('Message', 'Veuillez entrer votre IBAN!');
     } 
     else if(paypal_email.length === 0){
-      this.myAlert('Message', 'Veuillez entrer votre email paypal!');
+      alertValue = "Veuillez entrer votre email paypal!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez entrer votre email paypal!');
     }
     else {
       const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!paypal_email.match(mailformat)) {
-        this.myAlert('Message', 'Adresse email invalide!');
+        alertValue = "Adresse email invalide!"
+        this.setState({alertValue})
+        this.Show_Custom_Alert1()
+        // this.myAlert('Message', 'Adresse email invalide!');
         return false;
       }
       this.add_update_bank_infoFunction();
@@ -243,6 +270,116 @@ Après confirmation, votre compte coach d'anglais SPYK sera activé dans un dél
             </View>
           </ScrollView>
           </KeyboardAwareScrollView>
+
+
+
+
+
+
+
+
+
+
+
+          
+
+
+          <Modal
+            visible={this.state.Alert_Visibility1}
+            animationType={'fade'}
+            transparent={true}
+            onRequestClose={() => {
+              this.Show_Custom_Alert1(!this.state.Alert_Visibility1);
+            }}>
+            <View
+              style={{
+                backgroundColor: 'rgba(85,65,225,0.900)',
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  width: '80%',
+                  height: 221,
+                  backgroundColor: '#ffffff',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: 10,
+                  borderRadius: 10,
+                }}>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      height: 100,
+                      width: 100,
+                      borderRadius: 50,
+                      borderWidth: 0,
+                      marginTop: -50,
+                    }}>
+                    <Image
+                      source={require("../../../assets/icon/17.png")}
+                      style={{height: 80, width: 80, margin: 10}}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      alignSelf: 'center',
+                      fontWeight: '700',
+                      margin: 10,
+                      marginTop: 10,
+                      color: 'gray',
+                      textAlign: 'center',                      
+                    }}>
+                     {/* Veuillez entrer votre nouveau mot de passe de confirmation */}
+                     {this.state.alertValue}
+                  </Text>
+                </View>                 
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',                    
+                    borderRadius: 6,
+                    justifyContent:'center',
+                    alignSelf:'center',
+                    margin: 5,
+                  }}>
+                  <TouchableOpacity                 
+                    onPress={() => {                      
+                      this.Hide_Custom_Alert1();
+                    }}
+                    style={{
+                      backgroundColor: '#b41565',
+                      justifyContent: 'center',
+                      margin: 20,
+                   
+                      height: 35,
+                      borderRadius: 6,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#FFF',
+                        fontSize: 13,
+                        marginStart: 50,
+                        marginEnd: 50,
+                        fontWeight: '700',
+                        textAlign: 'center',
+                        fontFamily: 'Montserrat-Regular',
+                      }}>
+                          OK
+                    </Text>
+                  </TouchableOpacity>                
+                </View>
+              </View>
+            </View>
+          </Modal> 
+
+
+
+
+
         </ImageBackground>
       </View>
     );

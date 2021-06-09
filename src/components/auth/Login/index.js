@@ -253,7 +253,7 @@ export default class index extends Component {
                         placeholder="Mot de passe"
 
                         placeholderTextColor="gray"
-                        style={{paddingStart:15,fontFamily: this.state.password ? 'OpenSans-Regular' : 'OpenSans-Regular', borderWidth:0,width:"85%",color:"gray"}}
+                        style={{paddingStart:15,fontFamily: this.state.password ? 'OpenSans-Regular' : 'OpenSans-Regular', borderWidth:0,width:"85%",color:"#000000"}}
                         value={this.state.password}     
                         onChangeText={(password) => this.setState({ password })}           
                       />

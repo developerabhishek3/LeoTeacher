@@ -44,14 +44,16 @@ export default StyleSheet.create({
         fontWeight:'600',
         marginStart:30,
         alignSelf:'flex-start',marginBottom:30,
-        margin:10
+        margin:10,
+        color:"#000000"
     },
     txtStyle1:{
         fontSize:15,
         fontWeight:'600',
         marginStart:30,
         alignSelf:'flex-start',
-        marginBottom:10        
+        marginBottom:10   ,
+        color:"#000000"     
     },
     txtStyle2:{
         fontSize:14,
@@ -59,6 +61,7 @@ export default StyleSheet.create({
         marginStart:20,
         alignSelf:'center',        
         margin:2,
+        color:"#000000",
         width:"90%",
 
     },
@@ -67,7 +70,8 @@ export default StyleSheet.create({
         fontWeight:'700',
         marginStart:20,
         alignSelf:'center',  
-        marginBottom:10   
+        marginBottom:10   ,
+        color:"#000000"
     },
 
     continueBtnTxt:{

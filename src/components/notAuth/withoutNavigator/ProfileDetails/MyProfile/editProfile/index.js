@@ -11,7 +11,8 @@ import {
   Button,
   Alert,
   Dimensions,
-  StatusBar,  
+  StatusBar, 
+  Modal 
 } from 'react-native';
 import Styles from './indexCss';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -77,7 +78,9 @@ export default class index extends Component {
       isSpinner:true,
       // filePath: {},
        
-
+      Model_Visibility: false,
+      Alert_Visibility: false,
+      alertValue:"",
 
       data1:[
         {"id": "1",
@@ -139,6 +142,14 @@ export default class index extends Component {
 
 
 
+  Show_Custom_Alert(visible,) {
+    this.setState({Alert_Visibility: visible});
+  }
+  Hide_Custom_Alert() {
+    this.setState({Alert_Visibility: false}); 
+    // this.props.navigation.navigate("login")    
+  }
+
 
 
  uploadWholeData(){
@@ -198,10 +209,12 @@ export default class index extends Component {
             isSpinner:false
           }); 
       console.log("response:::::::" + JSON.stringify(resp.text()));
-      Alert.alert("Message","Mise à jour du profil réussie!")
+      // Alert.alert("Message","Mise à jour du profil réussie!")
+     
+      let alertValue = "Mise à jour du profil réussie"
+      this.setState({alertValue})
+      this.Show_Custom_Alert()
       this.props.navigation.navigate("home")
-      
-      
       if(resp.json().error === "false"){
       this.setState({
         isSpinner:false
@@ -307,6 +320,7 @@ export default class index extends Component {
 
 
   validateUser = async () => {
+    let alertValue;
     const {      
       first_name,
       last_name,
@@ -325,29 +339,53 @@ export default class index extends Component {
       q_6_ans
     } = this.state;
      if (first_name.length === 0) {
-      this.myAlert('Message', 'Veuillez saisir votre prénom!');
+      alertValue = "Veuillez saisir votre prénom!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert()
+      // this.myAlert('Message', 'Veuillez saisir votre prénom!');
     } else if (last_name.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre nom de famille!');
+      alertValue = "Veuillez entrer votre nom de famille!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert()
+      // this.myAlert('Message', 'Veuillez entrer votre nom de famille!');
     }
     else if (birth_date.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre date de naissance!');
+      alertValue = "Veuillez entrer votre date de naissance!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert()
+      // this.myAlert('Message', 'Veuillez entrer votre date de naissance!');
     }
     else if (address.length === 0) {
       this.myAlert('Message', 'Veuillez entrer votre adresse!');
     }
     else if (postcode.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre code postal!');
+      alertValue = "Veuillez entrer votre code postal!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert()
+      // this.myAlert('Message', 'Veuillez entrer votre code postal!');
     }
     else if (city.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre ville!');
+      alertValue = "Veuillez entrer votre ville!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert()
+      // this.myAlert('Message', 'Veuillez entrer votre ville!');
     } else if (country.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre pays!');
+      alertValue = "Veuillez entrer votre pays!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert()
+      // this.myAlert('Message', 'Veuillez entrer votre pays!');
     } 
      else if (telephone_no.length === 0) {
-      this.myAlert('Message', 'Veuillez saisir votre numéro de téléphone!');
+      alertValue = "Veuillez saisir votre numéro de téléphone!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert()
+      // this.myAlert('Message', 'Veuillez saisir votre numéro de téléphone!');
     } 
     else if (email.length === 0) {
-      this.myAlert('Message', 'Veuillez entrer votre adresse électronique!');
+      alertValue = "Veuillez entrer votre adresse électronique!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert()
+      // this.myAlert('Message', 'Veuillez entrer votre adresse électronique!');
     }   
     // else if (q_1_ans.length === 0) {
     //   this.myAlert('Message', 'Veuillez choisir votre réponse !');
@@ -365,13 +403,19 @@ export default class index extends Component {
     //   this.myAlert('Message', 'Veuillez choisir votre réponse !');
     // }
     else if(q_6_ans.length == 0){
-      this.myAlert('Message', 'Veuillez choisir votre réponse !');
+      alertValue = "Veuillez choisir votre réponse !"
+      this.setState({alertValue})
+      this.Show_Custom_Alert()
+      // this.myAlert('Message', 'Veuillez choisir votre réponse !');
     }
     else {
    
       const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!email.match(mailformat)) {
-        this.myAlert('Message', 'Email-id invalide');
+        alertValue = "Email-id invalide!"
+        this.setState({alertValue})
+        this.Show_Custom_Alert()
+        // this.myAlert('Message', 'Email-id invalide');
         return false;
       }  
       this.uploadWholeData();
@@ -398,7 +442,7 @@ export default class index extends Component {
     //     skipBackup: true
     //   }
     // };
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.launchImageLibrary(options, response => {
       // console.log('Response = ', response);
 
       if (response.didCancel) {
@@ -572,12 +616,12 @@ export default class index extends Component {
                 marginBottom: 15,
                 alignItems: 'center',
               }}>
-              <TextInput placeholder="  Nom" 
+              <TextInput placeholder="Nom" 
                placeholderTextColor="gray"
                 onChangeText={(first_name) => this.setState({first_name})}
               style={Styles.txtInput} >{profileData.first_name}</TextInput>
 
-              <TextInput placeholder="  Prénom" 
+              <TextInput placeholder="Prénom" 
               placeholderTextColor="gray"
                 onChangeText={(last_name) => this.setState({last_name})}
               style={Styles.txtInput} >{profileData.last_name}</TextInput>
@@ -632,7 +676,7 @@ export default class index extends Component {
 
                 </View>
               <TextInput
-                placeholder="  Adresse postale"
+                placeholder="Adresse postale"
                 placeholderTextColor="gray"
                 style={Styles.txtInput}
                 onChangeText={(address) => this.setState({address})}
@@ -818,7 +862,7 @@ sur l'application LEO ?
 
 
 
-                <Text style={{fontSize:16,fontWeight:'700',alignSelf:'flex-start',marginStart:30,color:"gray"}}>Quel est votre niveau de français ?</Text>
+                <Text style={{fontSize:16,fontWeight:'700',alignSelf:'flex-start',marginStart:30,color:"gray"}}>Compétences linguistiques ?</Text>
 
                   <View style={Styles.radiobtnMainView}>
                     <View style={{flexDirection:'row',flexWrap:'wrap'}}>

@@ -73,7 +73,8 @@ export default StyleSheet.create({
     width: '85%',
     height: 40,
     borderRadius: 10,
-    margin:12
+    margin:12,
+    color:"#000000"
   },
   txtInput1: {
     borderColor: 'gray',

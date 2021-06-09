@@ -251,11 +251,11 @@ checkSwitch  = (value) => {
     
     if(delete_accountResponse.result == true) {
       if(delete_accountResponse.response.status == true){
-        Alert.alert("Message",delete_accountResponse.response.message)
+        // Alert.alert("Message",delete_accountResponse.response.message)
         console.log("getting response hrere=============",delete_accountResponse.response)
       }
       else{
-        Alert.alert("Message",delete_accountResponse.response.message)
+        // Alert.alert("Message",delete_accountResponse.response.message)
         console.log("getting Error hrere=============",delete_accountResponse.response)
       }
         // console.log("getting delete_account response---------------",delete_accountResponse.response)     

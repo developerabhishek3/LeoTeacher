@@ -760,8 +760,8 @@ export async function current_reservation() {
   const TokenValue = JSON.parse(token);
   const UserId = JSON.parse(user_id)
   
-  console.log("getting token and user id here inside the function-----------",UserId)
-  console.log("getting token and user id here inside the function-----------",TokenValue)
+  // console.log("getting token and user id here inside the function-----------",UserId)
+  // console.log("getting token and user id here inside the function-----------",TokenValue)
  
   try {
     const current_reservationResponse = await Axios.get(
@@ -796,8 +796,8 @@ export async function history_reservation() {
   const TokenValue = JSON.parse(token);
   const UserId = JSON.parse(user_id)
   
-  console.log("getting token and user id here inside the function-----------",UserId)
-  console.log("getting token and user id here inside the function-----------",TokenValue)
+  // console.log("getting token and user id here inside the function-----------",UserId)
+  // console.log("getting token and user id here inside the function-----------",TokenValue)
  
   try {
     const history_reservationResponse = await Axios.get(
@@ -858,6 +858,89 @@ export async function cancel_reservation(body ={}) {
     throw error;
   }
   }
+
+
+
+  export async function reschedule_reservation(body ={}) {
+
+    const token = await AsyncStorage.getItem('token');
+    const user_id = await AsyncStorage.getItem('user_id');
+    
+    const TokenValue = JSON.parse(token);
+    const UserId = JSON.parse(user_id)
+    
+    console.log("getting token and user id here inside the function-----------",UserId)
+    console.log("getting token and user id here inside the function-----------",TokenValue)
+    try {      
+      const reschedule_reservationResponse = await Axios.post(
+        'https://www.spyk.fr/api_teacher/reschedule_reservation',
+        body,
+        {
+                 headers: {...commonHeader, 'user-id' : `${UserId}`, 'token' :`${TokenValue}`}   
+        },
+      );
+      if (reschedule_reservationResponse.status) {
+        return {result: true, response: reschedule_reservationResponse.data};
+      } else {
+        return {result: false, response: reschedule_reservationResponse.data};
+      }
+    } catch (err) {
+      let error = new Error();
+      const {data, status} = err.response;
+      error.response = err.response;
+      if (status == 400 && data.error === 'invalid_grant') {
+        error.message = 'Invalid Credentials';
+      } else {
+        error.message = 'Request Failed';
+      }
+      throw error;
+    }
+    }
+
+
+
+
+
+
+    
+  export async function complete_reservation(body ={}) {
+
+    const token = await AsyncStorage.getItem('token');
+    const user_id = await AsyncStorage.getItem('user_id');
+    
+    const TokenValue = JSON.parse(token);
+    const UserId = JSON.parse(user_id)
+    
+    // console.log("getting token and user id here inside the function-----------",UserId)
+    // console.log("getting token and user id here inside the function-----------",TokenValue)
+    try {      
+      const complete_reservationResponse = await Axios.post(
+        'https://www.spyk.fr/api_teacher/complete_reservation',
+        body,
+        {
+                 headers: {...commonHeader, 'user-id' : `${UserId}`, 'token' :`${TokenValue}`}   
+        },
+      );
+      if (complete_reservationResponse.status) {
+        return {result: true, response: complete_reservationResponse.data};
+      } else {
+        return {result: false, response: complete_reservationResponse.data};
+      }
+    } catch (err) {
+      let error = new Error();
+      const {data, status} = err.response;
+      error.response = err.response;
+      if (status == 400 && data.error === 'invalid_grant') {
+        error.message = 'Invalid Credentials';
+      } else {
+        error.message = 'Request Failed';
+      }
+      throw error;
+    }
+    }
+
+
+
 
 // # : STUDENT INFO & BOOK RESERVATION
 
