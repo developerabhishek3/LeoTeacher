@@ -31,7 +31,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import { reservation_request_accept_reject } from "../../Api/afterAuth";
 import CountDown from 'react-native-countdown-component';
 
-
+import moment from 'moment'
 
 import * as RNLocalize from "react-native-localize"
 
@@ -50,7 +50,7 @@ export default class App extends React.Component {
       seconds:0,
       secondBetweenTwoDate:0,
       isButtonEnable:true,
-
+      course_duration:0,
 
 
       //send in API
@@ -97,14 +97,16 @@ export default class App extends React.Component {
     let  reservation_request_id =this.props.navigation.getParam("reservation_request_id")
     let  student_name = this.props.navigation.getParam("student_name")
     let secondBetweenTwoDate = this.props.navigation.getParam("secondBetweenTwoDate")
-    let course_date = this.props.navigation.getParam("course_date")
+    let course_date1 = this.props.navigation.getParam("course_date")
+    let course_date = moment(course_date1).format('DD/MM/YYYY') 
     let course_time = this.props.navigation.getParam("course_time")
     let student_level = this.props.navigation.getParam("student_level")
+    let course_duration = this.props.navigation.getParam("course_duration") 
 
 
 
     this.setState({
-      transaction_id,teacher_id,reservation_request_id,student_name,student_level,course_date,course_time,secondBetweenTwoDate
+      transaction_id,teacher_id,course_duration,reservation_request_id,student_name,student_level,course_date,course_time,secondBetweenTwoDate
     })
 
 
@@ -244,7 +246,7 @@ export default class App extends React.Component {
                     marginTop: 30,
                     margin: 10,
                   }}>
-                  Demande de coaching (request)
+                 Demande de coaching reçue
                 </Text>
 
                 <View
@@ -271,6 +273,17 @@ export default class App extends React.Component {
                     }}>
                    {/* {newData.course_date} {newData.course_time} */}
                    {this.state.course_date}  {this.state.course_time}
+                  </Text>
+
+                  <Text
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: 14,
+                      fontWeight: '600',
+                      alignSelf: 'center',
+                    }}>
+                   {/* {newData.course_date} {newData.course_time} */}
+                   {this.state.course_duration}
                   </Text>
                 </View>
 
@@ -302,6 +315,16 @@ export default class App extends React.Component {
                       alignSelf: 'center',
                     }}>
                   {this.state.student_name}  
+                  </Text>
+
+                  <Text
+                    style={{
+                      color: '#FFFFFF',
+                      fontSize: 14,
+                      fontWeight: '600',
+                      alignSelf: 'center',
+                    }}>
+                  {this.state.student_level}  
                   </Text>
                 </View>
 
