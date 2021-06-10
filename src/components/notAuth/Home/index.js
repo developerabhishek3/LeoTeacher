@@ -25,7 +25,7 @@ import {ECharts} from 'react-native-echarts-wrapper';
 import logo from '../../../assets/icon/96.png';
 import Styles from './indexCss';
 import {RadioButton} from 'react-native-paper';
-
+import moment from 'moment'
 import watch from '../../../assets/icon/22.png';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {
@@ -48,6 +48,7 @@ export default class index extends Component {
     super(props);
     this.state = {
       value: 'first',
+      todayDateValue:new Date(),
       Model_Visibility: false,
       Alert_Visibility: false,
       isCurrenetComponentRefreshing:false,
@@ -122,6 +123,7 @@ export default class index extends Component {
         {x: 'JULY', y: 3},
       ],
     };
+    
   }
 
   Show_Custom_Alert(visible) {
@@ -150,6 +152,8 @@ export default class index extends Component {
 
   componentDidMount() {
     // setTimeout(() => {
+      let currentYear = (this.state.todayDateValue).getFullYear()
+      console.log("getting inside the didmount methid - - - - - - -",currentYear)
       
     setTimeout(() => {
       this.FetchBusinessData();
@@ -217,7 +221,7 @@ export default class index extends Component {
     const online_offlineResponse = await online_offlineFunction({
       online_offline: email_global,
     });
-    if (online_offlineResponse.result === true) {
+    if (online_offlineResponse.result == true) {
       // console.log(
       //   'getting result here ----------------->>>>>>>>>>>>>>>>>>>-',
       //   online_offlineResponse.response,
@@ -310,7 +314,7 @@ export default class index extends Component {
 
   fetchHomeCountData = async () => {
     const home_count_dataResponse = await home_count_data();
-    if (home_count_dataResponse.result === true) {
+    if (home_count_dataResponse.result == true) {
       var remuneration_total =
         home_count_dataResponse.response.remuneration_total;
       var total_coaching_given =
@@ -363,8 +367,9 @@ export default class index extends Component {
 
 
   FetchBusinessData = async () => {
+    let currentYear = (this.state.todayDateValue).getFullYear()
     const bussiness_monthlyResponse = await bussiness_monthly({
-      year: '2021',
+      year: currentYear,
     });
     if (bussiness_monthlyResponse.result === true) {
       var BusinessMonthlyData =
@@ -434,7 +439,7 @@ export default class index extends Component {
                 {x:categoryKey12,y:categoryValue12},
               ]
               // console.log("gettin new dataa  -  - - - -",newgData)
-              this.setState({ComposeData:newgData})
+              this.setState({ComposeData:newgData,isCurrenetComponentRefreshing:false,})
   
         // console.log("getting abhi ot not categoryValue =========",categoryValue[0])
       })
@@ -541,7 +546,8 @@ checkReserveCourse(){
             showsVerticalScrollIndicator={false}
             refreshControl={
                           <RefreshControl refreshing={this.state.isCurrenetComponentRefreshing} onRefresh={()=>{  this.setState({ isCurrenetComponentRefreshing: true }); setTimeout(()=>{
-                        this.fetchHomeCountData();
+                        this.fetchHomeCountData()
+                        this.FetchBusinessData()
                       },100)  }} />
                     }>
           <View

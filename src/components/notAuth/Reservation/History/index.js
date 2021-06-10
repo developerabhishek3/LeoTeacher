@@ -267,7 +267,7 @@ export default class index extends Component {
                     : singlehistoryMap.status == 2 ?
                     <Text style={Styles.contentTextStyle2}>annuler</Text>
                     :   singlehistoryMap.status == 3 ?
-                    <Text style={Styles.contentTextStyle2}>coaching fait</Text>
+                    <Text style={Styles.contentTextStyle2}>terminé</Text>
                     :singlehistoryMap.status == 4 ?
                     <Text style={Styles.contentTextStyle2}>rééchelonnement</Text>
                     :null
@@ -318,7 +318,7 @@ export default class index extends Component {
                         :   
                         <View style={Styles.continueBtn}>
                         <TouchableOpacity onPress={()=>{this.Fetchcomplete_reservation(singlehistoryMap.reservation_id)}}>
-                        <Text style={Styles.continueBtnTxt}>Terminé</Text>
+                        <Text style={Styles.continueBtnTxt}>Coaching fait</Text>
                         </TouchableOpacity>
                       </View>
 

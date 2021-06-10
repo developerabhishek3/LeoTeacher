@@ -46,9 +46,10 @@ export default class index extends Component {
       to_date: new Date(),
       date: new Date(),
       filteredData:[],
+      alertValue:"",
       filterKay:false,
       totalFilterAmount:0,
-
+      Alert_Visibility2:false,
       checked1:false,
       isdemandButtonEnable:false,
       transaction_ids:[],
@@ -77,12 +78,18 @@ export default class index extends Component {
   }
   Hide_Custom_Alert1() {
     this.setState({Alert_Visibility: false});
-    this.props.navigation.navigate('profile2');
+    this.Show_Custom_Alert2()
   }
 
 
 
-
+  Show_Custom_Alert2(visible,) {
+    this.setState({Alert_Visibility2: visible});
+  }
+  Hide_Custom_Alert2() {
+    this.setState({Alert_Visibility2: false}); 
+    this.props.navigation.navigate("profile2")  
+  }
 
 
 
@@ -188,9 +195,14 @@ export default class index extends Component {
     console.log("getting ampint and ids>>>>>>>>>>>>>>> ??????????????????? >>>>>>>>>>>>>>>>>>",amount,        transaction_ids)
     if (demand_amountdataResponse.result == true) {
      console.log("getting after filter response====================",demand_amountdataResponse.response)
-     Alert.alert("Message",demand_amountdataResponse.response.message)
-     this.props.navigation.navigate("profile2")
-     this.Hide_Custom_Alert1()
+    //  Alert.alert("Message",demand_amountdataResponse.response.message)
+    let alertValue = demand_amountdataResponse.response.message;
+    this.setState({alertValue})
+    this.Hide_Custom_Alert1()
+   
+ 
+   
+  
     // var filteredData = demand_amountdataResponse.response.revenue_list;
     // var totalFilterAmount = demand_amountdataResponse.response.total_amount
     // this.setState({isBodyLoaded:true,isSpinner:false,filteredData,filterKay:true,totalFilterAmount})
@@ -799,6 +811,122 @@ amountAfterCheck () {
               </View>
             </View>
           </Modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <Modal
+            visible={this.state.Alert_Visibility2}
+            animationType={'fade'}
+            transparent={true}
+            onRequestClose={() => {
+              this.Show_Custom_Alert2(!this.state.Alert_Visibility2);
+            }}>
+            <View
+              style={{
+                backgroundColor: 'rgba(85,65,225,0.900)',
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  width: '80%',
+                  height: 221,
+                  backgroundColor: '#ffffff',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: 10,
+                  borderRadius: 10,
+                }}>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <View
+                    style={{
+                      backgroundColor: '#FFFFFF',
+                      height: 100,
+                      width: 100,
+                      borderRadius: 50,
+                      borderWidth: 0,
+                      marginTop: -50,
+                    }}>
+                    <Image
+                      source={require("../../../../../assets/icon/check21.png")}
+                      style={{height: 80, width: 80, margin: 10}}
+                    />
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      alignSelf: 'center',
+                      fontWeight: '700',
+                      margin: 10,
+                      marginTop: 10,
+                      color: 'gray',
+                      textAlign: 'center',                      
+                    }}>
+                     {/* Veuillez entrer votre nouveau mot de passe de confirmation */}
+                     {this.state.alertValue}
+                  </Text>
+                </View>                 
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',                    
+                    borderRadius: 6,
+                    justifyContent:'center',
+                    alignSelf:'center',
+                    margin: 5,
+                  }}>
+                  <TouchableOpacity                 
+                    onPress={() => {                      
+                      this.Hide_Custom_Alert2();
+                    }}
+                    style={{
+                      backgroundColor: '#b41565',
+                      justifyContent: 'center',
+                      margin: 20,
+                   
+                      height: 35,
+                      borderRadius: 6,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#FFF',
+                        fontSize: 13,
+                        marginStart: 50,
+                        marginEnd: 50,
+                        fontWeight: '700',
+                        textAlign: 'center',
+                        fontFamily: 'Montserrat-Regular',
+                      }}>
+                          OK
+                    </Text>
+                  </TouchableOpacity>                
+                </View>
+              </View>
+            </View>
+          </Modal> 
         </View>
       </View>
     );

@@ -153,12 +153,13 @@ export default class App extends React.Component {
             
           var newData = JSON.parse(notificationData)
 
-          var student_name =  newData.student_name;
+          var student_name =  newData.student_name;          
           var transaction_id = newData.transaction_id;
           var reservation_request_id = newData.reservation_request_id;
           var course_date = newData.course_date;
           var course_time = newData.course_time;
-          var student_level =  newData.course_time;
+          var student_level =  newData.student_level;
+          var course_duration = newData.course_duration
       
           var request_start = new Date(newData.request_start)
           var request_end = new Date(newData.request_end)
@@ -182,7 +183,8 @@ export default class App extends React.Component {
             //       }
             //   EventRegister.emit('myCustomEvent', objchatscreens)
                       topLevelNavigate('notification', {
-                        student_name:student_name,
+                        student_name:student_name,                        
+                        course_duration:course_duration,
                         teacher_id:newData.teacher_id,
                         transaction_id:transaction_id,
                         reservation_request_id:reservation_request_id,
@@ -229,11 +231,12 @@ export default class App extends React.Component {
           var newData = JSON.parse(notificationData)
 
           var student_name =  newData.student_name;
+          var course_duration = newData.course_duration
           var transaction_id = newData.transaction_id;
           var reservation_request_id = newData.reservation_request_id;
           var course_date = newData.course_date;
           var course_time = newData.course_time;
-          var student_level =  newData.course_time;
+          var student_level =  newData.student_level;
       
           var request_start = new Date(newData.request_start)
           var request_end = new Date(newData.request_end)
@@ -248,6 +251,7 @@ export default class App extends React.Component {
           console.log("inside the notification data funciton - - - - -")
           topLevelNavigate('notification', {
             student_name:student_name,
+            course_duration:course_duration,
             teacher_id:newData.teacher_id,
             transaction_id:transaction_id,
             reservation_request_id:reservation_request_id,
@@ -293,11 +297,12 @@ export default class App extends React.Component {
         var newData = JSON.parse(notificationData)
 
         var student_name =  newData.student_name;
+        var course_duration = newData.course_duration;
         var transaction_id = newData.transaction_id;
         var reservation_request_id = newData.reservation_request_id;
         var course_date = newData.course_date;
         var course_time = newData.course_time;
-        var student_level =  newData.course_time;
+        var student_level =  newData.student_level;
     
         var request_end = moment(newData.request_end)
 
@@ -314,6 +319,7 @@ export default class App extends React.Component {
           console.log("inside the notification data funciton - - - - -")
           topLevelNavigate('notification', {
             student_name:student_name,
+            course_duration:course_duration,
             teacher_id:newData.teacher_id,
             transaction_id:transaction_id,
             reservation_request_id:reservation_request_id,

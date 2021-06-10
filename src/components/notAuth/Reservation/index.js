@@ -286,11 +286,15 @@ export default class index extends Component {
                               <TouchableOpacity
                               
 
-                                onPress={() => {this.props.navigation.navigate("reschedulereservation",{
-                                  reservation_id:singleCurrentMap.reservation_id,
-                                  course_duration:singleCurrentMap.course_duration
+                                // onPress={() => {this.props.navigation.navigate("reschedulereservation",{
+                                //   reservation_id:singleCurrentMap.reservation_id,
+                                //   course_duration:singleCurrentMap.course_duration
 
-                                })}}
+                                // })}}
+
+                                onPress={()=>{
+                                  Linking.openURL(`tel:${singleCurrentMap.student_contact}`)
+                                }}
                                 
                                 
                                 >

@@ -196,7 +196,7 @@ export default class index extends Component {
   }
   Hide_Custom_Alert2() {
     this.setState({Alert_Visibility1: false}); 
-    // this.props.navigation.navigate("login")    
+    this.props.navigation.navigate("home")    
   }
 
 
@@ -208,6 +208,8 @@ export default class index extends Component {
 
   componentDidMount = async () => {
     // this.fetchget_waiting_timeFunction()
+    this.getMonthValue()
+    
 
     let currentYear  = new Date().getFullYear()
     let currenMonth = new Date().getMonth()+1
@@ -519,7 +521,7 @@ set_availabilityData = async () => {
       this.Show_Custom_Alert1()
       // Alert.alert("Message",set_availabilityResponse.response.message)
       // this.setState({timeslot:[],date_slot:""})
-      this.props.navigation.navigate("home")
+      // this.props.navigation.navigate("home")
      }
      else{
       let alertValue = set_availabilityResponse.response.message
@@ -545,13 +547,35 @@ set_availabilityData = async () => {
 // }
 
 
+async getMonthValue(){
+  var currentDate = moment(this.state.todayDate);
+var futureMonth = moment(currentDate).add(1, 'M');
+var futureMonthEnd = moment(futureMonth).endOf('month');
 
+if(currentDate.date() != futureMonth.date() && futureMonth.isSame(futureMonthEnd.format('YYYY-MM-DD'))) {
+    futureMonth = futureMonth.add(1, 'd');
+}
+
+console.log("===============================",currentDate);
+console.log("------------------------------",futureMonth);
+
+}
 
 
 
   render() {
     const {TimesSlot} = this.state;
     console.log("getting time slot here inside render - - - -  - - -- -",TimesSlot)
+    var date = new Date(),
+    y = date.getFullYear(),
+    m = date.getMonth();
+    var firstDay = new Date(y, m, 1);
+    var lastDay = new Date(y, m + 1, 0);
+    
+    let futureDate = moment(lastDay).add(1, 'months').format('YYYY-MM-DD')
+    var futureMonth = moment(this.state.todayDate).add(2, 'M');
+    let futureDate1 = moment(futureDate).endOf(futureMonth)
+    console.log("future date inside render= = =  = = = =",futureDate)
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <StatusBar
@@ -591,6 +615,7 @@ set_availabilityData = async () => {
                 <Calendar
                   style={Styles.calenderStyle}
                   // minDate={today}
+                  maxDate={futureDate}
                   onMonthChange={
                     (month) =>
                      { 
@@ -636,7 +661,9 @@ set_availabilityData = async () => {
                {/* {
                       TimesSlot == undefined || TimesSlot == null || TimesSlot == "" || TimesSlot == [] || TimesSlot.length === 0 ? */}
 
-                    <View style={Styles.txtMainView}>             
+                    <View style={Styles.txtMainView}> 
+                    
+                                
                     <ScrollView horizontal={true}>
                         {
                           this.state.time_slot.map((singletimeslot,key)=>{
@@ -681,25 +708,44 @@ set_availabilityData = async () => {
                       </View>
                     {/* :                     */}
                          <View>
-                         {                          
-                       this.state.TimesSlot.map((singleMap,index)=>{
-                         let currentTime  = singleMap
-  
-                         console.log("getting current time from here -  - - - - - - -",singleMap)
-  
-                         return(
-                           <View style={{justifyContent: "flex-start",alignItems:"flex-start",flexDirection:"row"}}>
-                             <Text  style={{borderColor:"gray",borderWidth:1,color:"gray",fontSize:14,marginStart:10,margin:10,padding:10}}>{singleMap}</Text>
-                             <TouchableOpacity style={{margin:1}} 
-                                onPress={()=>{this.fetchavailability_times_delete(currentTime)}}
-                             >
-                                 <Image source={require("../../../../assets/icon/delete.png")} style={{height:24,width:24,margin:18}} />
-                             </TouchableOpacity>
-                           </View>
-                         )
-                       })
-                     }
-                 </View>
+                           {
+                             this.state.TimesSlot!= null || this.state.TimesSlot!= undefined ?
+                              <View>
+                                {
+                                  TimesSlot.length != 0 ?
+                                  <Text style={Styles.subheaderTxt}>
+                                   Choisissez l'horaires du coaching
+                                   </Text>
+                                  :
+                                  null
+                                }
+                                  
+                               
+                                {
+                                                          
+                                    this.state.TimesSlot.map((singleMap,index)=>{
+                                      let currentTime  = singleMap
+                
+                                      console.log("getting current time from here -  - - - - - - -",singleMap)
+                
+                                      return(
+                                        <View style={{justifyContent: "flex-start",alignItems:"flex-start",flexDirection:"row"}}>
+                                           
+                                          <Text  style={{borderColor:"gray",borderWidth:1,color:"gray",fontSize:14,marginStart:10,margin:10,padding:10}}>{singleMap}</Text>
+                                          <TouchableOpacity style={{margin:1}} 
+                                              onPress={()=>{this.fetchavailability_times_delete(currentTime)}}
+                                          >
+                                              <Image source={require("../../../../assets/icon/delete.png")} style={{height:24,width:24,margin:18}} />
+                                          </TouchableOpacity>
+                                        </View>
+                                      )
+                                    })
+                                  }
+                              </View>
+                             :null
+                           }
+                        
+                        </View>
                       {/* } */}
                                  
             </View>
@@ -954,7 +1000,7 @@ set_availabilityData = async () => {
                     }}>
                     <Image
                       // source={require("../../../assets/icon/17.png")}
-                      source={require("../../../../assets/icon/17.png")}
+                      source={require("../../../../assets/icon/check21.png")}
                       style={{height: 80, width: 80, margin: 10}}
                     />
                   </View>
@@ -969,7 +1015,7 @@ set_availabilityData = async () => {
                       textAlign: 'center',                      
                     }}>
                      {/* Veuillez entrer votre nouveau mot de passe de confirmation */}
-                     {this.state.alertValue}
+                     Disponibilité mise à jour avec succès
                   </Text>
                 </View>                 
                 <View

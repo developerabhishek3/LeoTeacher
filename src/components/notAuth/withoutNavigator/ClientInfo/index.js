@@ -138,6 +138,7 @@ export default class index extends Component {
                       <Fragment>
                         <View style={Styles.contentView}>
                           <View style={{flexDirection: 'row'}}>
+                            
                             <Image source={{
                             uri: `https://www.spyk.fr/${singleInfo.student_profile_url}`,
                           }}                              
@@ -174,14 +175,14 @@ export default class index extends Component {
                                 </Text>
                               </View>
 
-                              {/* <View
+                              <View
                                 style={{
                                   flexDirection: 'row',
                                   justifyContent: 'space-between',
-                                  marginStart: 10,
+                                  marginStart: 1,
                                 }}>
                               
-
+                                
                                 <View style={{alignItems: 'center'}}>
                                   <Stars
                                     default={singleInfo.student_rating}
@@ -220,7 +221,20 @@ export default class index extends Component {
                                     }
                                   />
                                 </View>
-                              </View> */}
+                               
+
+
+
+
+
+                              </View>
+                              {
+                                  singleInfo.student_rating  == 0 ?
+                                  <Text style={Styles.contentViewTxt2}>
+                                 En attente d'un classement
+                             </Text>:null
+
+                                }
                             </View>
                           </View>
                         </View>
@@ -234,14 +248,20 @@ export default class index extends Component {
                               {singleInfo.no_of_coaching_followed}
                             </Text>
                           </View>
-                          {/* <View style={Styles.contViewHeader}>
+                          <View style={Styles.contViewHeader}>
                             <Text style={Styles.contViewTxt1}>
-                              Compétences :{' '}
+                            Commentaire :{' '}
                             </Text>
-                            <Text style={Styles.contentViewTxt2}>
-                              {singleInfo.skill}
+                            {
+                              singleInfo.rating_feedback != null ?
+                              <Text style={Styles.contentViewTxt2}>
+                              {singleInfo.rating_feedback}
                             </Text>
-                          </View> */}
+                              :    <Text style={Styles.contentViewTxt2}>
+                             En attented'un commentaire
+                            </Text>
+                            }                         
+                          </View>
                           {/* <View style={Styles.contViewHeader}>
                             <Text style={Styles.contViewTxt1}>
                               Profession :{' '}

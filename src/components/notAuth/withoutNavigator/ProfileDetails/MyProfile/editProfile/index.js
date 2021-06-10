@@ -130,6 +130,20 @@ export default class index extends Component {
           "value":"Anglais général et business"
           },                             
       ],
+      data5:[
+        {"id": "1",
+        "value":"Débutant"
+          },
+          {"id": "2",
+          "value":"Intermédiaire"
+          },
+          {"id": "3",
+          "value":"Avancé"
+          },
+          {"id": "4",
+          "value":"Natif"
+          },                       
+      ],
     };
   }
 
@@ -873,14 +887,14 @@ sur l'application LEO ?
                                     return(
                                         <View style={{marginStart:20}}>
                                             {
-                                                this.state.q_6_ans == singleMap.value ? 
-                                                <TouchableOpacity onPress={()=>{this.setState({q_6_ans:singleMap.value})}} style={{flexDirection:'row',alignItems:'center',margin:10}}>
+                                                this.state.q_2_ans == singleMap.value ? 
+                                                <TouchableOpacity onPress={()=>{this.setState({q_2_ans:singleMap.value})}} style={{flexDirection:'row',alignItems:'center',margin:10}}>
                                                     <Image source={require("../../../../../../assets/icon/8.png")} style={{height:20,width:20,margin:3}} />
                                                     <Text style={{color:"lightgreen"}}>{singleMap.value}</Text>
                                                 </TouchableOpacity>
 
                                                 :
-                                                <TouchableOpacity onPress={()=>{this.setState({q_6_ans:singleMap.value})}} style={{flexDirection:'row',alignItems:'center',margin:10}}>
+                                                <TouchableOpacity onPress={()=>{this.setState({q_2_ans:singleMap.value})}} style={{flexDirection:'row',alignItems:'center',margin:10}}>
                                                     <Image source={require("../../../../../../assets/icon/4.png")} style={{height:20,width:20,margin:3}} />
                                                     <Text style={{color:"gray"}}>{singleMap.value}</Text>
                                                 </TouchableOpacity>
@@ -891,6 +905,36 @@ sur l'application LEO ?
                             }
                         </View>
                     </View>
+
+                    <Text style={{fontSize:16,fontWeight:'700',alignSelf:'flex-start',marginStart:30,color:"gray"}}>Quel est votre niveau de français ?</Text>
+
+                        <View style={Styles.radiobtnMainView}>
+                          <View style={{flexDirection:'row',flexWrap:'wrap'}}>
+                                  {
+
+                                      this.state.data5.map((singleMap,key)=>{
+                                        // console.log("geeeeeeee",singleMap)
+                                          return(
+                                              <View style={{marginStart:20}}>
+                                                  {
+                                                      this.state.q_6_ans == singleMap.value ? 
+                                                      <TouchableOpacity onPress={()=>{this.setState({q_6_ans:singleMap.value})}} style={{flexDirection:'row',alignItems:'center',margin:10}}>
+                                                          <Image source={require("../../../../../../assets/icon/8.png")} style={{height:20,width:20,margin:3}} />
+                                                          <Text style={{color:"lightgreen"}}>{singleMap.value}</Text>
+                                                      </TouchableOpacity>
+
+                                                      :
+                                                      <TouchableOpacity onPress={()=>{this.setState({q_6_ans:singleMap.value})}} style={{flexDirection:'row',alignItems:'center',margin:10}}>
+                                                          <Image source={require("../../../../../../assets/icon/4.png")} style={{height:20,width:20,margin:3}} />
+                                                          <Text style={{color:"gray"}}>{singleMap.value}</Text>
+                                                      </TouchableOpacity>
+                                                  }
+                                              </View>
+                                          )
+                                      })                         
+                                  }
+                              </View>
+                          </View>
 
 
 
