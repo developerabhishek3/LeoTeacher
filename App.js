@@ -129,20 +129,12 @@ export default class App extends React.Component {
 
 
   async createNotificationListeners() {
-    console.log("getting inside the notifcation function - - - - - - -")
+    // console.log("getting inside the notifcation function - - - - - - -")
     const user_id = await AsyncStorage.getItem('user_id');
     const UserId = JSON.parse(user_id)
 
     this.notificationListener = firebase.notifications().onNotification((notification) => {
-
-      // .displayNotification(localNotification)
-      // if(notification._data.reciever_id == UserId ){
-
-        // const { title, body } = notification;
-
-
-       
-        // firebase.notifications().removeDeliveredNotification(notification.notificationId);      
+  
 
         console.log("getting cosole veleu   1    ++++++++++++",notification)
 
@@ -165,23 +157,8 @@ export default class App extends React.Component {
           var request_end = new Date(newData.request_end)
 
 
-
-          // var realEndTime =    new Date(request_end.setHours(request_end.getHours() - 1))
-
           var secondBetweenTwoDate = parseInt((request_end.getTime() - request_start.getTime()) / 1000);
-
-            // const objchatscreens= {
-            //       transaction_id: newData.transaction_id,
-            //       teacher_id:newData.teacher_id,
-            //       reservation_request_id: newData.reservation_request_id,
-            //       student_name: newData.student_name,
-            //       secondBetweenTwoDate:180,
-            //       course_date:newData.course_date,
-            //       course_time:newData.course_time,
-            //       student_level:newData.student_level,
-
-            //       }
-            //   EventRegister.emit('myCustomEvent', objchatscreens)
+         
                       topLevelNavigate('notification', {
                         student_name:student_name,                        
                         course_duration:course_duration,
@@ -197,32 +174,18 @@ export default class App extends React.Component {
             }
 
             else {
-              console.log("in the 1st case......",notification)
+              // console.log("in the 1st case......",notification)
               const { title, body } = notification;        
               this.showAlert(title, body);
             }
-    
-
-        // this.setState({newData,secondBetweenTwoDate,transaction_id,reservation_request_id})
-
-        // this.Show_Custom_Alert()    
-        // this.showAlert(title, body);
-      // }    
+       
       });      
 
      
 
 
       this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
-
-
-          console.log("getting inside the on notifcation open method- -  - - - - -")
-
-        // firebase.notifications().removeDeliveredNotification(notificationOpen.notification.notificationId);
-
-
-        // return false;
-
+        //   console.log("getting inside the on notifcation open method- -  - - - - -")
         console.log("getting cosole veleu 2   ++++++++++++",notificationOpen)
      
       // if(notificationOpen._data.reciever_id == UserId){             
@@ -248,7 +211,7 @@ export default class App extends React.Component {
           var secondBetweenTwoDate = parseInt((request_end.getTime() - request_start.getTime()) / 1000);
   
           // this.Show_Custom_Alert()
-          console.log("inside the notification data funciton - - - - -")
+          // console.log("inside the notification data funciton - - - - -")
           topLevelNavigate('notification', {
             student_name:student_name,
             course_duration:course_duration,
@@ -260,39 +223,20 @@ export default class App extends React.Component {
             student_level:student_level,
             request_end:request_end,
             secondBetweenTwoDate:180
-          });
-  
-          // const objchatscreens= {
-          //   transaction_id: newData.transaction_id,
-          //   teacher_id:newData.teacher_id,
-          //   reservation_request_id: newData.reservation_request_id,
-          //   student_name: newData.student_name,
-          //   secondBetweenTwoDate:180,
-          //   course_date:newData.course_date,
-          //   course_time:newData.course_time,
-          //   student_level:newData.student_level,
-  
-          //   }
-          //   EventRegister.emit('myCustomEvent', objchatscreens)
+          });   
         }
         else {
               const { title, body } = notificationOpen.notification;        
                this.showAlert(title, body);
         }
-
-        // const { title, body } = notificationOpen.notification;        
-        // this.showAlert(title, body);
-      // }        
+              
       });
       
      const notificationOpen = await firebase.notifications().getInitialNotification();
+
       // firebase.notifications().removeDeliveredNotification(notificationOpen.notification.notificationId);
       if (notificationOpen) {
-  
-      // console.log("getting when app in background_______________",notificationOpen.notification)
-    
-      // console.log("getting when app in background_______________",notificationOpen.notification.data.extra_param)
-        
+        console.log("on the background mode notification gettt - - -- - - -",notificationOpen.notification.data)
         var notificationData = notificationOpen.notification.data.extra_param;   
         var newData = JSON.parse(notificationData)
 
@@ -309,14 +253,13 @@ export default class App extends React.Component {
         var currentTime = moment(new Date())
 
         var ActualCurentTime = request_end.diff(currentTime, 'seconds')
-        // console.log("Current mimutes value----",) 
-
+       
         var secondBetweenTwoDate = ActualCurentTime*60
                
 
         // var secondBetweenTwoDate = parseInt((realEndTime.getTime() - new Date().getTime()) / 1000);
         if(notificationData != null && notificationData != undefined && notificationData != "") {         
-          console.log("inside the notification data funciton - - - - -")
+          // console.log("inside the notification data funciton - - - - -")
           topLevelNavigate('notification', {
             student_name:student_name,
             course_duration:course_duration,
@@ -327,24 +270,23 @@ export default class App extends React.Component {
             course_time:course_time,
             student_level:student_level,
             request_end:request_end,
-            secondBetweenTwoDate:ActualCurentTime
+            secondBetweenTwoDate:180
           });
           // await AsyncStorage.setItem("notification", "true");      
           // await AsyncStorage.setItem("notificationData",notificationData)
           // console.log("getting one value here - -  - - - -")
          }
          else{         
-          console.log("inside the notification data funciton else - - - - -")  
+          // console.log("inside the notification data funciton else - - - - -")  
             const { title, body } = notificationOpen.notification;        
             this.showAlert(title, body);
          }
-
-      
-            
             }      
       // this.Show_Custom_Alert()
       this.messageListener = firebase.messaging().onMessage((message) => {
-      console.log(JSON.stringify(message));
+        console.log("gettign on the message listenre - -  - - - - - -",message)
+        // console.log("gettign on the message listenre 2nd - -  - - - - - -",message.data.data.payload)
+      // console.log(JSON.stringify(message));
       });
 
 
