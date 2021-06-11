@@ -225,11 +225,12 @@ export default class index extends Component {
                           })}}>
               <View style={Styles.contentView}>
               <View style={{flexDirection: 'row'}}>
-                <Image 
-                 source={{
-                    uri: `https://www.spyk.fr/${singlehistoryMap.student_profile_url}`,
-                  }} 
-                style={Styles.peopleStyle} />
+              <Image
+                          source={{
+                            uri: `https://www.spyk.fr/${singlehistoryMap.student_profile_url}`,
+                          }}                        
+                          style={Styles.peopleStyle}
+                        />
                 <View style={{flexDirection: 'column'}}>
                   <Text
                     style={{

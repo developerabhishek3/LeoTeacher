@@ -10,7 +10,8 @@ import {
   BackHandler,
   Alert,
   RefreshControl,
-  StatusBar
+  StatusBar,
+  Linking
 } from 'react-native';
 import BottomNavigator from '../../../router/BottomNavigator';
 import {Rating, AirbnbRating} from 'react-native-elements';
@@ -299,7 +300,7 @@ export default class index extends Component {
                                 
                                 >
                                 <Text style={Styles.continueBtnTxt1}>
-                                Rééchelonnement
+                                Commencer le coaching
                                 </Text>
                               </TouchableOpacity>
                             </View>
