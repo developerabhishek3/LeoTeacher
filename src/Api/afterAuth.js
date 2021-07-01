@@ -1827,3 +1827,41 @@ export async function availability_dates(body ={}) {
       }
     
   
+
+
+      export async function teacher_availability() {
+        const token = await AsyncStorage.getItem('token');
+        const user_id = await AsyncStorage.getItem('user_id');
+      
+        const TokenValue = JSON.parse(token);
+        const UserId = JSON.parse(user_id);
+      
+        // console.log(
+        //   'ghetting incomplete transactoin tokena dn ujserId =========',
+        //   TokenValue,
+        //   UserId,
+        // );
+      
+        try {
+          const teacher_availabilityResponse = await Axios.get(
+            `https://www.spyk.fr/api_teacher/teacher_availability`,
+            {
+              headers: {
+                ...commonHeader,
+                'user-id': `${UserId}`,
+                token: `${TokenValue}`,
+              },
+            },
+          );
+          if (teacher_availabilityResponse.status) {
+            // console.log("getting response on the function--------",teacher_availabilityResponse.data)
+            return {result: true, response: teacher_availabilityResponse.data};
+          } else {
+            return {result: false, error: teacher_availabilityResponse.data};
+          }
+        } catch (error) {
+          return {result: false, error};
+        }
+      }
+      
+      

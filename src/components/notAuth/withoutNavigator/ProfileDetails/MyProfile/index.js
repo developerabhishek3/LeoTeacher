@@ -10,11 +10,14 @@ import Edit from '../../../../../assets/icon/34.png';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Spinner from 'react-native-loading-spinner-overlay';
 import People from '../../../../../assets/icon/avatar.png';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import {StudentProfile,get_academic_info} from '../../../../../Api/afterAuth'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
+import RNFetchBlob from 'rn-fetch-blob'
+
+import ImagePicker from 'react-native-image-picker';
 
 export default class index extends Component {
 
@@ -121,6 +124,100 @@ componentDidMount = async () => {
 
 
 
+  uploadWholeData(){
+
+    this.setState({ isSpinner: true }, async () => { 
+  
+      console.log("getting inside the upload image function - -  -")
+  
+      const token = await AsyncStorage.getItem('token');
+      const user_id = await AsyncStorage.getItem('user_id');
+    
+      const TokenValue = JSON.parse(token);
+      const UserId = JSON.parse(user_id);
+    
+
+      const URL = `https://www.spyk.fr/api_teacher/update_profile_photo`
+    
+    
+      let headers = {
+        'Content-Type': 'multipart/form-data',
+        'x-api-key':'leo@2020',
+        'user-id': `${UserId}`,
+        token: `${TokenValue}`,
+        };
+      
+        RNFetchBlob.fetch("post",URL,headers,[      
+          { name: 'profile_pic', filename: 'photo.jpg', type: 'image/png', data: this.state.filePath},                 
+          ]).then((resp) => {        
+            this.setState({
+              isSpinner:false
+            }); 
+        console.log("response:::::::" + JSON.stringify(resp.text()));
+        // Alert.alert("Message","Mise à jour du profil réussie!")
+       
+        let alertValue = "Mise à jour du profil réussie"
+        // this.setState({alertValue})
+        // this.Show_Custom_Alert()
+        this.props.navigation.navigate("home")
+        if(resp.json().error === "false"){
+        this.setState({
+          isSpinner:false
+        });
+    
+        }else if(resp.json().error=== "true"){
+        // alert(resp.json().errorMessage)
+        this.setState({
+          isSpinner:false
+        });  
+        this.showalerts(resp.json().errorMessage)        
+        }
+        }).catch((err) => {
+        this.setState({
+          isSpinner:false
+        });
+        console.log("response::::err:::" + err);
+        });    
+     })
+    }
+
+
+
+
+
+
+  chooseFile = () => {
+    var options = {
+      title: 'Choisir une photo',     
+      storageOptions: {
+        skipBackup: false,
+        path: 'images',
+      },
+    };    
+    ImagePicker.launchImageLibrary(options, response => {
+      // console.log('Response = ', response);
+
+      if (response.didCancel) {
+        // console.log('User cancelled image picker');
+      } else if (response.error) {
+        // console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        // console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        let source = response.data;
+        let path = response.uri
+          this.setState({ filePath: source,path:path},()=>{
+            this.uploadWholeData()
+          })       
+      }
+    });
+  };
+
+
+
+
+
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', () =>
@@ -147,7 +244,11 @@ componentDidMount = async () => {
 
    let  profileImg  = this.props.navigation.getParam("profileImg")
 
-    console.log("getting inside the render method ??????????????",this.state.birth_date)
+   
+   var newdate = this.state.birth_date.split("-").reverse().join("/");
+   console.log("getting birthdate==========",newdate)
+
+    console.log("getting inside the render method ?????????????? profile URL",this.state.profile_url)
 
     // const userMap = Object.assign(profileData)
     return (
@@ -171,7 +272,12 @@ componentDidMount = async () => {
           </TouchableOpacity>
           <Text style={Styles.headerTxt}>        Mon profil</Text>
           <View style={{flexDirection:'row'}}>
+          <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate("home");
+        }}>
           <Image source={logo} style={Styles.headertxtInputImg1} />
+          </TouchableOpacity>
           <TouchableOpacity 
               onPress={()=>{this.props.navigation.navigate("editprofile",{profile_url:this.state.profile_url,birthDate:this.state.birth_date})}}
           >
@@ -185,16 +291,31 @@ componentDidMount = async () => {
           isBodyLoaded == true ? 
         <Fragment>
 
-          <View style={{borderWidth:0,marginTop:-70}}> 
-          {
-            this.state.profile_url == "" ?
+          <View style={{borderWidth:0,marginTop:-70}}>          
 
-                        <Image source={People}  style={Styles.peopleStyle} />
+
+            {
+              this.state.profile_url == "" ?
+              <View>
+              <Image  source={require("../../../../../assets/icon/avatar.png")} style={Styles.peopleStyle} />
+            </View>
             :
-            <Image source={{
-              uri: `https://www.spyk.fr/${profileData.profile_url}`,
-            }}  style={Styles.peopleStyle} />
-          }        
+      
+            <Image   source={{
+              uri: `https://www.spyk.fr/${this.state.profile_url}`,
+            }}  style={Styles.peopleStyle} />    
+            }
+
+
+          <TouchableOpacity onPress={this.chooseFile.bind(this)} style={{height:30,width:30,alignSelf:'center'}}>
+                  <Image source={require('../../../../../assets/icon/27.png')} style={{height:30,width:30,margin:-15,alignSelf:'center'}} />
+          </TouchableOpacity>
+
+
+
+
+
+
           </View>          
           <ScrollView style={{marginTop:4,marginBottom:15}}>
             
@@ -206,12 +327,12 @@ componentDidMount = async () => {
             <View style={Styles.nameStyleView}>
               <Text style={Styles.nameHeading}>Nom</Text>
 
-    <Text style={Styles.nameHeadingTxt}>{profileData.first_name} {profileData.last_name}</Text>
+    <Text style={Styles.nameHeadingTxt}>{profileData.first_name} </Text>
 
             </View>
 
             <View style={Styles.nameStyleView}>
-              <Text style={Styles.nameHeading}> Numéro de téléphone</Text>
+              <Text style={Styles.nameHeading}>Numéro de téléphone</Text>
 
               <Text style={Styles.nameHeadingTxt}>{profileData.phone}</Text>
 
@@ -234,7 +355,7 @@ componentDidMount = async () => {
 
 
         
-            <Text style={Styles.nameHeadingTxt}>{this.state.birth_date}</Text>
+            <Text style={Styles.nameHeadingTxt}>{newdate}</Text>
           
              
 
@@ -247,7 +368,7 @@ componentDidMount = async () => {
 
             <View style={Styles.maincontentContaine}>
             <View style={Styles.nameStyleView}>
-              <Text style={Styles.nameHeading}>Address </Text>
+              <Text style={Styles.nameHeading}>Adresse  </Text>
               <Text style={Styles.nameHeadingTxt}>{profileData.address} </Text>
             </View>
             <View style={Styles.nameStyleView}>
@@ -255,13 +376,6 @@ componentDidMount = async () => {
               <Text style={Styles.nameHeadingTxt}>{profileData.postcode} </Text>
             </View>          
             </View>
-
-
-
-
-            
-         
-
 
            
            <View style={Styles.maincontentContaine}>

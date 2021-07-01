@@ -572,13 +572,12 @@ set_availabilityData = async () => {
           </TouchableOpacity>
           <Text style={Styles.headerTxt}>Mes disponibilités</Text>
           <View style={{flexDirection: 'row'}}>
-            {/* <TouchableOpacity
-              onPress={() => {
-                this.Show_Custom_Alert();
-              }}>
-              <Image source={rightIcon} style={Styles.headertxtInputImg2} />
-            </TouchableOpacity> */}
+          <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate("home");
+        }}>
             <Image source={logo} style={Styles.headertxtInputImg} />
+            </TouchableOpacity>
           </View>
         </View>
         <Spinner visible={this.state.isSpinner} />

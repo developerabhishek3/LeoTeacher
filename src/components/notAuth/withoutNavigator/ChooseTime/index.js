@@ -589,15 +589,53 @@ console.log("------------------------------",futureMonth);
           </TouchableOpacity>
           <Text style={Styles.headerTxt}>Mes disponibilités</Text>
           <View style={{flexDirection: 'row'}}>
-            {/* <TouchableOpacity
-              onPress={() => {
-                this.Show_Custom_Alert();
-              }}>
-              <Image source={rightIcon} style={Styles.headertxtInputImg2} />
-            </TouchableOpacity> */}
+          <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate("home");
+        }}>
             <Image source={logo} style={Styles.headertxtInputImg} />
+            </TouchableOpacity>
           </View>
         </View>
+
+        <View style={{flexDirection: 'row',justifyContent: "space-between",width:"97%",margin:7}}>
+          <TouchableOpacity>
+              <Text style={{fontSize:13,margin:4,color:"#b41565",fontWeight:"700",marginStart:10}} >Nouvelles disponibilités</Text>
+              <View style={{borderColor: '#b41565', borderWidth: 1, width: SCREEN_WIDTH/2.3,marginStart:6}} />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={()=>{this.props.navigation.navigate("myavailability")}}>
+              <Text style={{fontSize:13,margin:4,marginEnd:10,color:"gray",fontWeight:"700"}}>Consulter mes disponibilités</Text>
+              <View style={{borderColor: 'gray', borderWidth: 1, width: SCREEN_WIDTH/2.1,marginStart:4,marginEnd:-4}}/>
+          </TouchableOpacity>
+
+        </View>
+
+
+        
+        {/* <View style={{flexDirection: 'row',justifyContent: "space-between",width:"97%",margin:7}}>
+          <TouchableOpacity  onPress={()=>{this.props.navigation.navigate("choosetime")}}>
+              <Text style={{fontSize:13,margin:4,color:"gray",fontWeight:"700",marginStart:10}} >Nouvelles disponibilités</Text>
+              <View style={{borderColor: 'gray', borderWidth: 1, width: SCREEN_WIDTH/2.1,marginStart:6,marginEnd:4}}  />
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+              <Text style={{fontSize:13,margin:4,marginEnd:10,color:"#b41565",fontWeight:"700"}}>Consulter mes disponibilités</Text>
+              <View  style={{borderColor: '#b41565', borderWidth: 1, width: SCREEN_WIDTH/2.1,marginStart:6}} />
+          </TouchableOpacity>
+          </View> */}
+
+
+
+
+
+
+
+
+
+
+
+
         <Spinner visible={this.state.isSpinner} />
         <View style={Styles.mainContentView}>
           <ScrollView>
@@ -632,7 +670,7 @@ console.log("------------------------------",futureMonth);
                   }}
                   // onPressArrowRight={console.log("getting current month and year on right arrow -  - - - -  - -",new Date())}
                   // onPressArrowLeft={console.log("getting current month and year on left arrow -  - - - -  - -",new Date())}
-                  onDayPress={(day) => {this.set_date(day);this.fetchavailability_times(day)}}
+                  onDayPress={(day) => {this.set_date(day);}}
                   onDateSelect={(date) => { console.log('selected Date', date) }}
                   minDate={this.state.todayDate}                                      
                   markedDates={this.state.markedDates}                

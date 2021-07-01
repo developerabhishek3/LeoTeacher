@@ -326,7 +326,12 @@ amountAfterCheck () {
           <Image source={back} style={Styles.headertxtInputImg} />
           </TouchableOpacity>
           <Text style={Styles.headerTxt}>Mes revenus</Text>
+          <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate("home");
+        }}>
           <Image source={logo} style={Styles.headertxtInputImg1} />
+          </TouchableOpacity>
         </View>
 
         <View style={Styles.subhaderView}>
@@ -510,20 +515,21 @@ amountAfterCheck () {
 
                   <View style={Styles.btnView}>
                     <View>
-                      <TouchableOpacity
+                      <View
                         style={Styles.continueBtn1}
-                        onPress={() => {
-                          this.Show_Custom_Alert();
-                        }}>
+                        // onPress={() => {
+                        //   this.Show_Custom_Alert();
+                        // }}
+                        
+                        >
                         <Text style={Styles.continueBtnTxt1}>
-                          Grin total : {this.state.totalAmount}
+                          Gain total : {this.state.totalAmount}
                         </Text>
-                      </TouchableOpacity>
+                      </View>
                     </View>
 
                     {
                       this.state.isdemandButtonEnable == true ?
-
                       <View>
                       <TouchableOpacity
                         style={Styles.continueBtn}
@@ -537,9 +543,7 @@ amountAfterCheck () {
                         <Text style={Styles.continueBtnTxt}>Demander règlement</Text>
                       </TouchableOpacity>
                     </View>
-
                        :
-
                       <View>
                       <TouchableOpacity
                         style={Styles.continueBtn2}
@@ -616,7 +620,8 @@ amountAfterCheck () {
                           style={Styles.continueBtn1}
                           onPress={() => {
                             this.Show_Custom_Alert();
-                          }}>
+                          }}
+                          >
                           <Text style={Styles.continueBtnTxt1}>
                           Gain total : {this.state.totalFilterAmount}
                           </Text>
@@ -654,14 +659,28 @@ amountAfterCheck () {
             onRequestClose={() => {
               this.Show_Custom_Alert(!this.state.Alert_Visibility);
             }}>
-            <View
+              <View
+              style={{
+                backgroundColor: 'rgba(85,65,225,0.900)',
+                flex: 1,
+            
+              }}>
+
+<TouchableOpacity onPress={() =>{this.Hide_Custom_Alert()}} >
+                        <Image                
+                            source={require("../../../../../assets/icon/20.png")}
+                            style={{height: 24, width: 24, margin: 20,borderWidth:0}}
+                            />
+                </TouchableOpacity>
+                <View
               style={{
                 // backgroundColor:'#FFF',
-                backgroundColor: 'rgba(0,0,230,0.700)',
+                // backgroundColor: 'rgba(85,65,225,0.900)',
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
+
               <View
                 style={{
                   width: '80%',
@@ -711,38 +730,7 @@ amountAfterCheck () {
                  {/* Saisissez le montant que vous voulez */}
                  Ce montant vous sera payé à la fin du mois
                 </Text>
-                {/* <Text
-                  style={{
-                    margin: 2,
-                    fontSize: 12,
-                    fontWeight: '700',
-                    color: 'gray',
-                    alignSelf: 'center',
-                  }}>
-                 demander pour le paiement. Ce montant
-                </Text> */}
-                {/* <Text
-                  style={{
-                    margin: 2,
-                    fontSize: 12,
-                    fontWeight: '700',
-                    color: 'gray',
-                    alignSelf: 'center',
-                  }}>
-                  vous sera payé par virement bancaire à la
-                </Text> */}
-                {/* <Text
-                  style={{
-                    margin: 2,
-                    fontSize: 12,
-                    fontWeight: '700',
-                    color: 'gray',
-                    alignSelf: 'center',
-                  }}>
-                 fin de chaque mois.
-                </Text> */}
-
-
+                
 
                   <View style={{borderColor:"gray",borderWidth:1,margin:3,borderRadius:5}}> 
                       <Text style={{fontSize:20,fontWeight:'700',margin:3,marginStart:20,marginEnd:20}}>{this.state.TotalCheckAmount}</Text>
@@ -758,7 +746,7 @@ amountAfterCheck () {
                                         onPress={()=>{this.setState({to_bank_or_paypal_account:singleMap.value})}}                                                                                                
                                             style={{flexDirection:'row',alignItems:'center'}}>
                                             <Image source={require("../../../../../assets/icon/9.png")} style={{height:20,width:20,margin:3}} />
-                                            <Text style={{color:"#b41565"}}>{singleMap.value}</Text>
+                                            <Text style={{color:"#b41565",fontWeight: '700'}}>{singleMap.value}</Text>
                                         </TouchableOpacity>
                                         :     
                                         <TouchableOpacity          
@@ -774,40 +762,83 @@ amountAfterCheck () {
                       }
                     </View>
 
+                      
+                      {
+                        this.state.to_bank_or_paypal_account != "" ?
 
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    borderRadius: 6,
-                    justifyContent: 'space-around',
-                    margin: 5,
-                  }}>
-                  
-                  <TouchableOpacity
-                    // onPress={() => this.Hide_Custom_Alert1()}
-                    onPress={()=>{this.demand_amountdata()}}
-                    style={{
-                      backgroundColor: '#b41565',
-                      justifyContent: 'center',
-                      margin: 10,
-                      height: 35,
-                      borderRadius: 6,
-                    }}>
-                    <Text
-                      style={{
-                        color: '#FFF',
-                        fontSize: 13,
-                        marginStart: 20,
-                        marginEnd: 20,
-                        fontWeight: '700',
-                        textAlign: 'center',
-                        fontFamily: 'Montserrat-Regular',
-                      }}>
-                      Confirmer
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+
+
+                        <View
+                        style={{
+                          flex: 1,
+                          flexDirection: 'row',
+                          borderRadius: 6,
+                          justifyContent: 'space-around',
+                          margin: 5,
+                        }}>
+                        
+                        <TouchableOpacity
+                          // onPress={() => this.Hide_Custom_Alert1()}
+                          onPress={()=>{this.demand_amountdata()}}
+                          style={{
+                            backgroundColor: '#b41565',
+                            justifyContent: 'center',
+                            margin: 10,
+                            height: 35,
+                            borderRadius: 6,
+                          }}>
+                          <Text
+                            style={{
+                              color: '#FFF',
+                              fontSize: 13,
+                              marginStart: 20,
+                              marginEnd: 20,
+                              fontWeight: '700',
+                              textAlign: 'center',
+                              fontFamily: 'Montserrat-Regular',
+                            }}>
+                            Confirmer
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+
+                        : <View
+                        style={{
+                          flex: 1,
+                          flexDirection: 'row',
+                          borderRadius: 6,
+                          justifyContent: 'space-around',
+                          margin: 5,
+                        }}>
+                        
+                        <TouchableOpacity
+                          // onPress={() => this.Hide_Custom_Alert1()}                         
+                          style={{
+                            borderColor: '#b41565',
+                            justifyContent: 'center',
+                            margin: 10,
+                            height: 35,
+                            borderWidth: 0,
+                            borderRadius: 6,
+                          }}>
+                          <Text
+                            style={{
+                              color: '#b41565',
+                              fontSize: 13,
+                              marginStart: 20,
+                              marginEnd: 20,
+                              fontWeight: '700',
+                              textAlign: 'center',
+                              fontFamily: 'Montserrat-Regular',
+                            }}>
+                           
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                      }
+
+
+              </View>
               </View>
             </View>
           </Modal>

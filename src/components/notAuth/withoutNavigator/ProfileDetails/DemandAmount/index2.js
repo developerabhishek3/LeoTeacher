@@ -200,7 +200,7 @@ export default class index extends Component {
 
         :
             <View style={{alignItems:'center',justifyContent:'center'}}>
-            <Text style={{textAlign:'center',color:"gray",textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>chargement...</Text>
+            <Text style={{textAlign:'center',color:"gray",textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>chargement</Text>
             </View>
           }
           

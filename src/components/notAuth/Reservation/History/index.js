@@ -164,7 +164,12 @@ export default class index extends Component {
           <Image source={back} style={Styles.headertxtInputImg} />
           </TouchableOpacity>
           <Text style={Styles.headerTxt}>Réservations</Text>
+          <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate("home");
+        }}>
           <Image source={logo} style={Styles.headertxtInputImg1} />
+          </TouchableOpacity>
         </View>
         <Spinner visible={this.state.isSpinner}/>
         <View style={Styles.subhaderView}>

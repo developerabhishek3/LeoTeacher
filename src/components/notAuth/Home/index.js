@@ -57,6 +57,9 @@ export default class index extends Component {
       Model_Visibility1: false,
       Alert_Visibility1: false,
       //check switch value
+      homeImage:"",
+      average_rating:0,
+      total_opinions:0,
 
       switchValue: false,
       isBodyLoaded: false,
@@ -156,7 +159,7 @@ export default class index extends Component {
       console.log("getting inside the didmount methid - - - - - - -",currentYear)
       
     setTimeout(() => {
-      this.FetchBusinessData();
+      // this.FetchBusinessData();
       this.my_rate_reviewData()
       this.Getonline_offline_status();
     this.fetchHomeCountData();
@@ -315,12 +318,16 @@ export default class index extends Component {
   fetchHomeCountData = async () => {
     const home_count_dataResponse = await home_count_data();
     if (home_count_dataResponse.result == true) {
+      var homeImage = home_count_dataResponse.response.newsletter_info.image_path
       var remuneration_total =
         home_count_dataResponse.response.remuneration_total;
       var total_coaching_given =
         home_count_dataResponse.response.total_coaching_given;
 
-      this.setState({remuneration_total, total_coaching_given,isCurrenetComponentRefreshing:false,});
+        var total_opinions = home_count_dataResponse.response.total_opinions
+        var average_rating = home_count_dataResponse.response.average_rating
+
+      this.setState({remuneration_total, total_coaching_given,average_rating,total_opinions,homeImage,isCurrenetComponentRefreshing:false,});
       // console.log(
       //   'getting result here ----------------->>>>>>>>>>>>>>>>>>>-',
       //   home_count_dataResponse.response,
@@ -362,95 +369,6 @@ export default class index extends Component {
 
 
 
-
-
-
-
-  FetchBusinessData = async () => {
-    let currentYear = (this.state.todayDateValue).getFullYear()
-    const bussiness_monthlyResponse = await bussiness_monthly({
-      year: currentYear,
-    });
-    if (bussiness_monthlyResponse.result === true) {
-      var BusinessMonthlyData =
-        bussiness_monthlyResponse.response.bussiness_data;
-      console.log(
-        'getting inside state velue---------------',
-        BusinessMonthlyData,
-      );
-      let newArray = [];
-      newArray.push(BusinessMonthlyData)
-
-     
-      newArray.map((singleMap)=>{
-      
-        let categoryKey1 = Object.keys(singleMap)[0]
-        console.log("getting methd 1============",categoryKey1)
-        let categoryKey2 = Object.keys(singleMap)[1]
-        console.log("getting methd 2============",categoryKey2)
-        let categoryKey3 = Object.keys(singleMap)[2]
-        let categoryKey4 = Object.keys(singleMap)[3]
-        let categoryKey5 = Object.keys(singleMap)[4]
-        let categoryKey6 = Object.keys(singleMap)[5]
-        let categoryKey7 = Object.keys(singleMap)[6]
-        console.log("getting methd 7============",categoryKey7)
-        let categoryKey8 = Object.keys(singleMap)[7]
-        let categoryKey9 = Object.keys(singleMap)[8]
-        let categoryKey10 = Object.keys(singleMap)[9]
-        let categoryKey11 = Object.keys(singleMap)[10]
-        let categoryKey12 = Object.keys(singleMap)[11]
-
-
-       let categoryValue1  = Object.values(singleMap)[0]
-      // let categoryValue1  = 0.3
-        let categoryValue2  = Object.values(singleMap)[1]
-        let categoryValue3  = Object.values(singleMap)[2]
-        let categoryValue4  = Object.values(singleMap)[3]
-        let categoryValue5 = Object.values(singleMap)[4]
-        let categoryValue6  = Object.values(singleMap)[5]
-        let categoryValue7 = Object.values(singleMap)[6]
-        let categoryValue8  = Object.values(singleMap)[7]
-        let categoryValue9  = Object.values(singleMap)[8]
-        let categoryValue10  = Object.values(singleMap)[9]
-        let categoryValue11  = Object.values(singleMap)[10]
-        let categoryValue12  = Object.values(singleMap)[11]
-        
-        let newcategoryValue1 = 0.1
-       
-          // this.setState({
-          //   categoryKey1,categoryKey2,categoryKey3,categoryKey4,categoryKey5,categoryKey6,
-          //   categoryKey7,categoryKey8,categoryKey9,categoryKey10,categoryKey11,categoryKey12,    
-          //   categoryValue1,categoryValue2,categoryValue3,categoryValue4,categoryValue5,categoryValue6,
-          //   categoryValue7,categoryValue8,categoryValue9,categoryValue10,categoryValue11,categoryValue12
-          // })
-           
-              const newgData  = [
-                {x:categoryKey1,y:categoryValue1 ==  0 || null || undefined || ""  ? newcategoryValue1 : categoryValue1  },
-                {x:categoryKey2,y:categoryValue2},
-                {x:categoryKey3,y:categoryValue3},
-                {x:categoryKey4,y:categoryValue4},
-                {x:categoryKey5,y:categoryValue5},
-                {x:categoryKey6,y:categoryValue6},
-                {x:categoryKey7,y:categoryValue7},
-                {x:categoryKey8,y:categoryValue8},
-                {x:categoryKey9,y:categoryValue9},
-                {x:categoryKey10,y:categoryValue10},
-                {x:categoryKey11,y:categoryValue11},
-                {x:categoryKey12,y:categoryValue12},
-              ]
-              // console.log("gettin new dataa  -  - - - -",newgData)
-              this.setState({ComposeData:newgData,isCurrenetComponentRefreshing:false,})
-  
-        // console.log("getting abhi ot not categoryValue =========",categoryValue[0])
-      })
-
-     
-    } else {
-      Alert.alert('Error', bussiness_monthlyResponse.error);
-      // console.log('getting error here-------------');
-    }
-    return;
-  };
 
   FetchafterContinue = async () => {
     // console.log(
@@ -546,118 +464,20 @@ checkReserveCourse(){
             showsVerticalScrollIndicator={false}
             refreshControl={
                           <RefreshControl refreshing={this.state.isCurrenetComponentRefreshing} onRefresh={()=>{  this.setState({ isCurrenetComponentRefreshing: true }); setTimeout(()=>{
-                        this.fetchHomeCountData()
-                        this.FetchBusinessData()
+                        this.fetchHomeCountData()                        
                       },100)  }} />
                     }>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              margin: 10,
-            }}>
-            <ImageBackground
-              resizeMode="cover"
-              source={require('../../../assets/icon/green.png')}
-              style={{
-                alignSelf: 'center',
-                width: SCREEN_WIDTH / 2.2,
-                height: 80,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: '#FFFFFF',
-                    fontWeight: '700',
-                    margin: 1,
-                    width: '60%',
-                    textAlign: 'left',
-                    marginTop: 15,
-                  }}>
-                  Rémunération totale
-                </Text>
-                <View
-                  style={{
-                    borderWidth: 0,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Image
-                    source={require('../../../assets/icon/wallet.png')}
-                    style={{height: 35, width: 35, margin: 4}}
-                  />
-                  <Text
-                    style={{
-                      color: '#FFFFFF',
-                      fontWeight: '700',
-                      marginStart: 3,
-                    }}>
-                    {this.state.remuneration_total}
-                  </Text>
-                </View>
-              </View>
-            </ImageBackground>
-
-            <ImageBackground
-              resizeMode="cover"
-              source={require('../../../assets/icon/skyblue.png')}
-              style={{
-                alignSelf: 'center',
-                width: SCREEN_WIDTH / 2.2,
-                height: 80,
-                marginEnd: 10,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text
-                  style={{
-                    color: '#FFFFFF',
-                    fontWeight: '700',
-                    margin: 1,
-                    width: '60%',
-                    textAlign: 'left',
-                    marginTop: 15,
-                  }}>
-                 Nombre de coachings donnés
-                </Text>
-                <View
-                  style={{
-                    borderWidth: 0,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Image
-                    source={require('../../../assets/icon/books.png')}
-                    style={{height: 35, width: 35, margin: 4}}
-                  />
-                  <Text
-                    style={{
-                      color: '#FFFFFF',
-                      fontWeight: '700',
-                      marginStart: 3,
-                    }}>
-                    {this.state.total_coaching_given}
-                  </Text>
-                </View>
-              </View>
-            </ImageBackground>
-          </View>
+        
 
 
+        <ImageBackground  source={{
+                   uri: `https://www.spyk.fr/${this.state.homeImage}`,
+                 }} 
+                  style={{width:'98%',alignSelf:'center',height:180,justifyContent:'flex-end',alignItems:'center',margin:15}} >
+     </ImageBackground>
 
 
-
-
-                          <View style={{flexDirection: 'row',justifyContent:"center"}}>
+                          {/* <View style={{flexDirection: 'row',justifyContent:"center"}}>
                                     <Stars
                                     // update={(rating)=>{this.setState({rating: rating})}}
                                     disabled={true}
@@ -670,10 +490,30 @@ checkReserveCourse(){
                                       halfStar={<Image source={require("../../../assets/icon/113.png")} style={{height:27,width:27,margin:3}} />}
                                     />
                                     <Text style={{marginStart:10,color:"gray",fontSize:24,fontWeight:"600",margin: 3}}>{reviewCount} Avis </Text>
-                                  </View>
+                                  </View> */}
 
 
 
+        <View style={{flexDirection: 'row',justifyContent:"space-around"}}>        
+            <TouchableOpacity
+             style={Styles.continueBtn}
+              onPress={()=>{this.props.navigation.navigate('choosetime');}}
+            >
+              <Text style={Styles.continueBtnTxt}>
+               Mes Disponibilités
+              </Text>
+            </TouchableOpacity>
+
+
+            <TouchableOpacity
+            style={Styles.continueBtn}
+              onPress={()=>{this.props.navigation.navigate('myavailability');}}
+            >
+              <Text style={Styles.continueBtnTxt}>
+               Mes Coachings
+              </Text>
+            </TouchableOpacity>
+          </View>
 
           <View
             style={{
@@ -725,7 +565,7 @@ checkReserveCourse(){
           </View>
 
        
-          <ScrollView horizontal={true} >  
+          {/* <ScrollView horizontal={true} >  
           <View style={{borderWidth:0}}>  
 
 
@@ -746,21 +586,219 @@ checkReserveCourse(){
             />         
           </VictoryChart>
           </View>
-          </ScrollView>
+          </ScrollView> */}
          
 
-          <View style={Styles.continueBtn}>
-            <TouchableOpacity
-              // onPress={() => {
-              //   this.Show_Custom_Alert();
-              // }}
-              onPress={()=>{this.props.navigation.navigate('choosetime');}}
-            >
-              <Text style={Styles.continueBtnTxt}>
-                Définissez votre disponibilité
-              </Text>
-            </TouchableOpacity>
+
+
+
+
+
+
+
+
+
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              margin: 10,
+              width:"96%",              
+            }}>
+            <ImageBackground
+              resizeMode="cover"
+              source={require('../../../assets/icon/Green1.png')}
+              style={{
+                justifyContent: 'center',
+                  alignItems: 'center',
+                width: SCREEN_WIDTH / 2.2,
+                height: 80,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '700',
+                    margin: 1,
+                    width:"60%",
+                    textAlign: 'left',
+                    marginTop: 15,
+                  }}>
+                  Rémunération totale
+                </Text>
+               
+                  {/* <Image
+                    source={require('../../../assets/icon/wallet.png')}
+                    style={{height: 35, width: 35, margin: 4}}
+                  /> */}
+                  <Text
+                    style={{
+                      color: '#000',
+                      fontWeight: '700',
+                      marginStart: 3,
+                    }}>
+                    {this.state.remuneration_total}
+                  </Text>
+               
+              </View>
+            </ImageBackground>
+
+            <ImageBackground
+              resizeMode="cover"
+              source={require('../../../assets/icon/skyblue1.png')}
+              style={{
+                justifyContent: 'center',
+                  alignItems: 'center',
+                width: SCREEN_WIDTH / 2.2,
+                height: 80,
+                marginEnd: 10,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '700',
+                    margin: 1,
+                    width:"60%",
+                    textAlign: 'left',
+                   
+                  }}>
+                 Nombre de coachings donnés
+                </Text>
+                <View
+                  style={{
+                    borderWidth: 0,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  {/* <Image
+                    source={require('../../../assets/icon/star1.png')}
+                    style={{height: 35, width: 35, margin: 4}}
+                  /> */}
+                  <Text
+                    style={{
+                      color: '#000',
+                      fontWeight: '700',
+                      marginStart: 3,
+                    }}>
+                    {this.state.total_coaching_given}
+                  </Text>
+                </View>
+              </View>
+            </ImageBackground>
           </View>
+
+
+
+
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              margin: 10,
+              width:"96%",
+            }}>
+            <ImageBackground
+              resizeMode="cover"
+              source={require('../../../assets/icon/yellow1.png')}
+              style={{
+                justifyContent: 'center',
+                  alignItems: 'center',
+                width: SCREEN_WIDTH / 2.2,
+                height: 80,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '700',
+                    margin: 1,
+                    width:"60%",
+                    textAlign: 'center',                    
+                  }}>
+                 Nombres d'avis
+                </Text>
+               
+                  <Text
+                    style={{
+                      color: '#000',
+                    fontWeight: '700',
+                    margin: 1,
+                
+                    textAlign: 'center'
+                    }}>
+                   {this.state.total_opinions}
+                  </Text>
+               
+              </View>
+            </ImageBackground>
+
+            <ImageBackground
+              resizeMode="cover"
+              source={require('../../../assets/icon/Pink1.png')}
+              style={{
+                justifyContent: 'center',
+                  alignItems: 'center',
+                width: SCREEN_WIDTH / 2.2,
+                height: 80,
+                marginEnd: 10,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                    fontWeight: '700',
+                    margin: 1,
+                    width: '60%',
+                    textAlign: 'center',              
+                  }}>
+                Note
+                </Text>
+                <View>
+                 <Image
+                    source={require('../../../assets/icon/star1.png')}
+                    style={{height: 24, width: 24, margin: 4}}
+                  />
+                  <Text
+                    style={{
+                      color: '#000',
+                      fontWeight: '700',
+                      marginStart: 3,
+                      textAlign: 'center', 
+                    }}>
+                      {this.state.average_rating}
+                  </Text>    
+                </View>       
+              </View>
+            </ImageBackground>
+          </View>
+
+
+
+
+
         </ScrollView>
 
         <Modal
@@ -818,63 +856,7 @@ checkReserveCourse(){
                 </Text>
               </View>
               <View style={Styles.radiobtnMainView}>
-                {/* <RadioButton.Group
-                    onValueChange={(value) => this.setState({value})}
-                    value={this.state.value}>
-                    <View style={Styles.radioBtnView}>
-                      <RadioButton value="first" />
-                      <Text style={Styles.radiobtnText}>COURS RÉSERVÉS</Text>
-                    </View>
-                    <View style={Styles.radioBtnView}>
-                      <RadioButton value="second" />
-                      <Text style={Styles.radiobtnText}>COURS INSTANTANÉS</Text>
-                    </View>                   
-                  </RadioButton.Group> */}
-                {/* {this.state.data1.map((singleMap, key) => {
-                  return (
-                    <View style={{margin: 7, marginBottom: 10}}>
-                      {this.state.checked == key ? (
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.setState({checked: key});
-                          }}
-                          //  onPress={()=>{
-                          //    let oldState = [...this.state.data1];
-                          //    oldState[key].isSelected = !oldState[key].isSelected;
-                          //    this.setState({ data1: oldState });
-                          //  }}
-                          style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Image
-                            source={require('../../../assets/icon/8.png')}
-                            style={{height: 20, width: 20, margin: 3}}
-                          />
-                          <Text style={{color: 'green'}}>
-                            {singleMap.value}
-                          </Text>
-                        </TouchableOpacity>
-                      ) : (
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.setState({checked: key});
-                          }}
-                          //  onPress={()=>{
-                          //    let oldState = [...this.state.data1];
-                          //    oldState[key].isSelected = !oldState[key].isSelected;
-                          //    this.setState({ data1: oldState });
-                          //  }}
-                          style={{flexDirection: 'row', alignItems: 'center'}}>
-                          <Image
-                            source={require('../../../assets/icon/4.png')}
-                            style={{height: 20, width: 20, margin: 3}}
-                          />
-                          <Text style={{color: 'gray'}}>{singleMap.value}</Text>
-                        </TouchableOpacity>
-                      )}
-                    </View>
-                  );
-                })} */}
-
-
+            
 
 
 

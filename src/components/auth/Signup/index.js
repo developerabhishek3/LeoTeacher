@@ -256,6 +256,12 @@ export default class index extends Component {
       this.Show_Custom_Alert1()
       // this.myAlert('Message', 'Veuillez saisir votre numéro de téléphone!');
     } 
+    else if (telephone_no.length < 10) {
+      alertValue = "Le numéro de téléphone doit être supérieur à 10 chiffres!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
+      // this.myAlert('Message', 'Veuillez saisir votre numéro de téléphone!');
+    } 
     else if (email.length === 0) {
       alertValue = "Veuillez entrer votre adresse électronique!"
       this.setState({alertValue})
@@ -267,6 +273,11 @@ export default class index extends Component {
       this.setState({alertValue})
       this.Show_Custom_Alert1()
       // this.myAlert('Message', 'Veuillez entrer votre mot de passe!');
+    }
+    else if(password.length < 8){
+      alertValue = "Le mot de passe doit avoir plus de 8 caractères!"
+      this.setState({alertValue})
+      this.Show_Custom_Alert1()
     }
     else if (confirm_password.length === 0 ) {
       alertValue = "Veuillez entrer votre mot de passe de confirmation!"
@@ -293,6 +304,14 @@ export default class index extends Component {
         // this.myAlert('Message', 'Adresse email invalide');
         return false;
       }  
+      // const passwordformat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*?]{6,}$/g;
+      // if(!password.match(passwordformat)){
+      //   alertValue = "Le mot de passe doit comporter un caractère spécial, une lettre minuscule et une lettre majuscule."
+      //   this.setState({alertValue})
+      //   this.Show_Custom_Alert1()
+
+      //   return false;
+      // }
 
       this.UserRegistrationFunction();
     }

@@ -68,7 +68,7 @@ import SecondCheck from '../components/notAuth/withoutNavigator/ProfileDetails/P
 import ThirdCheck from '../components/notAuth/withoutNavigator/ProfileDetails/Parameter/ChangePassword/ThirdCheck';
 import FourthCheck from '../components/notAuth/withoutNavigator/ProfileDetails/Parameter/ChangePassword/FourthCheck';
 
-
+import MyAvailability from '../components/notAuth/withoutNavigator/MyAvailability'
 
 
 const AppNavigator = createStackNavigator(
@@ -97,7 +97,12 @@ const AppNavigator = createStackNavigator(
         headerShown: false,
       },
     },
-
+    myavailability: {
+      screen: MyAvailability,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
     forgotpasswordreq2: {
       screen: forgotpasswordReq2,
       navigationOptions: {
