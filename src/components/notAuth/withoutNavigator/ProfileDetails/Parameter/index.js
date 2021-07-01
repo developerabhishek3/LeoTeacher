@@ -287,7 +287,12 @@ checkSwitch  = (value) => {
           <Image source={back} style={Styles.headertxtInputImg} />
           </TouchableOpacity>
           <Text style={Styles.headerTxt}>Paramètres</Text>
+          <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate("home");
+        }}>
           <Image source={logo} style={Styles.headertxtInputImg1} />
+          </TouchableOpacity>
         </View>
         <Spinner visible={this.state.isSpinner} />
         <ImageBackground source={bgImg} resizeMode="stretch" style={{flex:2,borderWidth:0,width:'100%'}}>                 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppRegistry, Alert, View,SafeAreaView} from 'react-native';
+import {AppRegistry, Alert, View,SafeAreaView,Platform} from 'react-native';
 import firebase from 'react-native-firebase';
 
 import Appcontainer from './src/router/index';
@@ -134,7 +134,25 @@ export default class App extends React.Component {
     const UserId = JSON.parse(user_id)
 
     this.notificationListener = firebase.notifications().onNotification((notification) => {
-  
+      const localNotification = new firebase.notifications.Notification({      
+        show_in_foreground: true,
+
+      })      
+        .setNotificationId(notification.notificationId)
+        .setTitle(notification.title)
+        .setBody(notification.body)
+        .android.setChannelId('notificationchannel') // e.g. the id you chose above
+        .android.setSmallIcon('@mipmap/ic_launcher') // create this icon in Android Studio
+        .android.setColor('#000000') // you can set a color here
+        .android.setPriority(firebase.notifications.Android.Priority.High);
+        firebase.notifications()
+        .displayNotification(localNotification)
+        .catch(err => console.error(err));
+         const { title, body } = notification;
+
+      const { fcm_push_response, fcm_order_id } = notification._data
+      console.log("notificatin_data:::::::::::::::::::::::",notification._data)
+      // this.displayNotification(title, body, fcm_push_response, fcm_order_id);
 
         console.log("getting cosole veleu   1    ++++++++++++",notification)
 
@@ -152,6 +170,7 @@ export default class App extends React.Component {
           var course_time = newData.course_time;
           var student_level =  newData.student_level;
           var course_duration = newData.course_duration
+          var waiting_time = newData.waiting_time;
       
           var request_start = new Date(newData.request_start)
           var request_end = new Date(newData.request_end)
@@ -169,7 +188,7 @@ export default class App extends React.Component {
                         course_time:course_time,
                         student_level:student_level,
                         request_end:request_end,
-                        secondBetweenTwoDate:secondBetweenTwoDate
+                        secondBetweenTwoDate:waiting_time
                       });
             }
 
@@ -185,6 +204,30 @@ export default class App extends React.Component {
 
 
       this.notificationOpenedListener = firebase.notifications().onNotificationOpened((notificationOpen) => {
+
+
+        // const localNotification = new firebase.notifications.Notification({      
+        //   show_in_foreground: true,
+  
+        // })      
+        //   .setNotificationId(notificationOpen.notification.notificationId)
+        //   .setTitle(notificationOpen.notification.title)
+        //   .setBody(notificationOpen.notification.body)
+        //   .android.setChannelId('notificationchannel') // e.g. the id you chose above
+        //   .android.setSmallIcon('@mipmap/ic_launcher') // create this icon in Android Studio
+        //   .android.setColor('#000000') // you can set a color here
+        //   .android.setPriority(firebase.notifications.Android.Priority.High);
+        //   firebase.notifications()
+        //   .displayNotification(localNotification)
+        //   .catch(err => console.error(err));
+        //    const { title, body } = notification;
+  
+        // const { fcm_push_response, fcm_order_id } = notification._data
+        // console.log("notificatin_data:::::::::::::::::::::::",notification._data)
+        // this.displayNotification(title, body, fcm_push_response, fcm_order_id);
+
+
+
         //   console.log("getting inside the on notifcation open method- -  - - - - -")
         console.log("getting cosole veleu 2   ++++++++++++",notificationOpen)
      
@@ -202,13 +245,19 @@ export default class App extends React.Component {
           var student_level =  newData.student_level;
       
           var request_start = new Date(newData.request_start)
-          var request_end = new Date(newData.request_end)
+          // var request_end = new Date(newData.request_end)
+
+          // var waiting_time = newData.waiting_time;
 
 
 
+          var request_end = moment(newData.request_end)
+          var currentTime = moment(new Date())
+          var ActualCurentTime = request_end.diff(currentTime, 'seconds')  
+          var secondBetweenTwoDate = ActualCurentTime
           // var realEndTime =    new Date(request_end.setHours(request_end.getHours() - 1))
 
-          var secondBetweenTwoDate = parseInt((request_end.getTime() - request_start.getTime()) / 1000);
+          // var secondBetweenTwoDate = parseInt((request_end.getTime() - request_start.getTime()) / 1000);
   
           // this.Show_Custom_Alert()
           // console.log("inside the notification data funciton - - - - -")
@@ -222,7 +271,7 @@ export default class App extends React.Component {
             course_time:course_time,
             student_level:student_level,
             request_end:request_end,
-            secondBetweenTwoDate:180
+            secondBetweenTwoDate:secondBetweenTwoDate
           });   
         }
         else {
@@ -233,9 +282,38 @@ export default class App extends React.Component {
       });
       
      const notificationOpen = await firebase.notifications().getInitialNotification();
+     
 
       // firebase.notifications().removeDeliveredNotification(notificationOpen.notification.notificationId);
       if (notificationOpen) {
+
+      
+        const localNotification = new firebase.notifications.Notification({      
+          show_in_foreground: true,
+  
+        })      
+        //   .setNotificationId(notificationOpen.notification.notificationId)
+        //   .setTitle(notificationOpen.notification.title)
+        //   .setBody(notificationOpen.notification.body)
+        //   .android.setChannelId('notificationchannel') // e.g. the id you chose above
+        //   .android.setSmallIcon('@mipmap/ic_launcher') // create this icon in Android Studio
+        //   .android.setColor('#000000') // you can set a color here
+        //   .android.setPriority(firebase.notifications.Android.Priority.High);
+        //   firebase.notifications()
+        //   .displayNotification(localNotification)
+        //   .catch(err => console.error(err));
+        //    const { title, body } = notification;
+  
+        // const { fcm_push_response, fcm_order_id } = notification._data
+        // console.log("notificatin_data:::::::::::::::::::::::",notification._data)
+        // this.displayNotification(title, body, fcm_push_response, fcm_order_id);
+
+
+
+
+
+
+
         console.log("on the background mode notification gettt - - -- - - -",notificationOpen.notification.data)
         var notificationData = notificationOpen.notification.data.extra_param;   
         var newData = JSON.parse(notificationData)
@@ -247,14 +325,27 @@ export default class App extends React.Component {
         var course_date = newData.course_date;
         var course_time = newData.course_time;
         var student_level =  newData.student_level;
+        var waiting_time = newData.waiting_time;
+
     
         var request_end = moment(newData.request_end)
 
+
+
+        // console.log("getting request_end time  - -  - - - - -",request_end)
+
         var currentTime = moment(new Date())
 
+        // console.log("Getting current time - - - "+currentTime)
+
         var ActualCurentTime = request_end.diff(currentTime, 'seconds')
+
+
+        // console.log("Getting actual time value - -  -  - -",ActualCurentTime)
        
-        var secondBetweenTwoDate = ActualCurentTime*60
+        var secondBetweenTwoDate = ActualCurentTime
+
+        // console.log("second b/w 2 values - -  - - -  -",secondBetweenTwoDate)
                
 
         // var secondBetweenTwoDate = parseInt((realEndTime.getTime() - new Date().getTime()) / 1000);
@@ -270,7 +361,7 @@ export default class App extends React.Component {
             course_time:course_time,
             student_level:student_level,
             request_end:request_end,
-            secondBetweenTwoDate:180
+            secondBetweenTwoDate:secondBetweenTwoDate
           });
           // await AsyncStorage.setItem("notification", "true");      
           // await AsyncStorage.setItem("notificationData",notificationData)
@@ -285,6 +376,26 @@ export default class App extends React.Component {
       // this.Show_Custom_Alert()
       this.messageListener = firebase.messaging().onMessage((message) => {
         console.log("gettign on the message listenre - -  - - - - - -",message)
+
+
+      //   if (Platform.OS === Constants.ANDROID) {
+      //     const localNotification = new firebase.notifications.Notification()
+      //         .setNotificationId(message.messageId)
+      //         .setTitle(JSON.parse(message.data.custom_notification).title)
+      //         .setBody(JSON.parse(message.data.custom_notification).body)
+      //         .android.setChannelId('fetchh-channel') // e.g. the id you chose above
+      //         .android.setSmallIcon('R.mipmap.ic_launcher') // create this icon in Android Studio
+      //         .android.setPriority(firebase.notifications.Android.Priority.High);
+
+      //     firebase.notifications()
+      //         .displayNotification(localNotification)
+      //         .catch(err => console.error(err));
+
+      //     // if (JSON.parse(message.data.custom_notification).title === Constants.SECURITY_ALERT) {
+      //     //     this.props.navigation.navigate('SignOut');
+      //     // }
+      // }
+
         // console.log("gettign on the message listenre 2nd - -  - - - - - -",message.data.data.payload)
       // console.log(JSON.stringify(message));
       });

@@ -201,7 +201,7 @@ export default class index extends Component {
                 </Fragment>
                 
                 :<View style={{alignItems:'center',justifyContent:'center'}}>
-                <Text style={{color:"gray",textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>Aucun coaching payé...</Text>
+                <Text style={{color:"gray",textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>Aucun coaching payé</Text>
                </View>
             }
 
@@ -209,7 +209,7 @@ export default class index extends Component {
 
         :
             <View style={{alignItems:'center',justifyContent:'center'}}>
-            <Text style={{color:"gray",textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>chargement...</Text>
+            <Text style={{color:"gray",textAlign:'center',textAlignVertical:'center',fontSize:18,fontWeight:'700',marginTop:160}}>chargement</Text>
             </View>
           }
           

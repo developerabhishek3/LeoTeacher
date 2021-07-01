@@ -563,7 +563,12 @@ export default class index extends Component {
               <TouchableOpacity onPress={()=>{this.validateUser()}}>
                 <Image source={Right} style={Styles.headertxtInputImg2} />
               </TouchableOpacity>
+              <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate("home");
+        }}>
               <Image source={logo} style={Styles.headertxtInputImg1} />
+              </TouchableOpacity>
             </View>
           
           </ImageBackground>

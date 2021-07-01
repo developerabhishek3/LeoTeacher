@@ -202,7 +202,12 @@ export default class index extends Component {
           <Image source={back} style={Styles.headertxtInputImg} />
           </TouchableOpacity>
           <Text style={Styles.headerTxt}>  Profil</Text>
+          <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate("home");
+        }}>
           <Image source={logo} style={Styles.headertxtInputImg1} />
+          </TouchableOpacity>
         </ImageBackground>
         <Spinner visible={this.state.isSpinner} />
 
@@ -231,7 +236,7 @@ export default class index extends Component {
           }
           </View>
 
-          <Text style={{alignSelf:'center',fontWeight:'700',fontSize:16,color:"#000000"}}>{profileData.first_name} {profileData.last_name}</Text>          
+          <Text style={{alignSelf:'center',fontWeight:'700',fontSize:16,color:"#000000"}}>{profileData.first_name} </Text>          
 
           <ScrollView style={{margin:10}}> 
         

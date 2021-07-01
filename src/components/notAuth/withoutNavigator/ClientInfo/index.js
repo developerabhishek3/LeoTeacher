@@ -115,13 +115,12 @@ export default class index extends Component {
           </TouchableOpacity>
           <Text style={Styles.headerTxt}>Info coaching fait</Text>
           <View style={{margin: 7, flexDirection: 'row', marginStart: 10}}>
-            {/* <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate('chat');
-              }}>
-              <Image source={Chat} style={Styles.headertxtInputImg2} />
-            </TouchableOpacity> */}
+          <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate("home");
+        }}>
             <Image source={logo} style={Styles.headertxtInputImg1} />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -231,7 +230,7 @@ export default class index extends Component {
                               {
                                   singleInfo.student_rating  == 0 ?
                                   <Text style={Styles.contentViewTxt2}>
-                                 En attente d'un classement
+                                    En attente d'une note
                              </Text>:null
 
                                 }

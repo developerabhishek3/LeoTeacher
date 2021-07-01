@@ -300,7 +300,7 @@ export default class index extends Component {
                   </View> */}
 
                     <View  style={{flexDirection:'row',margin:3,alignSelf:'center',marginTop:30}}>
-                    <Text style={Styles.txtStyle2}>Nouvel Utilisateur ?</Text>
+                    <Text style={Styles.txtStyle2}>Nouvel utilisateur ?</Text>
                       <TouchableOpacity onPress={()=>{this.props.navigation.navigate("singup")}}>
                       <Text style={Styles.txtStyle3}> S'inscrire</Text>
                       </TouchableOpacity>

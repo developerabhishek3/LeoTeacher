@@ -136,7 +136,7 @@ export default class App extends React.Component {
     var filteredData = reservation_requestAcceptResponse.response.revenue_list;
     var totalFilterAmount = reservation_requestAcceptResponse.response.total_amount
     this.setState({isBodyLoaded:true,isSpinner:false,filteredData,filterKay:true,totalFilterAmount})
-    // Alert.alert("Message",reservation_requestAcceptResponse.response.message)
+    Alert.alert("Message",reservation_requestAcceptResponse.response.message)
     this.Hide_Custom_Alert()
       
     }
@@ -182,7 +182,7 @@ export default class App extends React.Component {
     var filteredData = reservation_requestREjectResponse.response.revenue_list;
     var totalFilterAmount = reservation_requestREjectResponse.response.total_amount
     this.setState({isBodyLoaded:true,isSpinner:false,filteredData,filterKay:true,totalFilterAmount})
-    // Alert.alert("Message",reservation_requestREjectResponse.response.message)
+    Alert.alert("Message",reservation_requestREjectResponse.response.message)
     this.Hide_Custom_Alert()
       
     }
@@ -353,7 +353,8 @@ export default class App extends React.Component {
                    size={8}
                    until={this.state.secondBetweenTwoDate}
                   // until={10}
-                   onFinish={() => this.setState({secondBetweenTwoDate:0,isButtonEnable:false})}
+                  onFinish={()=>{this.fetchreservation_request_Reject()}}
+                  //  onFinish={() => this.setState({secondBetweenTwoDate:0,isButtonEnable:false,})}
                    digitStyle={{backgroundColor: '#FFF', borderWidth: 0, borderColor: '#b41565',}}
                    digitTxtStyle={{color: '#b41565'}}
                    timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
@@ -370,7 +371,7 @@ export default class App extends React.Component {
 
 
 
-
+{/* 
                 {
                   this.state.isButtonEnable == true ?
 
@@ -502,7 +503,76 @@ export default class App extends React.Component {
                 </TouchableOpacity>
               </View>
 
-                }
+                } */}
+
+
+
+
+
+<View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    margin: 30,
+                    marginTop: 40,
+                    marginBottom: 30,
+                  }}>
+                  <TouchableOpacity
+                    // onPress={()=>{this.Hide_Custom_Alert1()}}
+                    onPress={()=>{this.fetchreservation_request_Accept()}}
+                    style={{
+                      backgroundColor: '#b41565',
+                      justifyContent: 'center',
+                      margin: 10,
+                      marginStart: 25,
+                      marginEnd: 25,
+                      height: 35,
+                      borderRadius: 6,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#FFF',
+                        fontSize: 18,
+                        marginStart: 20,
+                        marginEnd: 20,
+                        fontWeight: '700',
+                        textAlign: 'center',
+                        fontFamily: 'Montserrat-Regular',
+                      }}>
+                      Accepter
+                    </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    // onPress={() => {
+                    //   this.Hide_Custom_Alert();
+                    // }}
+                    onPress={()=>{this.fetchreservation_request_Reject()}}
+                    style={{
+                      backgroundColor: '#b41565',
+                      justifyContent: 'center',
+                      margin: 10,
+                      marginStart: 25,
+                      marginEnd: 25,
+                      height: 35,
+                      borderRadius: 6,
+                    }}>
+                    <Text
+                      style={{
+                        color: '#FFF',
+                        fontSize: 18,
+                        marginStart: 20,
+                        marginEnd: 20,
+                        fontWeight: '700',
+                        textAlign: 'center',
+                        fontFamily: 'Montserrat-Regular',
+                      }}>
+                      Décliner
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+
+
 
               </View>
             </View>

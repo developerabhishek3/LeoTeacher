@@ -42,16 +42,16 @@ export default StyleSheet.create({
         margin: 3,
         marginBottom:20,
         borderRadius: 5,
-        
-        justifyContent:'flex-end',
-        alignItems:'flex-end',
+        flexDirection: 'row',
+        justifyContent:'center',      
         alignSelf: 'center',
+        width:"42%"
       },
       continueBtnTxt: {
         margin: 10,
         color: '#FFFFFF',
         fontWeight: '700',
-        fontSize: 16,
+        fontSize: 14,
         alignSelf: 'center',
       },
       radiobtnMainView:{
